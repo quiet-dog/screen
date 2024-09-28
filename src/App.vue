@@ -1,7 +1,22 @@
 <template>
   <div class="bigscreen">
     <div class="bigscreen_header">
-      <img src="/src/assets/img/高生物安全动态监管平台.png" alt="" />
+      <img
+        style="position: absolute; top: 18px; left: 50%; margin-left: -241px"
+        src="/src/assets/img/高生物安全动态监管平台.png"
+        alt=""
+      />
+      <div class="bigscreen_header_r">
+        <span>{{ time }}</span>
+        <span style="padding-left: 30px">{{ dayOfWeek }}</span>
+        <img
+          style="padding-left: 25px"
+          src="/src/assets/img/天气图标.png"
+          alt=""
+        />
+        <img style="margin-left: 6px" src="/src/assets/img/温度计.png" alt="" />
+        <span style="padding-right: 40px">26℃</span>
+      </div>
     </div>
     <div class="bigscreen_lt">
       <div class="bigscreen_lt_nei1">
@@ -81,7 +96,7 @@
         </div>
       </div>
     </div>
-    <div class="bigscreen_lb"></div>
+    <div class="bigscreen_lb" ref="bigscreenLBRef"></div>
     <div class="bigscreen_rt">
       <div class="bigscreen_rt_top"></div>
       <div class="bigscreen_rt_bottom">
@@ -146,7 +161,7 @@
         </div>
       </div>
     </div>
-    <div class="bigscreen_rb"></div>
+    <div class="bigscreen_rb" ref="bigscreenRBRef"></div>
     <div class="bigscreen_ct">
       <div class="bigscreen_ct_l">
         <span>今日报警数量</span>
@@ -175,7 +190,209 @@
 </template>
 
 <script setup lang="ts">
-import HelloWorld from "./components/HelloWorld.vue";
+import { ref, onMounted, onUnmounted } from "vue";
+import dayjs from "dayjs";
+import * as echarts from "echarts";
+
+let times: any;
+const daysInChinese = [
+  "星期日",
+  "星期一",
+  "星期二",
+  "星期三",
+  "星期四",
+  "星期五",
+  "星期六",
+];
+const dayOfWeek = ref(daysInChinese[dayjs().day()]);
+const updateDayOfWeek = () => {
+  // 更新星期几
+  dayOfWeek.value = daysInChinese[dayjs().day()];
+};
+const setMidnightTimer = () => {
+  // 获取当前时间
+  const now = dayjs();
+  // 计算距离明天 0 点的时间（毫秒）
+  const nextMidnight = dayjs().endOf("day").add(1, "millisecond");
+  const timeUntilMidnight = nextMidnight.diff(now);
+
+  // 设置定时器在 0 点更新
+  times = setTimeout(() => {
+    updateDayOfWeek();
+    // 在 0 点之后，设置一个每天执行的定时器
+    setInterval(updateDayOfWeek, 24 * 60 * 60 * 1000); // 每 24 小时更新一次
+  }, timeUntilMidnight);
+};
+
+let timer: any;
+const time = ref<string>(dayjs().format("YYYY-MM-DD HH:mm:ss"));
+
+const bigscreenLBRef = ref();
+const bigscreenLBoption = {
+  grid: {
+    left: "60px",
+    top: "70px",
+    bottom: "40px",
+  },
+
+  xAxis: {
+    type: "category",
+    data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+  },
+  yAxis: {
+    type: "value",
+    splitLine: {
+      show: true, //让网格显示
+      lineStyle: {
+        //网格样式
+        color: ["rgba(255, 255, 255, 0.15)"], //网格的颜色
+        width: 2, //网格的宽度
+        type: "dashed", //网格是实实线，可以修改成虚线以及其他的类型
+      },
+    },
+  },
+  series: [
+    {
+      data: [820, 932, 901, 934, 1290, 1330, 1320],
+      type: "line",
+      smooth: true,
+      symbol: "none",
+      areaStyle: {
+        color: {
+          type: "linear",
+          x: 0,
+          y: 0,
+          x2: 0,
+          y2: 1,
+          colorStops: [
+            {
+              offset: 0,
+              color: "rgba(54, 161, 255, 0.60)", // 0% 处的颜色
+            },
+            {
+              offset: 1,
+              color: "rgba(25, 104, 255, 0)", // 100% 处的颜色
+            },
+          ],
+          global: false, // 缺省为 false
+        },
+      },
+    },
+  ],
+};
+
+const bigscreenRBRef = ref();
+const bigscreenRBoption = {
+  grid: {
+    left: "60px",
+    top: "70px",
+    bottom: "40px",
+  },
+  xAxis: {
+    type: "category",
+    data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+  },
+  yAxis: {
+    type: "value",
+    splitLine: {
+      show: true, //让网格显示
+      lineStyle: {
+        //网格样式
+        color: ["rgba(255, 255, 255, 0.15)"], //网格的颜色
+        width: 2, //网格的宽度
+        type: "dashed", //网格是实实线，可以修改成虚线以及其他的类型
+      },
+    },
+  },
+  series: [
+    {
+      data: [820, 932, 901, 934, 1290, 1330, 1320],
+      type: "line",
+      smooth: true,
+      symbol: "none",
+      itemStyle: {
+        color: "rgba(56, 124, 255,1)", //改变折线点的颜色
+        lineStyle: {
+          color: "rgba(56, 124, 255, 1)", //改变折线颜色
+        },
+      },
+      areaStyle: {
+        color: {
+          type: "linear",
+          x: 0,
+          y: 0,
+          x2: 0,
+          y2: 1,
+          colorStops: [
+            {
+              offset: 0,
+              color: "rgba(56, 124, 255, 0.50)", // 0% 处的颜色
+            },
+            {
+              offset: 1,
+              color: "rgba(25, 104, 255, 0)", // 100% 处的颜色
+            },
+          ],
+          global: false, // 缺省为 false
+        },
+      },
+    },
+    {
+      data: [520, 532, 601, 634, 990, 930, 920],
+      type: "line",
+      smooth: true,
+      symbol: "none",
+      itemStyle: {
+        color: "rgb(62, 230, 255, 1)", //改变折线点的颜色
+        lineStyle: {
+          color: "rgb(62, 230, 255, 1)", //改变折线颜色
+        },
+      },
+      areaStyle: {
+        color: {
+          type: "linear",
+          x: 0,
+          y: 0,
+          x2: 0,
+          y2: 1,
+          colorStops: [
+            {
+              offset: 0,
+              color: "rgb(62, 230, 255, 0.5)", // 0% 处的颜色
+            },
+            {
+              offset: 1,
+              color: "rgba(62, 230, 255, 0)", // 100% 处的颜色
+            },
+          ],
+          global: false, // 缺省为 false
+        },
+      },
+    },
+  ],
+};
+
+onMounted(() => {
+  timer = setInterval(() => {
+    time.value = dayjs().format("YYYY-MM-DD HH:mm:ss");
+  }, 1000);
+  setMidnightTimer();
+  if (bigscreenLBRef.value) {
+    const bigscreenLBChart = echarts.init(bigscreenLBRef.value);
+    bigscreenLBChart.setOption(bigscreenLBoption);
+  }
+
+  if (bigscreenRBRef.value) {
+    const bigscreenRBChart = echarts.init(bigscreenRBRef.value);
+    bigscreenRBChart.setOption(bigscreenRBoption);
+  }
+});
+
+onUnmounted(() => {
+  // 清除定时器
+  clearInterval(timer);
+  clearInterval(times);
+});
 </script>
 
 <style scoped>
@@ -193,13 +410,17 @@ import HelloWorld from "./components/HelloWorld.vue";
   position: absolute;
   top: 0;
 }
-.bigscreen_header img {
+.bigscreen_header_r {
+  height: 100px;
+  display: flex;
+  align-items: center;
   position: absolute;
-  top: 18px;
-  left: 50%;
-  margin-left: -241px;
+  right: 0;
 }
-
+.bigscreen_header_r span {
+  font-size: 20px;
+  color: rgba(255, 255, 255, 1);
+}
 .bigscreen_lt,
 .bigscreen_lc,
 .bigscreen_lb,

@@ -19,156 +19,209 @@
       </div>
     </div>
     <div class="bigscreen_lt">
-      <div class="bigscreen_lt_nei1">
-        <span>设备报警</span>
-        <span>二级</span>
-        <span>2024-07-31 22:58:15</span>
+      <div class="bigscreen_lt_top">
+        <div class="bigscreen_lt_top_l">
+          <img src="/src/assets/img/光标.png" alt="" />
+          <span>报警信息</span>
+        </div>
       </div>
-      <div class="bigscreen_lt_nei2">
-        <span>环境数据</span>
-        <span>三级</span>
-        <span>2024-07-31 22:58:15</span>
-      </div>
-      <div class="bigscreen_lt_nei3">
-        <span>物料数据</span>
-        <span>二级</span>
-        <span>2024-07-31 22:58:15</span>
-      </div>
-      <div class="bigscreen_lt_nei4">
-        <span>工艺节点</span>
-        <span>三级</span>
-        <span>2024-07-31 22:58:15</span>
-      </div>
+      <BorderBox1 class="bigscreen_lt_bottom">
+        <div class="bigscreen_lt_bottom_nei">
+          <div class="bigscreen_lt_nei1">
+            <span>设备报警</span>
+            <span>二级</span>
+            <span>2024-07-31 22:58:15</span>
+          </div>
+          <div class="bigscreen_lt_nei2">
+            <span>环境数据</span>
+            <span>三级</span>
+            <span>2024-07-31 22:58:15</span>
+          </div>
+          <div class="bigscreen_lt_nei3">
+            <span>物料数据</span>
+            <span>二级</span>
+            <span>2024-07-31 22:58:15</span>
+          </div>
+          <div class="bigscreen_lt_nei4">
+            <span>工艺节点</span>
+            <span>三级</span>
+            <span>2024-07-31 22:58:15</span>
+          </div>
+        </div>
+      </BorderBox1>
     </div>
+
     <div class="bigscreen_lc">
-      <div class="bigscreen_lc_top"></div>
-      <div class="bigscreen_lc_bottom">
-        <img
-          style="width: 163px; height: 159px"
-          src="/src/assets/img/事件报告图标.png"
-          alt=""
-        />
-        <div class="bigscreen_lc_bottom_r">
-          <div class="bigscreen_lc_bottom_rnei">
-            <span>物料A库存异常</span>
-            <div
-              style="
-                background: url('/src/assets/img/黄色.png') no-repeat;
-                background-size: 100% 100%;
-              "
-            >
-              物料报警
+      <div class="bigscreen_lc_top">
+        <div class="bigscreen_lc_top_l">
+          <img src="/src/assets/img/光标.png" alt="" />
+          <span>事件报告</span>
+        </div>
+      </div>
+      <BorderBox1 class="bigscreen_lc_bottom">
+        <div class="bigscreen_lc_bottom_nei">
+          <img
+            style="width: 163px; height: 159px"
+            src="/src/assets/img/事件报告图标.png"
+            alt=""
+          />
+          <div class="bigscreen_lc_bottom_r">
+            <div class="bigscreen_lc_bottom_rnei">
+              <span>物料A库存异常</span>
+              <div
+                style="
+                  background: url('/src/assets/img/黄色.png') no-repeat;
+                  background-size: 100% 100%;
+                "
+              >
+                物料报警
+              </div>
             </div>
-          </div>
-          <div class="bigscreen_lc_bottom_rnei">
-            <span>设备一监测数据异常</span>
-            <div
-              style="
-                background: url('/src/assets/img/绿色.png') no-repeat;
-                background-size: 100% 100%;
-              "
-            >
-              设备报警
+            <div class="bigscreen_lc_bottom_rnei">
+              <span>设备一监测数据异常</span>
+              <div
+                style="
+                  background: url('/src/assets/img/绿色.png') no-repeat;
+                  background-size: 100% 100%;
+                "
+              >
+                设备报警
+              </div>
             </div>
-          </div>
-          <div class="bigscreen_lc_bottom_rnei">
-            <span>月饼食品产生严重质量问题</span>
-            <div
-              style="
-                background: url('/src/assets/img/红色.png') no-repeat;
-                background-size: 100% 100%;
-              "
-            >
-              质量问题
+            <div class="bigscreen_lc_bottom_rnei">
+              <span>月饼食品产生严重质量问题</span>
+              <div
+                style="
+                  background: url('/src/assets/img/红色.png') no-repeat;
+                  background-size: 100% 100%;
+                "
+              >
+                质量问题
+              </div>
             </div>
-          </div>
-          <div class="bigscreen_lc_bottom_rnei">
-            <span>科学大道西路段发生安全事故</span>
-            <div
-              style="
-                background: url('/src/assets/img/蓝色.png') no-repeat;
-                background-size: 100% 100%;
-              "
-            >
-              事故问题
+            <div class="bigscreen_lc_bottom_rnei">
+              <span>科学大道西路段发生安全事故</span>
+              <div
+                style="
+                  background: url('/src/assets/img/蓝色.png') no-repeat;
+                  background-size: 100% 100%;
+                "
+              >
+                事故问题
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </BorderBox1>
     </div>
-    <div class="bigscreen_lb" ref="bigscreenLBRef"></div>
-    <div class="bigscreen_rt">
-      <div class="bigscreen_rt_top"></div>
-      <div class="bigscreen_rt_bottom">
-        <img src="/src/assets/img/监控报告图标.png" alt="" />
-        <div class="bigscreen_rt_bottom_r">
-          <div><span>JK218 科学大道点位1</span></div>
-          <div><span>JK218 科学大道点位1</span></div>
-          <div><span>JK218 科学大道点位1</span></div>
+
+    <div class="bigscreen_lb">
+      <div class="bigscreen_lb_top">
+        <div class="bigscreen_lb_top_l">
+          <img src="/src/assets/img/光标.png" alt="" />
+          <span>报警历史</span>
         </div>
       </div>
+      <BorderBox1 class="bigscreen_lb_bottom">
+        <div class="bigscreen_lb_bottom_nei" ref="bigscreenLBRef"></div>
+      </BorderBox1>
+    </div>
+    <div class="bigscreen_rt">
+      <div class="bigscreen_rt_top">
+        <div class="bigscreen_rt_top_l">
+          <img src="/src/assets/img/光标.png" alt="" />
+          <span>监控报告</span>
+        </div>
+      </div>
+      <BorderBox1 class="bigscreen_rt_bottom">
+        <div class="bigscreen_rt_bottom_nei">
+          <img src="/src/assets/img/监控报告图标.png" alt="" />
+          <div class="bigscreen_rt_bottom_r">
+            <div><span>JK218 科学大道点位1</span></div>
+            <div><span>JK218 科学大道点位1</span></div>
+            <div><span>JK218 科学大道点位1</span></div>
+          </div>
+        </div>
+      </BorderBox1>
     </div>
     <div class="bigscreen_rc">
-      <div class="bigscreen_rc_top"></div>
-      <div class="bigscreen_rc_bottom">
-        <div>
-          <img src="/src/assets/img/线.png" alt="" />
-        </div>
-
-        <div class="bigscreen_rc_bottom_r">
-          <div class="bigscreen_rc_bottom_rnei">
-            <span style="color: rgba(172, 223, 255, 1); font-size: 11px"
-              >2024年09月23日 22:15:53</span
-            >
-            <div
-              style="
-                background: url('/src/assets/img/红色背景框.png') no-repeat;
-                background-size: 100% 100%;
-              "
-            >
-              <span>《WHO实验室生物安全手册 (第四版)》</span>
-              <img src="/src/assets/img/查看详情.png" alt="" />
-            </div>
-          </div>
-          <div class="bigscreen_rc_bottom_rnei">
-            <span style="color: rgba(172, 223, 255, 1); font-size: 11px"
-              >2024年09月23日 22:15:53</span
-            >
-            <div
-              style="
-                background: url('/src/assets/img/绿色背景框.png') no-repeat;
-                background-size: 100% 100%;
-              "
-            >
-              <span>《WHO实验室生物安全手册 (第四版)》</span>
-              <img src="/src/assets/img/查看详情.png" alt="" />
-            </div>
-          </div>
-          <div class="bigscreen_rc_bottom_rnei">
-            <span style="color: rgba(172, 223, 255, 1); font-size: 11px"
-              >2024年09月23日 22:15:53</span
-            >
-            <div
-              style="
-                background: url('/src/assets/img/黄色背景框.png') no-repeat;
-                background-size: 100% 100%;
-              "
-            >
-              <span>《WHO实验室生物安全手册 (第四版)》</span>
-              <img src="/src/assets/img/查看详情.png" alt="" />
-            </div>
-          </div>
+      <div class="bigscreen_rc_top">
+        <div class="bigscreen_rc_top_l">
+          <img src="/src/assets/img/光标.png" alt="" />
+          <span>政策法规</span>
         </div>
       </div>
+      <BorderBox1 class="bigscreen_rc_bottom">
+        <div class="bigscreen_rc_bottom_nei">
+          <div>
+            <img src="/src/assets/img/线.png" alt="" />
+          </div>
+
+          <div class="bigscreen_rc_bottom_r">
+            <div class="bigscreen_rc_bottom_rnei">
+              <span style="color: rgba(172, 223, 255, 1); font-size: 11px"
+                >2024年09月23日 22:15:53</span
+              >
+              <div
+                style="
+                  background: url('/src/assets/img/红色背景框.png') no-repeat;
+                  background-size: 100% 100%;
+                "
+              >
+                <span>《WHO实验室生物安全手册 (第四版)》</span>
+                <img src="/src/assets/img/查看详情.png" alt="" />
+              </div>
+            </div>
+            <div class="bigscreen_rc_bottom_rnei">
+              <span style="color: rgba(172, 223, 255, 1); font-size: 11px"
+                >2024年09月23日 22:15:53</span
+              >
+              <div
+                style="
+                  background: url('/src/assets/img/绿色背景框.png') no-repeat;
+                  background-size: 100% 100%;
+                "
+              >
+                <span>《WHO实验室生物安全手册 (第四版)》</span>
+                <img src="/src/assets/img/查看详情.png" alt="" />
+              </div>
+            </div>
+            <div class="bigscreen_rc_bottom_rnei">
+              <span style="color: rgba(172, 223, 255, 1); font-size: 11px"
+                >2024年09月23日 22:15:53</span
+              >
+              <div
+                style="
+                  background: url('/src/assets/img/黄色背景框.png') no-repeat;
+                  background-size: 100% 100%;
+                "
+              >
+                <span>《WHO实验室生物安全手册 (第四版)》</span>
+                <img src="/src/assets/img/查看详情.png" alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </BorderBox1>
     </div>
-    <div class="bigscreen_rb" ref="bigscreenRBRef"></div>
+    <div class="bigscreen_rb">
+      <div class="bigscreen_rb_top">
+        <div class="bigscreen_rb_top_l">
+          <img src="/src/assets/img/光标.png" alt="" />
+          <span>生产安全线</span>
+        </div>
+      </div>
+      <BorderBox1 class="bigscreen_rb_bottom">
+        <div class="bigscreen_rb_bottom_nei" ref="bigscreenRBRef"></div>
+      </BorderBox1>
+    </div>
     <div class="bigscreen_ct">
       <div class="bigscreen_ct_l">
         <span>今日报警数量</span>
         <div></div>
       </div>
       <div class="bigscreen_ct_r">
-        <span>指标总数量</span>
+        <span>历史报警数量</span>
         <div></div>
       </div>
     </div>
@@ -193,6 +246,7 @@
 import { ref, onMounted, onUnmounted } from "vue";
 import dayjs from "dayjs";
 import * as echarts from "echarts";
+import { BorderBox1 } from "@dataview/datav-vue3/es";
 
 let times: any;
 const daysInChinese = [
@@ -231,7 +285,7 @@ const bigscreenLBRef = ref();
 const bigscreenLBoption = {
   grid: {
     left: "60px",
-    top: "70px",
+    top: "40px",
     bottom: "40px",
   },
 
@@ -285,7 +339,7 @@ const bigscreenRBRef = ref();
 const bigscreenRBoption = {
   grid: {
     left: "60px",
-    top: "70px",
+    top: "40px",
     bottom: "40px",
   },
   xAxis: {
@@ -434,17 +488,58 @@ onUnmounted(() => {
   position: absolute;
   top: 91px;
   left: 26px;
-  background: url("/src/assets/img/报警信息.png") no-repeat;
+}
+.bigscreen_lt_top {
+  width: 100%;
+  height: 34px;
+  background: url("/src/assets/img/背景-上层.png") no-repeat;
   background-size: 100% 100%;
+  display: flex;
+  align-items: center;
+}
+.bigscreen_lt_top_l {
+  display: flex;
+  align-items: center;
+}
+.bigscreen_lt_top_l img {
+  margin-left: 11px;
+}
+.bigscreen_lt_top_l span {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  font-style: normal;
+  text-transform: none;
+  background: linear-gradient(
+    to bottom,
+    #c7e5fd 42%,
+    #3582c7 100%
+  ); /* 渐变背景 */
+  background-clip: text; /* 让背景应用到文本 */
+  -webkit-text-fill-color: transparent; /* 使文本颜色透明 */
+  padding-left: 10px;
+}
+.bigscreen_lt_bottom {
+  width: 100%;
+  height: 251px;
+  margin-top: 5px;
+  background: url("/src/assets/img/背景下层.png") no-repeat;
+  background-size: 100% 100%;
+}
+.bigscreen_lt_bottom_nei {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .bigscreen_lt_nei1 {
   width: 93px;
   height: 210px;
   background: url("/src/assets/img/设备报警.png") no-repeat;
   background-size: 100% 100%;
-  position: absolute;
-  top: 60px;
-  left: 18px;
+  margin-left: 18px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -470,9 +565,6 @@ onUnmounted(() => {
   height: 210px;
   background: url("/src/assets/img/环境数据.png") no-repeat;
   background-size: 100% 100%;
-  position: absolute;
-  top: 60px;
-  left: 123px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -498,9 +590,6 @@ onUnmounted(() => {
   height: 210px;
   background: url("/src/assets/img/物料报警.png") no-repeat;
   background-size: 100% 100%;
-  position: absolute;
-  top: 60px;
-  right: 123px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -526,9 +615,7 @@ onUnmounted(() => {
   height: 210px;
   background: url("/src/assets/img/工艺节点.png") no-repeat;
   background-size: 100% 100%;
-  position: absolute;
-  top: 60px;
-  right: 18px;
+  margin-right: 18px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -554,8 +641,6 @@ onUnmounted(() => {
   position: absolute;
   top: 395px;
   left: 26px;
-  background: url("/src/assets/img/事件报告.png") no-repeat;
-  background-size: 100% 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -563,10 +648,44 @@ onUnmounted(() => {
 .bigscreen_lc_top {
   width: 100%;
   height: 34px;
+  background: url("/src/assets/img/背景-上层.png") no-repeat;
+  background-size: 100% 100%;
+  display: flex;
+  align-items: center;
+}
+.bigscreen_lc_top_l {
+  display: flex;
+  align-items: center;
+}
+.bigscreen_lc_top_l img {
+  margin-left: 11px;
+}
+.bigscreen_lc_top_l span {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  font-style: normal;
+  text-transform: none;
+  background: linear-gradient(
+    to bottom,
+    #c7e5fd 42%,
+    #3582c7 100%
+  ); /* 渐变背景 */
+  background-clip: text; /* 让背景应用到文本 */
+  -webkit-text-fill-color: transparent; /* 使文本颜色透明 */
+  padding-left: 10px;
 }
 .bigscreen_lc_bottom {
   width: 100%;
   height: 251px;
+  margin-top: 5px;
+  background: url("/src/assets/img/背景下层.png") no-repeat;
+  background-size: 100% 100%;
+}
+.bigscreen_lc_bottom_nei {
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -607,29 +726,101 @@ onUnmounted(() => {
   position: absolute;
   bottom: 85px;
   left: 26px;
-  background: url("/src/assets/img/报警历史.png") no-repeat;
+}
+.bigscreen_lb_top {
+  width: 100%;
+  height: 34px;
+  background: url("/src/assets/img/背景-上层.png") no-repeat;
   background-size: 100% 100%;
+  display: flex;
+  align-items: center;
+}
+.bigscreen_lb_top_l {
+  display: flex;
+  align-items: center;
+}
+.bigscreen_lb_top_l img {
+  margin-left: 11px;
+}
+.bigscreen_lb_top_l span {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  font-style: normal;
+  text-transform: none;
+  background: linear-gradient(
+    to bottom,
+    #c7e5fd 42%,
+    #3582c7 100%
+  ); /* 渐变背景 */
+  background-clip: text; /* 让背景应用到文本 */
+  -webkit-text-fill-color: transparent; /* 使文本颜色透明 */
+  padding-left: 10px;
+}
+.bigscreen_lb_bottom {
+  width: 100%;
+  height: 251px;
+  margin-top: 5px;
+  background: url("/src/assets/img/背景下层.png") no-repeat;
+  background-size: 100% 100%;
+}
+.bigscreen_lb_bottom_nei {
+  width: 100%;
+  height: 100%;
 }
 
 .bigscreen_rt {
   position: absolute;
   top: 91px;
   right: 26px;
-  background: url("/src/assets/img/监控报告.png") no-repeat;
-  background-size: 100% 100%;
 }
 .bigscreen_rt_top {
   width: 100%;
   height: 34px;
+  background: url("/src/assets/img/背景-上层.png") no-repeat;
+  background-size: 100% 100%;
+  display: flex;
+  align-items: center;
+}
+.bigscreen_rt_top_l {
+  display: flex;
+  align-items: center;
+}
+.bigscreen_rt_top_l img {
+  margin-left: 11px;
+}
+.bigscreen_rt_top_l span {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  font-style: normal;
+  text-transform: none;
+  background: linear-gradient(
+    to bottom,
+    #c7e5fd 42%,
+    #3582c7 100%
+  ); /* 渐变背景 */
+  background-clip: text; /* 让背景应用到文本 */
+  -webkit-text-fill-color: transparent; /* 使文本颜色透明 */
+  padding-left: 10px;
 }
 .bigscreen_rt_bottom {
   width: 100%;
   height: 251px;
+  margin-top: 5px;
+  background: url("/src/assets/img/背景下层.png") no-repeat;
+  background-size: 100% 100%;
+}
+.bigscreen_rt_bottom_nei {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 100%;
 }
-.bigscreen_rt_bottom img {
+.bigscreen_rt_bottom_nei img {
   width: 126px;
   height: 176px;
   margin-right: 28px;
@@ -659,21 +850,52 @@ onUnmounted(() => {
   position: absolute;
   top: 395px;
   right: 26px;
-  background: url("/src/assets/img/法规政策.png") no-repeat;
-  background-size: 100% 100%;
 }
 .bigscreen_rc_top {
   width: 100%;
   height: 34px;
+  background: url("/src/assets/img/背景-上层.png") no-repeat;
+  background-size: 100% 100%;
+  display: flex;
+  align-items: center;
+}
+.bigscreen_rc_top_l {
+  display: flex;
+  align-items: center;
+}
+.bigscreen_rc_top_l img {
+  margin-left: 11px;
+}
+.bigscreen_rc_top_l span {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  font-style: normal;
+  text-transform: none;
+  background: linear-gradient(
+    to bottom,
+    #c7e5fd 42%,
+    #3582c7 100%
+  ); /* 渐变背景 */
+  background-clip: text; /* 让背景应用到文本 */
+  -webkit-text-fill-color: transparent; /* 使文本颜色透明 */
+  padding-left: 10px;
 }
 .bigscreen_rc_bottom {
   width: 100%;
   height: 251px;
+  margin-top: 5px;
+  background: url("/src/assets/img/背景下层.png") no-repeat;
+  background-size: 100% 100%;
+}
+.bigscreen_rc_bottom_nei {
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
 .bigscreen_rc_bottom_r {
   width: 381px;
   height: 207px;
@@ -702,8 +924,48 @@ onUnmounted(() => {
   position: absolute;
   bottom: 85px;
   right: 26px;
-  background: url("/src/assets/img/生产安全线.png") no-repeat;
+}
+.bigscreen_rb_top {
+  width: 100%;
+  height: 34px;
+  background: url("/src/assets/img/背景-上层.png") no-repeat;
+  display: flex;
+  align-items: center;
   background-size: 100% 100%;
+}
+.bigscreen_rb_top_l {
+  display: flex;
+  align-items: center;
+}
+.bigscreen_rb_top_l img {
+  margin-left: 11px;
+}
+.bigscreen_rb_top_l span {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  font-style: normal;
+  text-transform: none;
+  background: linear-gradient(
+    to bottom,
+    #c7e5fd 42%,
+    #3582c7 100%
+  ); /* 渐变背景 */
+  background-clip: text; /* 让背景应用到文本 */
+  -webkit-text-fill-color: transparent; /* 使文本颜色透明 */
+  padding-left: 10px;
+}
+.bigscreen_rb_bottom {
+  width: 100%;
+  height: 251px;
+  margin-top: 5px;
+  background: url("/src/assets/img/背景下层.png") no-repeat;
+  background-size: 100% 100%;
+}
+.bigscreen_rb_bottom_nei {
+  width: 100%;
+  height: 100%;
 }
 .bigscreen_ct {
   width: 840px;
@@ -716,7 +978,7 @@ onUnmounted(() => {
   justify-content: space-between;
 }
 .bigscreen_ct_l {
-  width: 353px;
+  width: 208px;
   height: 100%;
 }
 .bigscreen_ct_l span {
@@ -727,11 +989,11 @@ onUnmounted(() => {
   width: 100%;
   height: 72px;
   margin-top: 12px;
-  background: url("/src/assets/img/左边数字背景.png") no-repeat;
+  background: url("/src/assets/img/Group_1321314865.png") no-repeat;
   background-size: 100% 100%;
 }
 .bigscreen_ct_r {
-  width: 208px;
+  width: 353px;
   height: 100%;
 }
 .bigscreen_ct_r span {
@@ -742,7 +1004,7 @@ onUnmounted(() => {
   width: 100%;
   height: 72px;
   margin-top: 12px;
-  background: url("/src/assets/img/Group_1321314865.png") no-repeat;
+  background: url("/src/assets/img/左边数字背景.png") no-repeat;
   background-size: 100% 100%;
 }
 .bigscreen_cb {

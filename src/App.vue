@@ -72,50 +72,23 @@
             alt=""
           />
           <div class="bigscreen_lc_bottom_r">
-            <div class="bigscreen_lc_bottom_rnei">
-              <span>物料A库存异常</span>
+            <Vue3SeamlessScroll :list="list" class="scrool">
               <div
-                style="
-                  background: url('/src/assets/img/黄色.png') no-repeat;
-                  background-size: 100% 100%;
-                "
+                v-for="(item, index) in list"
+                :key="index"
+                class="bigscreen_lc_bottom_rnei"
               >
-                物料报警
+                <span>{{ item.name }}</span>
+                <div
+                  :style="{
+                    background: ` url(${item.img}) no-repeat`,
+                    'background-size': '100% 100%',
+                  }"
+                >
+                  {{ item.status }}
+                </div>
               </div>
-            </div>
-            <div class="bigscreen_lc_bottom_rnei">
-              <span>设备一监测数据异常</span>
-              <div
-                style="
-                  background: url('/src/assets/img/绿色.png') no-repeat;
-                  background-size: 100% 100%;
-                "
-              >
-                设备报警
-              </div>
-            </div>
-            <div class="bigscreen_lc_bottom_rnei">
-              <span>XXX产品出现质量问题</span>
-              <div
-                style="
-                  background: url('/src/assets/img/红色.png') no-repeat;
-                  background-size: 100% 100%;
-                "
-              >
-                质量问题
-              </div>
-            </div>
-            <div class="bigscreen_lc_bottom_rnei">
-              <span>XXX发生安全事故</span>
-              <div
-                style="
-                  background: url('/src/assets/img/蓝色.png') no-repeat;
-                  background-size: 100% 100%;
-                "
-              >
-                事故问题
-              </div>
-            </div>
+            </Vue3SeamlessScroll>
           </div>
         </div>
       </BorderBox1>
@@ -157,7 +130,7 @@
         <el-input
           class="inputcss"
           style="width: 148px; height: 24px; margin-right: 11px"
-          placeholder="请输入事件类型"
+          placeholder="请输入监控报告"
           :prefix-icon="Search"
         />
       </div>
@@ -181,7 +154,7 @@
         <el-input
           class="inputcss"
           style="width: 148px; height: 24px; margin-right: 11px"
-          placeholder="请输入事件类型"
+          placeholder="请输入政策法规"
           :prefix-icon="Search"
         />
       </div>
@@ -321,13 +294,16 @@
     </div>
     <div class="bigscreen_bottom">
       <div class="bigscreen_bottom_nei">
-        <div>总体态势</div>
-        <div>人员数据</div>
-        <div>设备数据</div>
-        <div>物理数据</div>
-        <div>工艺数据</div>
-        <div>环境数据</div>
-        <div>事件数据</div>
+        <div class="bigscreen_bottom_neis">
+          <div>总体态势</div>
+          <!-- <img style="margin-top: 20px;" src="/src/assets/img/切换图标.png" alt="" /> -->
+        </div>
+        <div class="bigscreen_bottom_neis">人员数据</div>
+        <div class="bigscreen_bottom_neis">设备数据</div>
+        <div class="bigscreen_bottom_neis">物理数据</div>
+        <div class="bigscreen_bottom_neis">工艺数据</div>
+        <div class="bigscreen_bottom_neis">环境数据</div>
+        <div class="bigscreen_bottom_neis">事件数据</div>
       </div>
     </div>
   </div>
@@ -339,10 +315,34 @@ import dayjs from "dayjs";
 import * as echarts from "echarts";
 import { BorderBox1 } from "@dataview/datav-vue3/es";
 import { Search } from "@element-plus/icons-vue";
+import { Vue3SeamlessScroll } from "vue3-seamless-scroll";
 
 const count1 = ref(321);
 const count2 = ref(45671);
 const radio1 = ref("zhou");
+
+const list = ref([
+  {
+    name: "物料A库存异常",
+    img: "/src/assets/img/黄色.png",
+    status: "物料报警",
+  },
+  {
+    name: "设备一监测数据异常",
+    img: "/src/assets/img/绿色.png",
+    status: "设备报警",
+  },
+  {
+    name: "XXX产品出现质量问题",
+    img: "/src/assets/img/红色.png",
+    status: "质量问题",
+  },
+  {
+    name: "XXX发生安全事故",
+    img: "/src/assets/img/蓝色.png",
+    status: "事故问题",
+  },
+]);
 
 let times: any;
 const daysInChinese = [
@@ -431,6 +431,7 @@ const bigscreenLBoption = {
   ],
 };
 
+let bigscreenRBChart: any = null;
 const bigscreenRBRef = ref();
 const bigscreenRBoption = {
   grid: {
@@ -441,165 +442,132 @@ const bigscreenRBoption = {
   legend: {
     data: ["设备报警", "环境数据", "物料数据", "工艺节点"],
     top: "10px",
-    icon: "rect",
     textStyle: {
       color: "#ffffff",
     },
   },
-  tooltip: {
-    trigger: "axis",
-  },
   xAxis: {
-    type: "category",
-    data: ["07-21", "07-22", "07-23", "07-24", "07-25", "07-26", "07-27"],
+    type: "time", // 使用时间坐标轴
+    boundaryGap: false, // 确保折线图在 x 轴上的起点对齐
+    axisLabel: {
+      formatter: function (value) {
+        const date = new Date(value);
+        const month = date.getMonth() + 1; // 月份从0开始，需加1
+        const day = date.getDate(); // 获取日期
+        return [
+          `{big|${month}}`, // 大点显示月份
+          `{small|-${day}}`, // 小点显示日期
+        ].join(""); // 合并两部分
+      },
+    },
   },
   yAxis: {
     type: "value",
     splitLine: {
-      show: true, //让网格显示
+      show: true,
       lineStyle: {
-        //网格样式
-        color: ["rgba(255, 255, 255, 0.15)"], //网格的颜色
-        width: 2, //网格的宽度
-        type: "dashed", //网格是实实线，可以修改成虚线以及其他的类型
+        color: ["rgba(255, 255, 255, 0.15)"],
+        width: 2,
+        type: "dashed",
       },
     },
   },
   series: [
     {
-      data: [820, 932, 901, 934, 1290, 1330, 120],
       name: "设备报警",
+      data: generateDynamicData(), // 动态生成数据
       type: "line",
       smooth: true,
       symbol: "none",
-      itemStyle: {
-        color: "rgba(56, 124, 255,1)", //改变折线点的颜色
-        lineStyle: {
-          color: "rgba(56, 124, 255, 1)", //改变折线颜色
-        },
-      },
-      areaStyle: {
-        color: {
-          type: "linear",
-          x: 0,
-          y: 0,
-          x2: 0,
-          y2: 1,
-          colorStops: [
-            {
-              offset: 0,
-              color: "rgba(56, 124, 255, 0.50)", // 0% 处的颜色
-            },
-            {
-              offset: 1,
-              color: "rgba(25, 104, 255, 0)", // 100% 处的颜色
-            },
-          ],
-          global: false, // 缺省为 false
-        },
-      },
+      areaStyle: createAreaStyle(
+        "RGBA(255, 169, 19, 0.5)",
+        "rgba(25, 104, 255, 0)"
+      ),
     },
     {
-      data: [520, 532, 601, 634, 990, 930, 920],
       name: "环境数据",
+      data: generateDynamicData(),
       type: "line",
       smooth: true,
       symbol: "none",
-      itemStyle: {
-        color: "rgb(62, 230, 255, 1)", //改变折线点的颜色
-        lineStyle: {
-          color: "rgb(62, 230, 255, 1)", //改变折线颜色
-        },
-      },
-      areaStyle: {
-        color: {
-          type: "linear",
-          x: 0,
-          y: 0,
-          x2: 0,
-          y2: 1,
-          colorStops: [
-            {
-              offset: 0,
-              color: "rgb(62, 230, 255, 0.5)", // 0% 处的颜色
-            },
-            {
-              offset: 1,
-              color: "rgba(62, 230, 255, 0)", // 100% 处的颜色
-            },
-          ],
-          global: false, // 缺省为 false
-        },
-      },
+      areaStyle: createAreaStyle(
+        "RGBA(225, 110, 122, 0.5)",
+        "rgba(255, 99, 132, 0)"
+      ),
     },
     {
-      data: [120, 232, 601, 234, 190, 330, 20],
       name: "物料数据",
+      data: generateDynamicData(),
       type: "line",
       smooth: true,
       symbol: "none",
-      itemStyle: {
-        color: "rgba(239, 164, 28, 1)", //改变折线点的颜色
-        lineStyle: {
-          color: "rgba(239, 164, 28, 1)", //改变折线颜色
-        },
-      },
-      areaStyle: {
-        color: {
-          type: "linear",
-          x: 0,
-          y: 0,
-          x2: 0,
-          y2: 1,
-          colorStops: [
-            {
-              offset: 0,
-              color: "rgba(239, 164, 28, 0.50)", // 0% 处的颜色
-            },
-            {
-              offset: 1,
-              color: "rgba(239, 164, 28, 0)", // 100% 处的颜色
-            },
-          ],
-          global: false, // 缺省为 false
-        },
-      },
+      areaStyle: createAreaStyle(
+        "RGBA(65, 195, 142, 0.5)",
+        "rgba(75, 192, 192, 0)"
+      ),
     },
     {
-      data: [20, 32, 61, 64, 90, 30, 20],
       name: "工艺节点",
+      data: generateDynamicData(),
       type: "line",
       smooth: true,
       symbol: "none",
-      itemStyle: {
-        color: "rgba(35, 151, 121, 1)", //改变折线点的颜色
-        lineStyle: {
-          color: "rgba(35, 151, 121, 1)", //改变折线颜色
-        },
-      },
-      areaStyle: {
-        color: {
-          type: "linear",
-          x: 0,
-          y: 0,
-          x2: 0,
-          y2: 1,
-          colorStops: [
-            {
-              offset: 0,
-              color: "rgb(35, 151, 121, 0.5)", // 0% 处的颜色
-            },
-            {
-              offset: 1,
-              color: "rgba(35, 151, 121, 0)", // 100% 处的颜色
-            },
-          ],
-          global: false, // 缺省为 false
-        },
-      },
+      areaStyle: createAreaStyle(
+        "RGBA(210, 114, 255, 0.5)",
+        "rgba(153, 102, 255, 0)"
+      ),
     },
   ],
 };
+
+// 动态生成数据的函数
+function generateDynamicData() {
+  const data = [];
+  const startDate = new Date(); // 从当前时间开始
+  for (let i = 0; i < 10; i++) {
+    // 每次生成10个数据点
+    const currentDate = new Date(startDate.getTime() + i * 3000); // 每个数据点相隔3秒
+    data.push([currentDate, Math.round(Math.random() * 1000)]);
+  }
+  return data; // 生成当前时间起始的动态数据
+}
+
+// 创建 areaStyle 的函数
+function createAreaStyle(startColor, endColor) {
+  return {
+    color: {
+      type: "linear",
+      x: 0,
+      y: 0,
+      x2: 0,
+      y2: 1,
+      colorStops: [
+        {
+          offset: 0,
+          color: startColor, // 0% 处的颜色
+        },
+        {
+          offset: 1,
+          color: endColor, // 100% 处的颜色
+        },
+      ],
+      global: false,
+    },
+  };
+}
+
+// 用于定时更新数据的函数
+function refreshData() {
+  // 更新每个 series 的数据
+  bigscreenRBoption.series.forEach((series) => {
+    series.data = generateDynamicData(); // 生成新的动态数据
+  });
+
+  // 重新渲染图表
+  if (bigscreenRBChart) {
+    bigscreenRBChart.setOption(bigscreenRBoption);
+  }
+}
 
 function shuimg(val: string) {
   const img = ref<string>("");
@@ -652,8 +620,10 @@ onMounted(() => {
   }
 
   if (bigscreenRBRef.value) {
-    const bigscreenRBChart = echarts.init(bigscreenRBRef.value);
+    bigscreenRBChart = echarts.init(bigscreenRBRef.value);
     bigscreenRBChart.setOption(bigscreenRBoption);
+
+    setInterval(refreshData, 3000);
   }
 });
 
@@ -904,6 +874,7 @@ onUnmounted(() => {
   background: url("/src/assets/img/背景下层.png") no-repeat;
   background-size: 100% 100%;
 }
+
 .bigscreen_lc_bottom_nei {
   width: 100%;
   height: 100%;
@@ -917,6 +888,12 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  overflow: hidden;
+}
+.scroll {
+  height: 195px;
+  width: 100%;
+  overflow: hidden;
 }
 .bigscreen_lc_bottom_rnei {
   width: 100%;
@@ -1321,10 +1298,11 @@ onUnmounted(() => {
   align-items: center;
   justify-content: space-between;
 }
-.bigscreen_bottom_nei div {
+.bigscreen_bottom_neis {
   width: 112px;
   height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   color: rgba(255, 255, 255, 1);

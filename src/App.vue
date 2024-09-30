@@ -57,6 +57,12 @@
           <img src="/src/assets/img/光标.png" alt="" />
           <span>事件报告</span>
         </div>
+        <el-input
+          class="inputcss"
+          style="width: 148px; height: 24px; margin-right: 11px"
+          placeholder="请输入事件类型"
+          :prefix-icon="Search"
+        />
       </div>
       <BorderBox1 class="bigscreen_lc_bottom">
         <div class="bigscreen_lc_bottom_nei">
@@ -89,7 +95,7 @@
               </div>
             </div>
             <div class="bigscreen_lc_bottom_rnei">
-              <span>月饼食品产生严重质量问题</span>
+              <span>XXX产品出现质量问题</span>
               <div
                 style="
                   background: url('/src/assets/img/红色.png') no-repeat;
@@ -100,7 +106,7 @@
               </div>
             </div>
             <div class="bigscreen_lc_bottom_rnei">
-              <span>科学大道西路段发生安全事故</span>
+              <span>XXX发生安全事故</span>
               <div
                 style="
                   background: url('/src/assets/img/蓝色.png') no-repeat;
@@ -121,6 +127,22 @@
           <img src="/src/assets/img/光标.png" alt="" />
           <span>报警历史</span>
         </div>
+        <div
+          style="
+            width: 65px;
+            height: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-right: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          "
+        >
+          <el-radio-group v-model="radio1" class="group">
+            <el-radio-button label="周" value="zhou" />
+            <el-radio-button label="日" value="ri" />
+          </el-radio-group>
+        </div>
       </div>
       <BorderBox1 class="bigscreen_lb_bottom">
         <div class="bigscreen_lb_bottom_nei" ref="bigscreenLBRef"></div>
@@ -132,6 +154,12 @@
           <img src="/src/assets/img/光标.png" alt="" />
           <span>监控报告</span>
         </div>
+        <el-input
+          class="inputcss"
+          style="width: 148px; height: 24px; margin-right: 11px"
+          placeholder="请输入事件类型"
+          :prefix-icon="Search"
+        />
       </div>
       <BorderBox1 class="bigscreen_rt_bottom">
         <div class="bigscreen_rt_bottom_nei">
@@ -150,11 +178,38 @@
           <img src="/src/assets/img/光标.png" alt="" />
           <span>政策法规</span>
         </div>
+        <el-input
+          class="inputcss"
+          style="width: 148px; height: 24px; margin-right: 11px"
+          placeholder="请输入事件类型"
+          :prefix-icon="Search"
+        />
       </div>
       <BorderBox1 class="bigscreen_rc_bottom">
         <div class="bigscreen_rc_bottom_nei">
-          <div>
-            <img src="/src/assets/img/线.png" alt="" />
+          <div
+            style="
+              width: 20px;
+              height: 207px;
+              background: url('/src/assets/img/线.png') no-repeat;
+              background-size: 2px 100%;
+              background-position: center;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+            "
+          >
+            <img src="/src/assets/img/圆形标记.png" alt="" />
+            <img
+              style="margin-top: 70px"
+              src="/src/assets/img/圆形标记.png"
+              alt=""
+            />
+            <img
+              style="margin-top: 70px"
+              src="/src/assets/img/圆形标记.png"
+              alt=""
+            />
           </div>
 
           <div class="bigscreen_rc_bottom_r">
@@ -169,7 +224,11 @@
                 "
               >
                 <span>《WHO实验室生物安全手册 (第四版)》</span>
-                <img src="/src/assets/img/查看详情.png" alt="" />
+                <img
+                  style="margin-right: 18px"
+                  src="/src/assets/img/查看详情.png"
+                  alt=""
+                />
               </div>
             </div>
             <div class="bigscreen_rc_bottom_rnei">
@@ -183,7 +242,11 @@
                 "
               >
                 <span>《WHO实验室生物安全手册 (第四版)》</span>
-                <img src="/src/assets/img/查看详情.png" alt="" />
+                <img
+                  style="margin-right: 18px"
+                  src="/src/assets/img/查看详情.png"
+                  alt=""
+                />
               </div>
             </div>
             <div class="bigscreen_rc_bottom_rnei">
@@ -197,7 +260,11 @@
                 "
               >
                 <span>《WHO实验室生物安全手册 (第四版)》</span>
-                <img src="/src/assets/img/查看详情.png" alt="" />
+                <img
+                  style="margin-right: 18px"
+                  src="/src/assets/img/查看详情.png"
+                  alt=""
+                />
               </div>
             </div>
           </div>
@@ -210,6 +277,22 @@
           <img src="/src/assets/img/光标.png" alt="" />
           <span>生产安全线</span>
         </div>
+        <div
+          style="
+            width: 65px;
+            height: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-right: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          "
+        >
+          <el-radio-group v-model="radio1" class="group">
+            <el-radio-button label="周" value="zhou" />
+            <el-radio-button label="日" value="ri" />
+          </el-radio-group>
+        </div>
       </div>
       <BorderBox1 class="bigscreen_rb_bottom">
         <div class="bigscreen_rb_bottom_nei" ref="bigscreenRBRef"></div>
@@ -218,11 +301,19 @@
     <div class="bigscreen_ct">
       <div class="bigscreen_ct_l">
         <span>今日报警数量</span>
-        <div></div>
+        <div class="bigscreen_ct_lb">
+          <div v-for="item in count1.toString().split('')">
+            <img :src="shuimg(item)" alt="" />
+          </div>
+        </div>
       </div>
       <div class="bigscreen_ct_r">
         <span>历史报警数量</span>
-        <div></div>
+        <div class="bigscreen_ct_rb">
+          <div v-for="item in count2.toString().split('')">
+            <img :src="shuimg(item)" alt="" />
+          </div>
+        </div>
       </div>
     </div>
     <div class="bigscreen_cb">
@@ -247,6 +338,11 @@ import { ref, onMounted, onUnmounted } from "vue";
 import dayjs from "dayjs";
 import * as echarts from "echarts";
 import { BorderBox1 } from "@dataview/datav-vue3/es";
+import { Search } from "@element-plus/icons-vue";
+
+const count1 = ref(321);
+const count2 = ref(45671);
+const radio1 = ref("zhou");
 
 let times: any;
 const daysInChinese = [
@@ -291,7 +387,7 @@ const bigscreenLBoption = {
 
   xAxis: {
     type: "category",
-    data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+    data: ["07-21", "07-22", "07-23", "07-24", "07-25", "07-26", "07-27"],
   },
   yAxis: {
     type: "value",
@@ -342,9 +438,20 @@ const bigscreenRBoption = {
     top: "40px",
     bottom: "40px",
   },
+  legend: {
+    data: ["设备报警", "环境数据", "物料数据", "工艺节点"],
+    top: "10px",
+    icon: "rect",
+    textStyle: {
+      color: "#ffffff",
+    },
+  },
+  tooltip: {
+    trigger: "axis",
+  },
   xAxis: {
     type: "category",
-    data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+    data: ["07-21", "07-22", "07-23", "07-24", "07-25", "07-26", "07-27"],
   },
   yAxis: {
     type: "value",
@@ -360,7 +467,8 @@ const bigscreenRBoption = {
   },
   series: [
     {
-      data: [820, 932, 901, 934, 1290, 1330, 1320],
+      data: [820, 932, 901, 934, 1290, 1330, 120],
+      name: "设备报警",
       type: "line",
       smooth: true,
       symbol: "none",
@@ -393,6 +501,7 @@ const bigscreenRBoption = {
     },
     {
       data: [520, 532, 601, 634, 990, 930, 920],
+      name: "环境数据",
       type: "line",
       smooth: true,
       symbol: "none",
@@ -423,8 +532,114 @@ const bigscreenRBoption = {
         },
       },
     },
+    {
+      data: [120, 232, 601, 234, 190, 330, 20],
+      name: "物料数据",
+      type: "line",
+      smooth: true,
+      symbol: "none",
+      itemStyle: {
+        color: "rgba(239, 164, 28, 1)", //改变折线点的颜色
+        lineStyle: {
+          color: "rgba(239, 164, 28, 1)", //改变折线颜色
+        },
+      },
+      areaStyle: {
+        color: {
+          type: "linear",
+          x: 0,
+          y: 0,
+          x2: 0,
+          y2: 1,
+          colorStops: [
+            {
+              offset: 0,
+              color: "rgba(239, 164, 28, 0.50)", // 0% 处的颜色
+            },
+            {
+              offset: 1,
+              color: "rgba(239, 164, 28, 0)", // 100% 处的颜色
+            },
+          ],
+          global: false, // 缺省为 false
+        },
+      },
+    },
+    {
+      data: [20, 32, 61, 64, 90, 30, 20],
+      name: "工艺节点",
+      type: "line",
+      smooth: true,
+      symbol: "none",
+      itemStyle: {
+        color: "rgba(35, 151, 121, 1)", //改变折线点的颜色
+        lineStyle: {
+          color: "rgba(35, 151, 121, 1)", //改变折线颜色
+        },
+      },
+      areaStyle: {
+        color: {
+          type: "linear",
+          x: 0,
+          y: 0,
+          x2: 0,
+          y2: 1,
+          colorStops: [
+            {
+              offset: 0,
+              color: "rgb(35, 151, 121, 0.5)", // 0% 处的颜色
+            },
+            {
+              offset: 1,
+              color: "rgba(35, 151, 121, 0)", // 100% 处的颜色
+            },
+          ],
+          global: false, // 缺省为 false
+        },
+      },
+    },
   ],
 };
+
+function shuimg(val: string) {
+  const img = ref<string>("");
+  switch (val) {
+    case "0":
+      img.value = "/src/assets/img/0.png";
+      break;
+    case "1":
+      img.value = "/src/assets/img/1.png";
+      break;
+    case "2":
+      img.value = "/src/assets/img/2.png";
+      break;
+    case "3":
+      img.value = "/src/assets/img/3.png";
+      break;
+    case "4":
+      img.value = "/src/assets/img/4.png";
+      break;
+    case "5":
+      img.value = "/src/assets/img/5.png";
+      break;
+    case "6":
+      img.value = "/src/assets/img/6.png";
+      break;
+    case "7":
+      img.value = "/src/assets/img/7.png";
+      break;
+    case "8":
+      img.value = "/src/assets/img/8.png";
+      break;
+    case "9":
+      img.value = "/src/assets/img/9.png";
+      break;
+    default:
+      break;
+  }
+
+  return img.value;
+}
 
 onMounted(() => {
   timer = setInterval(() => {
@@ -651,7 +866,13 @@ onUnmounted(() => {
   background: url("/src/assets/img/背景-上层.png") no-repeat;
   background-size: 100% 100%;
   display: flex;
+  justify-content: space-between;
   align-items: center;
+}
+.inputcss :deep(.el-input__wrapper) {
+  background-color: rgba(255, 255, 255, 0);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: none;
 }
 .bigscreen_lc_top_l {
   display: flex;
@@ -719,7 +940,7 @@ onUnmounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 3px;
+  margin-right: 22px;
 }
 
 .bigscreen_lb {
@@ -733,7 +954,26 @@ onUnmounted(() => {
   background: url("/src/assets/img/背景-上层.png") no-repeat;
   background-size: 100% 100%;
   display: flex;
+  justify-content: space-between;
   align-items: center;
+}
+.group
+  :deep(
+    .el-radio-button.is-active
+      .el-radio-button__original-radio:not(:disabled)
+      + .el-radio-button__inner
+  ) {
+  background: rgba(255, 255, 255, 0.8);
+  color: rgba(7, 36, 57, 1);
+  border-color: rgba(255, 255, 255, 0);
+  font-size: 12px;
+}
+.group :deep(.el-radio-button .el-radio-button__inner) {
+  padding: 2px 8px;
+  background: rgba(255, 255, 255, 0);
+  border-color: rgba(255, 255, 255, 0);
+  font-size: 12px;
+  border-radius: 2px;
 }
 .bigscreen_lb_top_l {
   display: flex;
@@ -781,6 +1021,7 @@ onUnmounted(() => {
   background: url("/src/assets/img/背景-上层.png") no-repeat;
   background-size: 100% 100%;
   display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 .bigscreen_rt_top_l {
@@ -857,6 +1098,7 @@ onUnmounted(() => {
   background: url("/src/assets/img/背景-上层.png") no-repeat;
   background-size: 100% 100%;
   display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 .bigscreen_rc_top_l {
@@ -899,7 +1141,7 @@ onUnmounted(() => {
 .bigscreen_rc_bottom_r {
   width: 381px;
   height: 207px;
-  margin-left: 18px;
+  margin-left: 15px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -907,6 +1149,9 @@ onUnmounted(() => {
 .bigscreen_rc_bottom_rnei {
   width: 100%;
   height: 57px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .bigscreen_rc_bottom_rnei div {
   width: 100%;
@@ -930,6 +1175,7 @@ onUnmounted(() => {
   height: 34px;
   background: url("/src/assets/img/背景-上层.png") no-repeat;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   background-size: 100% 100%;
 }
@@ -955,6 +1201,11 @@ onUnmounted(() => {
   background-clip: text; /* 让背景应用到文本 */
   -webkit-text-fill-color: transparent; /* 使文本颜色透明 */
   padding-left: 10px;
+}
+.bigscreen_rb_top_r {
+  display: flex;
+  align-items: center;
+  margin-right: 11px;
 }
 .bigscreen_rb_bottom {
   width: 100%;
@@ -985,12 +1236,21 @@ onUnmounted(() => {
   color: rgba(242, 242, 242, 1);
   font-size: 24px;
 }
-.bigscreen_ct_l div {
+.bigscreen_ct_lb {
   width: 100%;
   height: 72px;
   margin-top: 12px;
-  background: url("/src/assets/img/Group_1321314865.png") no-repeat;
+  display: flex;
+  justify-content: space-between;
+}
+.bigscreen_ct_lb div {
+  width: 63px;
+  height: 72px;
+  background: url("/src/assets/img/数字背景.png") no-repeat;
   background-size: 100% 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .bigscreen_ct_r {
   width: 353px;
@@ -1000,12 +1260,28 @@ onUnmounted(() => {
   color: rgba(242, 242, 242, 1);
   font-size: 24px;
 }
-.bigscreen_ct_r div {
+/* .bigscreen_ct_r div {
   width: 100%;
   height: 72px;
   margin-top: 12px;
   background: url("/src/assets/img/左边数字背景.png") no-repeat;
   background-size: 100% 100%;
+} */
+.bigscreen_ct_rb {
+  width: 100%;
+  height: 72px;
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+.bigscreen_ct_rb div {
+  width: 63px;
+  height: 72px;
+  background: url("/src/assets/img/数字背景.png") no-repeat;
+  background-size: 100% 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .bigscreen_cb {
   width: 996px;
@@ -1037,7 +1313,6 @@ onUnmounted(() => {
 .bigscreen_bottom_nei {
   width: 860px;
   height: 55px;
-
   position: absolute;
   top: 15px;
   left: 50%;

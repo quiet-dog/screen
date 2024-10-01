@@ -295,15 +295,111 @@
     <div class="bigscreen_bottom">
       <div class="bigscreen_bottom_nei">
         <div class="bigscreen_bottom_neis">
-          <div>总体态势</div>
-          <!-- <img style="margin-top: 20px;" src="/src/assets/img/切换图标.png" alt="" /> -->
+          <div
+            style="
+              width: 112px;
+              height: 56px;
+              background: url('/src/assets/img/底座文案框.png') no-repeat;
+              background-size: 100% 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            "
+          >
+            总体态势
+          </div>
+          <img style="position: absolute;bottom: 0;" src="/src/assets/img/切换图标.png" alt="" />
         </div>
-        <div class="bigscreen_bottom_neis">人员数据</div>
-        <div class="bigscreen_bottom_neis">设备数据</div>
-        <div class="bigscreen_bottom_neis">物理数据</div>
-        <div class="bigscreen_bottom_neis">工艺数据</div>
-        <div class="bigscreen_bottom_neis">环境数据</div>
-        <div class="bigscreen_bottom_neis">事件数据</div>
+        <div class="bigscreen_bottom_neis">
+          <div
+            style="
+              width: 112px;
+              height: 56px;
+              background: url('/src/assets/img/底座文案框.png') no-repeat;
+              background-size: 100% 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            "
+          >
+            人员数据
+          </div>
+        </div>
+        <div class="bigscreen_bottom_neis">
+          <div
+            style="
+              width: 112px;
+              height: 56px;
+              background: url('/src/assets/img/底座文案框.png') no-repeat;
+              background-size: 100% 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            "
+          >
+            设备数据
+          </div>
+        </div>
+        <div class="bigscreen_bottom_neis">
+          <div
+            style="
+              width: 112px;
+              height: 56px;
+              background: url('/src/assets/img/底座文案框.png') no-repeat;
+              background-size: 100% 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            "
+          >
+            物理数据
+          </div>
+        </div>
+        <div class="bigscreen_bottom_neis">
+          <div
+            style="
+              width: 112px;
+              height: 56px;
+              background: url('/src/assets/img/底座文案框.png') no-repeat;
+              background-size: 100% 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            "
+          >
+            工艺数据
+          </div>
+        </div>
+        <div class="bigscreen_bottom_neis">
+          <div
+            style="
+              width: 112px;
+              height: 56px;
+              background: url('/src/assets/img/底座文案框.png') no-repeat;
+              background-size: 100% 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            "
+          >
+            环境数据
+          </div>
+        </div>
+        <div class="bigscreen_bottom_neis">
+          <div
+            style="
+              width: 112px;
+              height: 56px;
+              background: url('/src/assets/img/底座文案框.png') no-repeat;
+              background-size: 100% 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            "
+          >
+            事件数据
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1289,7 +1385,7 @@ onUnmounted(() => {
 }
 .bigscreen_bottom_nei {
   width: 860px;
-  height: 55px;
+  height: 75px;
   position: absolute;
   top: 15px;
   left: 50%;
@@ -1303,7 +1399,7 @@ onUnmounted(() => {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   color: rgba(255, 255, 255, 1);
   font-size: 20px;

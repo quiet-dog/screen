@@ -537,7 +537,24 @@ const bigscreenRBoption = {
     bottom: "40px",
   },
   legend: {
-    data: ["设备报警", "环境数据", "物料数据", "工艺节点"],
+    data: [
+      {
+        name: "设备报警",
+        itemStyle: { color: "RGBA(255, 169, 19, 1)" },
+      },
+      {
+        name: "环境数据",
+        itemStyle: { color: "RGBA(225, 110, 122, 1)" },
+      },
+      {
+        name: "物料数据",
+        itemStyle: { color: "RGBA(65, 195, 142, 1)" },
+      },
+      {
+        name: "工艺节点",
+        itemStyle: { color: "RGBA(210, 114, 255, 1)" },
+      },
+    ],
     top: "10px",
     textStyle: {
       color: "#ffffff",
@@ -579,6 +596,9 @@ const bigscreenRBoption = {
       type: "line",
       smooth: true,
       symbol: "none",
+      lineStyle: {
+        color: "RGBA(225, 110, 122, 1)", // 线条颜色
+      },
       areaStyle: createAreaStyle(
         "RGBA(225, 110, 122, 0.5)",
         "rgba(225, 110, 122, 0)"
@@ -586,24 +606,30 @@ const bigscreenRBoption = {
     },
     {
       name: "物料数据",
-      data: [],
+      data: [200, 20, 21, 30, 200, 170, 50],
       type: "line",
       smooth: true,
       symbol: "none",
+      lineStyle: {
+        color: "RGBA(65, 195, 142, 1)", // 线条颜色
+      },
       areaStyle: createAreaStyle(
         "RGBA(65, 195, 142, 0.5)",
-        "rgba(75, 192, 192, 0)"
+        "rgba(65, 195, 142, 0)"
       ),
     },
     {
       name: "工艺节点",
-      data: [],
+      data: [200, 180, 40, 30, 50, 170, 50],
       type: "line",
       smooth: true,
       symbol: "none",
+      lineStyle: {
+        color: "RGBA(210, 114, 255, 1)", // 线条颜色
+      },
       areaStyle: createAreaStyle(
         "RGBA(210, 114, 255, 0.5)",
-        "rgba(153, 102, 255, 0)"
+        "rgba(210, 114, 255, 0)"
       ),
     },
   ],
@@ -632,7 +658,6 @@ function createAreaStyle(startColor: string, endColor: string) {
     },
   };
 }
-
 
 function shuimg(val: string) {
   const img = ref<string>("");

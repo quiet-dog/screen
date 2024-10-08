@@ -72,7 +72,13 @@
             alt=""
           />
           <div class="bigscreen_lc_bottom_r">
-            <Vue3SeamlessScroll :list="list" class="scrool">
+            <Vue3SeamlessScroll
+              :list="list"
+              :class-option="{
+                step: 5,
+              }"
+              class="scrool"
+            >
               <div
                 v-for="(item, index) in list"
                 :key="index"
@@ -184,62 +190,37 @@
               alt=""
             />
           </div>
-
           <div class="bigscreen_rc_bottom_r">
-            <div class="bigscreen_rc_bottom_rnei">
-              <span style="color: rgba(172, 223, 255, 1); font-size: 11px"
-                >2024年09月23日 22:15:53</span
-              >
+            <Vue3SeamlessScroll
+              :list="list2"
+              :class-option="{
+                step: 5,
+              }"
+              class="scrool"
+            >
               <div
-                style="
-                  background: url('/src/assets/img/红色背景框.png') no-repeat;
-                  background-size: 100% 100%;
-                "
+                v-for="(item, index) in list2"
+                :key="index"
+                class="bigscreen_rc_bottom_rnei"
               >
-                <span>《WHO实验室生物安全手册 (第四版)》</span>
-                <img
-                  style="margin-right: 18px"
-                  src="/src/assets/img/查看详情.png"
-                  alt=""
-                />
+                <span style="color: rgba(172, 223, 255, 1); font-size: 11px"
+                  >2024年09月23日 22:15:53</span
+                >
+                <div
+                  :style="{
+                    background: `url(${item.background}) no-repeat`,
+                    'background-size': '100% 100%',
+                  }"
+                >
+                  <span>{{ item.text }}</span>
+                  <img
+                    style="margin-right: 18px"
+                    src="/src/assets/img/查看详情.png"
+                    alt=""
+                  />
+                </div>
               </div>
-            </div>
-            <div class="bigscreen_rc_bottom_rnei">
-              <span style="color: rgba(172, 223, 255, 1); font-size: 11px"
-                >2024年09月23日 22:15:53</span
-              >
-              <div
-                style="
-                  background: url('/src/assets/img/绿色背景框.png') no-repeat;
-                  background-size: 100% 100%;
-                "
-              >
-                <span>《WHO实验室生物安全手册 (第四版)》</span>
-                <img
-                  style="margin-right: 18px"
-                  src="/src/assets/img/查看详情.png"
-                  alt=""
-                />
-              </div>
-            </div>
-            <div class="bigscreen_rc_bottom_rnei">
-              <span style="color: rgba(172, 223, 255, 1); font-size: 11px"
-                >2024年09月23日 22:15:53</span
-              >
-              <div
-                style="
-                  background: url('/src/assets/img/黄色背景框.png') no-repeat;
-                  background-size: 100% 100%;
-                "
-              >
-                <span>《WHO实验室生物安全手册 (第四版)》</span>
-                <img
-                  style="margin-right: 18px"
-                  src="/src/assets/img/查看详情.png"
-                  alt=""
-                />
-              </div>
-            </div>
+            </Vue3SeamlessScroll>
           </div>
         </div>
       </BorderBox1>
@@ -248,7 +229,7 @@
       <div class="bigscreen_rb_top">
         <div class="bigscreen_rb_top_l">
           <img src="/src/assets/img/光标.png" alt="" />
-          <span>生产安全线</span>
+          <span>安全生产曲线</span>
         </div>
         <div
           style="
@@ -308,7 +289,11 @@
           >
             总体态势
           </div>
-          <img style="position: absolute;bottom: 0;" src="/src/assets/img/切换图标.png" alt="" />
+          <img
+            style="position: absolute; bottom: 0"
+            src="/src/assets/img/切换图标.png"
+            alt=""
+          />
         </div>
         <div class="bigscreen_bottom_neis">
           <div
@@ -440,6 +425,21 @@ const list = ref([
   },
 ]);
 
+const list2 = ref([
+  {
+    background: "/src/assets/img/红色背景框.png",
+    text: "《WHO实验室生物安全手册 (第四版)》",
+  },
+  {
+    background: "/src/assets/img/绿色背景框.png",
+    text: "《WHO实验室生物安全手册 (第四版)》",
+  },
+  {
+    background: "/src/assets/img/黄色背景框.png",
+    text: "《WHO实验室生物安全手册 (第四版)》",
+  },
+]);
+
 let times: any;
 const daysInChinese = [
   "星期日",
@@ -529,6 +529,7 @@ const bigscreenLBoption = {
 
 let bigscreenRBChart: any = null;
 const bigscreenRBRef = ref();
+
 const bigscreenRBoption = {
   grid: {
     left: "60px",
@@ -543,19 +544,8 @@ const bigscreenRBoption = {
     },
   },
   xAxis: {
-    type: "time", // 使用时间坐标轴
-    boundaryGap: false, // 确保折线图在 x 轴上的起点对齐
-    axisLabel: {
-      formatter: function (value) {
-        const date = new Date(value);
-        const month = date.getMonth() + 1; // 月份从0开始，需加1
-        const day = date.getDate(); // 获取日期
-        return [
-          `{big|${month}}`, // 大点显示月份
-          `{small|-${day}}`, // 小点显示日期
-        ].join(""); // 合并两部分
-      },
-    },
+    type: "category",
+    data: ["07-21", "07-22", "07-23", "07-24", "07-25", "07-26", "07-27"],
   },
   yAxis: {
     type: "value",
@@ -571,29 +561,32 @@ const bigscreenRBoption = {
   series: [
     {
       name: "设备报警",
-      data: generateDynamicData(), // 动态生成数据
+      data: [50, 60, 90, 200, 120, 140, 80],
       type: "line",
       smooth: true,
       symbol: "none",
+      lineStyle: {
+        color: "RGBA(255, 169, 19, 1)", // 线条颜色
+      },
       areaStyle: createAreaStyle(
         "RGBA(255, 169, 19, 0.5)",
-        "rgba(25, 104, 255, 0)"
+        "rgba(255, 169, 19, 0)"
       ),
     },
     {
       name: "环境数据",
-      data: generateDynamicData(),
+      data: [20, 40, 60, 210, 90, 140, 50],
       type: "line",
       smooth: true,
       symbol: "none",
       areaStyle: createAreaStyle(
         "RGBA(225, 110, 122, 0.5)",
-        "rgba(255, 99, 132, 0)"
+        "rgba(225, 110, 122, 0)"
       ),
     },
     {
       name: "物料数据",
-      data: generateDynamicData(),
+      data: [],
       type: "line",
       smooth: true,
       symbol: "none",
@@ -604,7 +597,7 @@ const bigscreenRBoption = {
     },
     {
       name: "工艺节点",
-      data: generateDynamicData(),
+      data: [],
       type: "line",
       smooth: true,
       symbol: "none",
@@ -616,20 +609,8 @@ const bigscreenRBoption = {
   ],
 };
 
-// 动态生成数据的函数
-function generateDynamicData() {
-  const data = [];
-  const startDate = new Date(); // 从当前时间开始
-  for (let i = 0; i < 10; i++) {
-    // 每次生成10个数据点
-    const currentDate = new Date(startDate.getTime() + i * 3000); // 每个数据点相隔3秒
-    data.push([currentDate, Math.round(Math.random() * 1000)]);
-  }
-  return data; // 生成当前时间起始的动态数据
-}
-
 // 创建 areaStyle 的函数
-function createAreaStyle(startColor, endColor) {
+function createAreaStyle(startColor: string, endColor: string) {
   return {
     color: {
       type: "linear",
@@ -640,11 +621,11 @@ function createAreaStyle(startColor, endColor) {
       colorStops: [
         {
           offset: 0,
-          color: startColor, // 0% 处的颜色
+          color: startColor,
         },
         {
           offset: 1,
-          color: endColor, // 100% 处的颜色
+          color: endColor,
         },
       ],
       global: false,
@@ -652,18 +633,6 @@ function createAreaStyle(startColor, endColor) {
   };
 }
 
-// 用于定时更新数据的函数
-function refreshData() {
-  // 更新每个 series 的数据
-  bigscreenRBoption.series.forEach((series) => {
-    series.data = generateDynamicData(); // 生成新的动态数据
-  });
-
-  // 重新渲染图表
-  if (bigscreenRBChart) {
-    bigscreenRBChart.setOption(bigscreenRBoption);
-  }
-}
 
 function shuimg(val: string) {
   const img = ref<string>("");
@@ -718,8 +687,6 @@ onMounted(() => {
   if (bigscreenRBRef.value) {
     bigscreenRBChart = echarts.init(bigscreenRBRef.value);
     bigscreenRBChart.setOption(bigscreenRBoption);
-
-    setInterval(refreshData, 3000);
   }
 });
 
@@ -1218,6 +1185,7 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  overflow: hidden;
 }
 .bigscreen_rc_bottom_rnei {
   width: 100%;

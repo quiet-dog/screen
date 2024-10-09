@@ -25,7 +25,8 @@
           <span>报警信息</span>
         </div>
       </div>
-      <BorderBox1 class="bigscreen_lt_bottom">
+      <!-- <BorderBox1 class="bigscreen_lt_bottom"> -->
+      <div class="bigscreen_lt_bottom">
         <div class="bigscreen_lt_bottom_nei">
           <div class="bigscreen_lt_nei1">
             <span>设备报警</span>
@@ -48,7 +49,8 @@
             <span>2024-07-31 22:58:15</span>
           </div>
         </div>
-      </BorderBox1>
+      </div>
+      <!-- </BorderBox1> -->
     </div>
 
     <div class="bigscreen_lc">
@@ -64,7 +66,8 @@
           :prefix-icon="Search"
         />
       </div>
-      <BorderBox1 class="bigscreen_lc_bottom">
+      <!-- <BorderBox1 class="bigscreen_lc_bottom"> -->
+      <div class="bigscreen_lc_bottom">
         <div class="bigscreen_lc_bottom_nei">
           <img
             style="width: 163px; height: 159px"
@@ -97,7 +100,8 @@
             </Vue3SeamlessScroll>
           </div>
         </div>
-      </BorderBox1>
+      </div>
+      <!-- </BorderBox1> -->
     </div>
 
     <div class="bigscreen_lb">
@@ -123,9 +127,12 @@
           </el-radio-group>
         </div>
       </div>
-      <BorderBox1 class="bigscreen_lb_bottom">
+      <!-- <BorderBox1 class="bigscreen_lb_bottom"> -->
+      <div class="bigscreen_lb_bottom">
         <div class="bigscreen_lb_bottom_nei" ref="bigscreenLBRef"></div>
-      </BorderBox1>
+      </div>
+
+      <!-- </BorderBox1> -->
     </div>
     <div class="bigscreen_rt">
       <div class="bigscreen_rt_top">
@@ -140,7 +147,8 @@
           :prefix-icon="Search"
         />
       </div>
-      <BorderBox1 class="bigscreen_rt_bottom">
+      <!-- <BorderBox1 class="bigscreen_rt_bottom"> -->
+      <div class="bigscreen_rt_bottom">
         <div class="bigscreen_rt_bottom_nei">
           <img src="/src/assets/img/监控报告图标.png" alt="" />
           <div class="bigscreen_rt_bottom_r">
@@ -149,7 +157,8 @@
             <div><span>JK218 科学大道点位1</span></div>
           </div>
         </div>
-      </BorderBox1>
+      </div>
+      <!-- </BorderBox1> -->
     </div>
     <div class="bigscreen_rc">
       <div class="bigscreen_rc_top">
@@ -164,7 +173,8 @@
           :prefix-icon="Search"
         />
       </div>
-      <BorderBox1 class="bigscreen_rc_bottom">
+      <!-- <BorderBox1 class="bigscreen_rc_bottom"> -->
+      <div class="bigscreen_rc_bottom">
         <div class="bigscreen_rc_bottom_nei">
           <div
             style="
@@ -223,7 +233,8 @@
             </Vue3SeamlessScroll>
           </div>
         </div>
-      </BorderBox1>
+      </div>
+      <!-- </BorderBox1> -->
     </div>
     <div class="bigscreen_rb">
       <div class="bigscreen_rb_top">
@@ -248,9 +259,11 @@
           </el-radio-group>
         </div>
       </div>
-      <BorderBox1 class="bigscreen_rb_bottom">
+      <!-- <BorderBox1 class="bigscreen_rb_bottom"> -->
+      <div class="bigscreen_rb_bottom">
         <div class="bigscreen_rb_bottom_nei" ref="bigscreenRBRef"></div>
-      </BorderBox1>
+      </div>
+      <!-- </BorderBox1> -->
     </div>
     <div class="bigscreen_ct">
       <div class="bigscreen_ct_l">
@@ -765,7 +778,7 @@ onUnmounted(() => {
 .bigscreen_lt_top {
   width: 100%;
   height: 34px;
-  background: url("/src/assets/img/背景-上层.png") no-repeat;
+  background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
   background-size: 100% 100%;
   display: flex;
   align-items: center;
@@ -921,7 +934,7 @@ onUnmounted(() => {
 .bigscreen_lc_top {
   width: 100%;
   height: 34px;
-  background: url("/src/assets/img/背景-上层.png") no-repeat;
+  background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
   background-size: 100% 100%;
   display: flex;
   justify-content: space-between;
@@ -1016,7 +1029,7 @@ onUnmounted(() => {
 .bigscreen_lb_top {
   width: 100%;
   height: 34px;
-  background: url("/src/assets/img/背景-上层.png") no-repeat;
+  background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
   background-size: 100% 100%;
   display: flex;
   justify-content: space-between;
@@ -1083,7 +1096,7 @@ onUnmounted(() => {
 .bigscreen_rt_top {
   width: 100%;
   height: 34px;
-  background: url("/src/assets/img/背景-上层.png") no-repeat;
+  background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
   background-size: 100% 100%;
   display: flex;
   justify-content: space-between;
@@ -1160,7 +1173,7 @@ onUnmounted(() => {
 .bigscreen_rc_top {
   width: 100%;
   height: 34px;
-  background: url("/src/assets/img/背景-上层.png") no-repeat;
+  background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
   background-size: 100% 100%;
   display: flex;
   justify-content: space-between;
@@ -1239,7 +1252,7 @@ onUnmounted(() => {
 .bigscreen_rb_top {
   width: 100%;
   height: 34px;
-  background: url("/src/assets/img/背景-上层.png") no-repeat;
+  background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
   display: flex;
   justify-content: space-between;
   align-items: center;

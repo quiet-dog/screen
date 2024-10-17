@@ -3,118 +3,16 @@
     <div class="bigscreen_lt_top">
       <div class="bigscreen_lt_top_l">
         <img src="/src/assets/img/光标.png" alt="" />
-        <span>报警信息</span>
+        <span>数据展示</span>
       </div>
     </div>
-    <div class="bigscreen_lt_bottom">
-      <div class="bigscreen_lt_bottom_nei">
-        <div class="bigscreen_lt_nei1">
-          <span>设备报警</span>
-          <span>二级</span>
-          <span>2024-07-31 22:58:15</span>
-        </div>
-        <div class="bigscreen_lt_nei2">
-          <span>环境数据</span>
-          <span>三级</span>
-          <span>2024-07-31 22:58:15</span>
-        </div>
-        <div class="bigscreen_lt_nei3">
-          <span>物料数据</span>
-          <span>二级</span>
-          <span>2024-07-31 22:58:15</span>
-        </div>
-        <div class="bigscreen_lt_nei4">
-          <span>工艺节点</span>
-          <span>三级</span>
-          <span>2024-07-31 22:58:15</span>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="bigscreen_lc">
-    <div class="bigscreen_lc_top">
-      <div class="bigscreen_lc_top_l">
-        <img src="/src/assets/img/光标.png" alt="" />
-        <span>事件报告</span>
-      </div>
-      <el-input
-        class="inputcss"
-        style="width: 148px; height: 24px; margin-right: 11px"
-        placeholder="请输入事件类型"
-        :prefix-icon="Search"
-      />
-    </div>
-    <div class="bigscreen_lc_bottom">
-      <div class="bigscreen_lc_bottom_nei">
-        <img
-          style="width: 163px; height: 159px"
-          src="/src/assets/img/事件报告图标.png"
-          alt=""
-        />
-        <div class="bigscreen_lc_bottom_r">
-          <Vue3SeamlessScroll
-            :list="list"
-            :class-option="{
-              step: 5,
-            }"
-            class="scrool"
-          >
-            <div
-              v-for="(item, index) in list"
-              :key="index"
-              class="bigscreen_lc_bottom_rnei"
-            >
-              <span>{{ item.name }}</span>
-              <div
-                :style="{
-                  background: ` url(${item.img}) no-repeat`,
-                  'background-size': '100% 100%',
-                }"
-              >
-                {{ item.status }}
-              </div>
-            </div>
-          </Vue3SeamlessScroll>
-        </div>
-      </div>
-    </div>
+    <div class="bigscreen_lt_bottom"></div>
   </div>
   <div class="bigscreen_lb">
     <div class="bigscreen_lb_top">
       <div class="bigscreen_lb_top_l">
         <img src="/src/assets/img/光标.png" alt="" />
-        <span>报警历史</span>
-      </div>
-      <div
-        style="
-          width: 65px;
-          height: 24px;
-          border: 1px solid rgba(255, 255, 255, 0.2);
-          margin-right: 11px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        "
-      >
-        <el-radio-group v-model="radio1" class="group">
-          <el-radio-button label="周" value="zhou" />
-          <el-radio-button label="日" value="ri" />
-        </el-radio-group>
-      </div>
-    </div>
-    <!-- <BorderBox1 class="bigscreen_lb_bottom"> -->
-    <div class="bigscreen_lb_bottom">
-      <div class="bigscreen_lb_bottom_nei" ref="bigscreenLBRef"></div>
-    </div>
-
-    <!-- </BorderBox1> -->
-  </div>
-  <center></center>
-  <div class="bigscreen_rt">
-    <div class="bigscreen_rt_top">
-      <div class="bigscreen_rt_top_l">
-        <img src="/src/assets/img/光标.png" alt="" />
-        <span>监控报告</span>
+        <span>当前总功耗</span>
       </div>
       <el-input
         class="inputcss"
@@ -123,96 +21,23 @@
         :prefix-icon="Search"
       />
     </div>
-    <div class="bigscreen_rt_bottom">
-      <div class="bigscreen_rt_bottom_nei">
-        <img src="/src/assets/img/监控报告图标.png" alt="" />
-        <div class="bigscreen_rt_bottom_r">
-          <div><span>JK218 科学大道点位1</span></div>
-          <div><span>JK218 科学大道点位1</span></div>
-          <div><span>JK218 科学大道点位1</span></div>
-        </div>
-      </div>
-    </div>
+    <div class="bigscreen_lb_bottom"></div>
   </div>
-  <div class="bigscreen_rc">
-    <div class="bigscreen_rc_top">
-      <div class="bigscreen_rc_top_l">
+  <center></center>
+  <div class="bigscreen_rt">
+    <div class="bigscreen_rt_top">
+      <div class="bigscreen_rt_top_l">
         <img src="/src/assets/img/光标.png" alt="" />
-        <span>政策法规</span>
-      </div>
-      <el-input
-        class="inputcss"
-        style="width: 148px; height: 24px; margin-right: 11px"
-        placeholder="请输入政策法规"
-        :prefix-icon="Search"
-      />
-    </div>
-    <div class="bigscreen_rc_bottom">
-      <div class="bigscreen_rc_bottom_nei">
-        <div
-          style="
-            width: 20px;
-            height: 207px;
-            background: url('/src/assets/img/线.png') no-repeat;
-            background-size: 2px 100%;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-          "
-        >
-          <img src="/src/assets/img/圆形标记.png" alt="" />
-          <img
-            style="margin-top: 70px"
-            src="/src/assets/img/圆形标记.png"
-            alt=""
-          />
-          <img
-            style="margin-top: 70px"
-            src="/src/assets/img/圆形标记.png"
-            alt=""
-          />
-        </div>
-        <div class="bigscreen_rc_bottom_r">
-          <Vue3SeamlessScroll
-            :list="list2"
-            :class-option="{
-              step: 5,
-            }"
-            class="scrool"
-          >
-            <div
-              v-for="(item, index) in list2"
-              :key="index"
-              class="bigscreen_rc_bottom_rnei"
-            >
-              <span style="color: rgba(172, 223, 255, 1); font-size: 11px"
-                >2024年09月23日 22:15:53</span
-              >
-              <div
-                :style="{
-                  background: `url(${item.background}) no-repeat`,
-                  'background-size': '100% 100%',
-                }"
-              >
-                <span>{{ item.text }}</span>
-                <img
-                  style="margin-right: 18px"
-                  src="/src/assets/img/查看详情.png"
-                  alt=""
-                />
-              </div>
-            </div>
-          </Vue3SeamlessScroll>
-        </div>
+        <span>历史功耗</span>
       </div>
     </div>
+    <div class="bigscreen_rt_bottom"></div>
   </div>
   <div class="bigscreen_rb">
     <div class="bigscreen_rb_top">
       <div class="bigscreen_rb_top_l">
         <img src="/src/assets/img/光标.png" alt="" />
-        <span>安全生产曲线</span>
+        <span>趋势变化</span>
       </div>
       <div
         style="
@@ -231,9 +56,7 @@
         </el-radio-group>
       </div>
     </div>
-    <div class="bigscreen_rb_bottom">
-      <div class="bigscreen_rb_bottom_nei" ref="bigscreenRBRef"></div>
-    </div>
+    <div class="bigscreen_rb_bottom"></div>
   </div>
 </template>
 
@@ -485,13 +308,11 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .bigscreen_lt,
-.bigscreen_lc,
 .bigscreen_lb,
 .bigscreen_rt,
-.bigscreen_rc,
 .bigscreen_rb {
   width: 443px;
-  height: 292px;
+  height: 445px;
 }
 .bigscreen_lt {
   position: absolute;
@@ -530,7 +351,7 @@ onMounted(() => {
   }
   .bigscreen_lt_bottom {
     width: 100%;
-    height: 251px;
+    height: 406px;
     margin-top: 5px;
     background: url("/src/assets/img/背景下层.png") no-repeat;
     background-size: 100% 100%;
@@ -591,93 +412,6 @@ onMounted(() => {
   }
 }
 
-.bigscreen_lc {
-  position: absolute;
-  top: 395px;
-  left: 26px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  .bigscreen_lc_top {
-    width: 100%;
-    height: 34px;
-    background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
-    background-size: 100% 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    .bigscreen_lc_top_l {
-      display: flex;
-      align-items: center;
-      img {
-        margin-left: 11px;
-      }
-      span {
-        font-weight: 600;
-        font-size: 16px;
-        line-height: 19px;
-        text-align: center;
-        font-style: normal;
-        text-transform: none;
-        background: linear-gradient(
-          to bottom,
-          #c7e5fd 42%,
-          #3582c7 100%
-        ); /* 渐变背景 */
-        background-clip: text; /* 让背景应用到文本 */
-        -webkit-text-fill-color: transparent; /* 使文本颜色透明 */
-        padding-left: 10px;
-      }
-    }
-  }
-  .bigscreen_lc_bottom {
-    width: 100%;
-    height: 251px;
-    margin-top: 5px;
-    background: url("/src/assets/img/背景下层.png") no-repeat;
-    background-size: 100% 100%;
-    .bigscreen_lc_bottom_nei {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      .bigscreen_lc_bottom_r {
-        width: 265px;
-        height: 195px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        overflow: hidden;
-        .bigscreen_lc_bottom_rnei {
-          width: 100%;
-          height: 45px;
-          background: url("/src/assets/img/背景1.png") no-repeat;
-          background-size: 100% 100%;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          span {
-            color: rgba(244, 249, 255, 1);
-            font-size: 11px;
-            margin-left: 20px;
-          }
-          div {
-            width: 67px;
-            height: 31px;
-            color: rgba(244, 249, 255, 1);
-            font-size: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-right: 22px;
-          }
-        }
-      }
-    }
-  }
-}
-
 .bigscreen_lb {
   position: absolute;
   bottom: 85px;
@@ -716,7 +450,7 @@ onMounted(() => {
   }
   .bigscreen_lb_bottom {
     width: 100%;
-    height: 251px;
+    height: 406px;
     margin-top: 5px;
     background: url("/src/assets/img/背景下层.png") no-repeat;
     background-size: 100% 100%;
@@ -765,7 +499,7 @@ onMounted(() => {
   }
   .bigscreen_rt_bottom {
     width: 100%;
-    height: 251px;
+    height: 406px;
     margin-top: 5px;
     background: url("/src/assets/img/背景下层.png") no-repeat;
     background-size: 100% 100%;
@@ -798,85 +532,6 @@ onMounted(() => {
             font-size: 14px;
             color: rgba(255, 255, 255, 1);
             margin-left: 10px;
-          }
-        }
-      }
-    }
-  }
-}
-
-.bigscreen_rc {
-  position: absolute;
-  top: 395px;
-  right: 26px;
-  .bigscreen_rc_top {
-    width: 100%;
-    height: 34px;
-    background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
-    background-size: 100% 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    .bigscreen_rc_top_l {
-      display: flex;
-      align-items: center;
-      img {
-        margin-left: 11px;
-      }
-      span {
-        font-weight: 600;
-        font-size: 16px;
-        line-height: 19px;
-        text-align: center;
-        font-style: normal;
-        text-transform: none;
-        background: linear-gradient(
-          to bottom,
-          #c7e5fd 42%,
-          #3582c7 100%
-        ); /* 渐变背景 */
-        background-clip: text; /* 让背景应用到文本 */
-        -webkit-text-fill-color: transparent; /* 使文本颜色透明 */
-        padding-left: 10px;
-      }
-    }
-  }
-  .bigscreen_rc_bottom {
-    width: 100%;
-    height: 251px;
-    margin-top: 5px;
-    background: url("/src/assets/img/背景下层.png") no-repeat;
-    background-size: 100% 100%;
-    .bigscreen_rc_bottom_nei {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      .bigscreen_rc_bottom_r {
-        width: 381px;
-        height: 207px;
-        margin-left: 15px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        overflow: hidden;
-        .bigscreen_rc_bottom_rnei {
-          width: 100%;
-          height: 57px;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          div {
-            width: 100%;
-            height: 38px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            span {
-              color: rgba(255, 255, 255, 1);
-              font-size: 14px;
-            }
           }
         }
       }
@@ -927,7 +582,7 @@ onMounted(() => {
   }
   .bigscreen_rb_bottom {
     width: 100%;
-    height: 251px;
+    height: 406px;
     margin-top: 5px;
     background: url("/src/assets/img/背景下层.png") no-repeat;
     background-size: 100% 100%;

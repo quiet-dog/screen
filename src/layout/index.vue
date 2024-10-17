@@ -19,11 +19,17 @@
       </div>
     </div>
     <div class="bigscreen_center">
-      <router-view></router-view>
+      <router-view v-slot="{ Component }">
+        <component :is="Component" />
+      </router-view>
     </div>
     <div class="bigscreen_bottom">
       <div class="bigscreen_bottom_nei">
-        <div class="bigscreen_bottom_neis">
+        <div
+          class="bigscreen_bottom_neis"
+          v-for="item in btnfun"
+          @click="bigscreenBtn(item.path)"
+        >
           <div
             style="
               width: 112px;
@@ -33,105 +39,17 @@
               display: flex;
               justify-content: center;
               align-items: center;
+              cursor: pointer;
             "
           >
-            总体态势
+            {{ item.title }}
           </div>
           <img
+            v-if="$route.path === item.path"
             style="position: absolute; bottom: 0"
             src="/src/assets/img/切换图标.png"
             alt=""
           />
-        </div>
-        <div class="bigscreen_bottom_neis">
-          <div
-            style="
-              width: 112px;
-              height: 56px;
-              background: url('/src/assets/img/底座文案框.png') no-repeat;
-              background-size: 100% 100%;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-            "
-          >
-            人员数据
-          </div>
-        </div>
-        <div class="bigscreen_bottom_neis">
-          <div
-            style="
-              width: 112px;
-              height: 56px;
-              background: url('/src/assets/img/底座文案框.png') no-repeat;
-              background-size: 100% 100%;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-            "
-          >
-            设备数据
-          </div>
-        </div>
-        <div class="bigscreen_bottom_neis">
-          <div
-            style="
-              width: 112px;
-              height: 56px;
-              background: url('/src/assets/img/底座文案框.png') no-repeat;
-              background-size: 100% 100%;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-            "
-          >
-            物理数据
-          </div>
-        </div>
-        <div class="bigscreen_bottom_neis">
-          <div
-            style="
-              width: 112px;
-              height: 56px;
-              background: url('/src/assets/img/底座文案框.png') no-repeat;
-              background-size: 100% 100%;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-            "
-          >
-            工艺数据
-          </div>
-        </div>
-        <div class="bigscreen_bottom_neis">
-          <div
-            style="
-              width: 112px;
-              height: 56px;
-              background: url('/src/assets/img/底座文案框.png') no-repeat;
-              background-size: 100% 100%;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-            "
-          >
-            环境数据
-          </div>
-        </div>
-        <div class="bigscreen_bottom_neis">
-          <div
-            style="
-              width: 112px;
-              height: 56px;
-              background: url('/src/assets/img/底座文案框.png') no-repeat;
-              background-size: 100% 100%;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-            "
-          >
-            事件数据
-          </div>
         </div>
       </div>
     </div>
@@ -141,6 +59,10 @@
 <script lang="ts" setup>
 import dayjs from "dayjs";
 import { ref, onMounted, onUnmounted } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
 let times: any;
 let timer: any;
 const time = ref<string>(dayjs().format("YYYY-MM-DD HH:mm:ss"));
@@ -171,6 +93,50 @@ const setMidnightTimer = () => {
     // 在 0 点之后，设置一个每天执行的定时器
     setInterval(updateDayOfWeek, 24 * 60 * 60 * 1000); // 每 24 小时更新一次
   }, timeUntilMidnight);
+};
+
+const btnfun = [
+  {
+    title: "总体态势",
+    name: "home",
+    path: "/home",
+  },
+  {
+    title: "人员数据",
+    name: "personnel",
+    path: "/personnel",
+  },
+  {
+    title: "设备数据",
+    name: "equipment",
+    path: "/equipment",
+  },
+  {
+    title: "物料数据",
+    name: "materials",
+    path: "/materials",
+  },
+  {
+    title: "工艺数据",
+    name: "craftsmanship",
+    path: "/craftsmanship",
+  },
+  {
+    title: "环境数据",
+    name: "environment",
+    path: "/environment",
+  },
+  {
+    title: "事件管理",
+    name: "incident",
+    path: "/incident",
+  },
+];
+
+const bigscreenBtn = (val: string) => {
+  router.push({
+    path: val,
+  });
 };
 
 onMounted(() => {

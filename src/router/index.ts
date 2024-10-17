@@ -1,10 +1,11 @@
-import { createMemoryHistory, createRouter, RouteRecordRaw } from "vue-router";
+import { createWebHashHistory, createRouter, RouteRecordRaw } from "vue-router";
 import layout from "../layout/index.vue";
 
 const routes: RouteRecordRaw[] = [
   {
     path: "/",
     component: layout,
+    name: "layout",
     redirect: "/home",
     children: [
       {
@@ -15,12 +16,60 @@ const routes: RouteRecordRaw[] = [
           title: "首页",
         },
       },
+      {
+        path: "/personnel",
+        name: "personnel",
+        component: () => import("../view/personnel/index.vue"),
+        meta: {
+          title: "人员数据",
+        },
+      },
+      {
+        path: "/equipment",
+        name: "equipment",
+        component: () => import("../view/equipment/index.vue"),
+        meta: {
+          title: "设备数据",
+        },
+      },
+      {
+        path: "/materials",
+        name: "materials",
+        component: () => import("../view/materials/index.vue"),
+        meta: {
+          title: "物料数据",
+        },
+      },
+      {
+        path: "/craftsmanship",
+        name: "craftsmanship",
+        component: () => import("../view/craftsmanship/index.vue"),
+        meta: {
+          title: "工艺数据",
+        },
+      },
+      {
+        path: "/environment",
+        name: "environment",
+        component: () => import("../view/environment/index.vue"),
+        meta: {
+          title: "环境数据",
+        },
+      },
+      {
+        path: "/incident",
+        name: "incident",
+        component: () => import("../view/incident/index.vue"),
+        meta: {
+          title: "事件管理",
+        },
+      },
     ],
   },
 ];
 
 const router = createRouter({
-  history: createMemoryHistory(),
+  history: createWebHashHistory(),
   routes,
 });
 

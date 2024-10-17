@@ -9,6 +9,15 @@ export default defineConfig({
   plugins: [
     vue(),
     AutoImport({
+      include: [/\.[tj]sx?$/, /\.vue$/, /\.vue\?vue/, /\.md$/],
+      imports: [
+        "vue",
+        "vue-router",
+        {
+          axios: [["default", "axios"]],
+        },
+      ],
+      dts: "./auto-imports.d.ts",
       resolvers: [ElementPlusResolver()],
     }),
     Components({
@@ -26,4 +35,9 @@ export default defineConfig({
       dirs: ["src/components"],
     }),
   ],
+  server: {
+    port: 9200,
+    host: "0.0.0.0",
+    hmr: true,
+  },
 });

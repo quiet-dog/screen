@@ -21,7 +21,9 @@
         :prefix-icon="Search"
       />
     </div>
-    <div class="bigscreen_lb_bottom"></div>
+    <div class="bigscreen_lb_bottom">
+      <div class="bigscreen_lb_bottom_nei" ref="bigscreenLBRef"></div>
+    </div>
   </div>
   <center></center>
   <div class="bigscreen_rt">
@@ -56,7 +58,9 @@
         </el-radio-group>
       </div>
     </div>
-    <div class="bigscreen_rb_bottom"></div>
+    <div class="bigscreen_rb_bottom">
+      <div class="bigscreen_rb_bottom_nei" ref="bigscreenRBRef"></div>
+    </div>
   </div>
 </template>
 
@@ -117,7 +121,7 @@ const bigscreenLBoption = {
 
   xAxis: {
     type: "category",
-    data: ["07-21", "07-22", "07-23", "07-24", "07-25", "07-26", "07-27"],
+    data: ["01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00"],
   },
   yAxis: {
     type: "value",
@@ -137,6 +141,9 @@ const bigscreenLBoption = {
       type: "line",
       smooth: true,
       symbol: "none",
+      lineStyle: {
+        color: "rgba(61, 230, 255, 1)", // 线条颜色
+      },
       areaStyle: {
         color: {
           type: "linear",
@@ -147,11 +154,11 @@ const bigscreenLBoption = {
           colorStops: [
             {
               offset: 0,
-              color: "rgba(54, 161, 255, 0.60)", // 0% 处的颜色
+              color: "rgba(61, 230, 255, 0.60)", // 0% 处的颜色
             },
             {
               offset: 1,
-              color: "rgba(25, 104, 255, 0)", // 100% 处的颜色
+              color: "rgba(61, 230, 255, 0)", // 100% 处的颜色
             },
           ],
           global: false, // 缺省为 false
@@ -170,128 +177,55 @@ const bigscreenRBoption = {
     top: "40px",
     bottom: "40px",
   },
-  legend: {
-    data: [
-      {
-        name: "设备报警",
-        itemStyle: { color: "RGBA(255, 169, 19, 1)" },
-      },
-      {
-        name: "环境数据",
-        itemStyle: { color: "RGBA(225, 110, 122, 1)" },
-      },
-      {
-        name: "物料数据",
-        itemStyle: { color: "RGBA(65, 195, 142, 1)" },
-      },
-      {
-        name: "工艺节点",
-        itemStyle: { color: "RGBA(210, 114, 255, 1)" },
-      },
-    ],
-    top: "10px",
-    textStyle: {
-      color: "#ffffff",
-    },
-  },
+
   xAxis: {
     type: "category",
-    data: ["07-21", "07-22", "07-23", "07-24", "07-25", "07-26", "07-27"],
+    data: ["01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00"],
   },
   yAxis: {
     type: "value",
     splitLine: {
-      show: true,
+      show: true, //让网格显示
       lineStyle: {
-        color: ["rgba(255, 255, 255, 0.15)"],
-        width: 2,
-        type: "dashed",
+        //网格样式
+        color: ["rgba(255, 255, 255, 0.15)"], //网格的颜色
+        width: 2, //网格的宽度
+        type: "dashed", //网格是实实线，可以修改成虚线以及其他的类型
       },
     },
   },
   series: [
     {
-      name: "设备报警",
-      data: [50, 60, 90, 200, 120, 140, 80],
+      data: [820, 932, 901, 934, 1290, 1330, 1320],
       type: "line",
       smooth: true,
       symbol: "none",
       lineStyle: {
-        color: "RGBA(255, 169, 19, 1)", // 线条颜色
+        color: "rgba(25,100,238, 1)", // 线条颜色
       },
-      areaStyle: createAreaStyle(
-        "RGBA(255, 169, 19, 0.5)",
-        "rgba(255, 169, 19, 0)"
-      ),
-    },
-    {
-      name: "环境数据",
-      data: [20, 40, 60, 210, 90, 140, 50],
-      type: "line",
-      smooth: true,
-      symbol: "none",
-      lineStyle: {
-        color: "RGBA(225, 110, 122, 1)", // 线条颜色
+      areaStyle: {
+        color: {
+          type: "linear",
+          x: 0,
+          y: 0,
+          x2: 0,
+          y2: 1,
+          colorStops: [
+            {
+              offset: 0,
+              color: "rgba(25,100,238, 0.60)", // 0% 处的颜色
+            },
+            {
+              offset: 1,
+              color: "rgba(25,100,238, 0)", // 100% 处的颜色
+            },
+          ],
+          global: false, // 缺省为 false
+        },
       },
-      areaStyle: createAreaStyle(
-        "RGBA(225, 110, 122, 0.5)",
-        "rgba(225, 110, 122, 0)"
-      ),
-    },
-    {
-      name: "物料数据",
-      data: [200, 20, 21, 30, 200, 170, 50],
-      type: "line",
-      smooth: true,
-      symbol: "none",
-      lineStyle: {
-        color: "RGBA(65, 195, 142, 1)", // 线条颜色
-      },
-      areaStyle: createAreaStyle(
-        "RGBA(65, 195, 142, 0.5)",
-        "rgba(65, 195, 142, 0)"
-      ),
-    },
-    {
-      name: "工艺节点",
-      data: [200, 180, 40, 30, 50, 170, 50],
-      type: "line",
-      smooth: true,
-      symbol: "none",
-      lineStyle: {
-        color: "RGBA(210, 114, 255, 1)", // 线条颜色
-      },
-      areaStyle: createAreaStyle(
-        "RGBA(210, 114, 255, 0.5)",
-        "rgba(210, 114, 255, 0)"
-      ),
     },
   ],
 };
-
-// 创建 areaStyle 的函数
-function createAreaStyle(startColor: string, endColor: string) {
-  return {
-    color: {
-      type: "linear",
-      x: 0,
-      y: 0,
-      x2: 0,
-      y2: 1,
-      colorStops: [
-        {
-          offset: 0,
-          color: startColor,
-        },
-        {
-          offset: 1,
-          color: endColor,
-        },
-      ],
-      global: false,
-    },
-  };
-}
 
 onMounted(() => {
   if (bigscreenLBRef.value) {

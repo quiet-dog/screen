@@ -6,7 +6,30 @@
         <span>门禁记录</span>
       </div>
     </div>
-    <div class="bigscreen_lt_bottom"></div>
+    <div class="bigscreen_lt_bottom">
+      <div class="bigscreen_lt_bottom_nei" v-for="item in list">
+        <img src="/src/assets/img/personnel/人物图标.png" alt="" />
+        <div
+          class="bigscreen_lt_bottom_nei_r"
+          :style="{
+            background: `url(${item.img}) no-repeat`,
+            'background-size': '100% 100%',
+          }"
+        >
+          <div>
+            <span>张建坤</span>
+            <span>进入</span>
+          </div>
+          <div>
+            <span>员工编号：YG005</span>
+            <span>门禁地点：公司大门</span>
+          </div>
+          <div>
+            <span>刷卡时间：2024-07-20 20:23:06</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="bigscreen_lb">
     <div class="bigscreen_lb_top">
@@ -17,11 +40,50 @@
       <el-input
         class="inputcss"
         style="width: 148px; height: 24px; margin-right: 11px"
-        placeholder="请输入监控报告"
+        placeholder="请输入员工姓名"
         :prefix-icon="Search"
       />
     </div>
-    <div class="bigscreen_lb_bottom"></div>
+    <div class="bigscreen_lb_bottom">
+      <div class="bigscreen_lb_bottom_nei" v-for="item in list2">
+        <div class="bigscreen_lb_bottom_nei_count">
+          <div class="left">
+            <div
+              :style="{
+                width: '79px',
+                height: '27px',
+                background: `url(${item.img}) no-repeat`,
+                backgroundSize: '100% 100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                fontSize: '13px',
+                color: '#ffffff',
+              }"
+            >
+              {{ item.name }}
+            </div>
+            <div style="color: #ffffff; margin-top: 10px">{{ item.code }}</div>
+          </div>
+          <div class="right">
+            <span class="right_text">
+              <span>体温：{{ item.tiwen }}℃</span>
+              <span style="padding-left: 15px"
+                >心率：{{ item.xinlv }}/分钟</span
+              >
+            </span>
+            <span class="right_text">
+              <span>血压：{{ item.xuya1 }}mmHg</span>
+              <span style="padding-left: 15px">{{ item.xueya2 }}mmHg</span>
+            </span>
+            <span class="right_text">
+              <span>监测时间：{{ item.time }}</span>
+            </span>
+          </div>
+        </div>
+        <div class="bigscreen_lb_bottom_nei_dizuo"></div>
+      </div>
+    </div>
   </div>
   <center></center>
   <div class="bigscreen_rt">
@@ -56,7 +118,9 @@
         </el-radio-group>
       </div>
     </div>
-    <div class="bigscreen_rb_bottom"></div>
+    <div class="bigscreen_rb_bottom">
+      <div class="bigscreen_rb_bottom_nei" ref="bigscreenRBRef"></div>
+    </div>
   </div>
 </template>
 
@@ -71,39 +135,58 @@ import center from "../../components/center.vue";
 const radio1 = ref("zhou");
 const list = ref([
   {
-    name: "物料A库存异常",
-    img: "/src/assets/img/黄色.png",
-    status: "物料报警",
+    name: "张建坤",
+    code: "YG005",
+    didian: "公司大门",
+    time: "2024-07-20 20:23:06",
+    img: "/src/assets/img/personnel/红色背景.png",
   },
   {
-    name: "设备一监测数据异常",
-    img: "/src/assets/img/绿色.png",
-    status: "设备报警",
+    name: "张建坤",
+    code: "YG005",
+    didian: "公司大门",
+    time: "2024-07-20 20:23:06",
+    img: "/src/assets/img/personnel/绿色背景.png",
   },
   {
-    name: "XXX产品出现质量问题",
-    img: "/src/assets/img/红色.png",
-    status: "质量问题",
-  },
-  {
-    name: "XXX发生安全事故",
-    img: "/src/assets/img/蓝色.png",
-    status: "事故问题",
+    name: "张建坤",
+    code: "YG005",
+    didian: "公司大门",
+    time: "2024-07-20 20:23:06",
+    img: "/src/assets/img/personnel/黄色背景.png",
   },
 ]);
 
 const list2 = ref([
   {
-    background: "/src/assets/img/红色背景框.png",
-    text: "《WHO实验室生物安全手册 (第四版)》",
+    name: "张建坤",
+    code: "YG001",
+    tiwen: 36.5,
+    xinlv: 75,
+    xuya1: 100,
+    xueya2: 145,
+    time: "2024-07-20 20:23:06",
+    img: "/src/assets/img/personnel/名字绿色背景.png",
   },
   {
-    background: "/src/assets/img/绿色背景框.png",
-    text: "《WHO实验室生物安全手册 (第四版)》",
+    name: "张建坤",
+    code: "YG001",
+    tiwen: 36.5,
+    xinlv: 75,
+    xuya1: 100,
+    xueya2: 145,
+    time: "2024-07-20 20:23:06",
+    img: "/src/assets/img/personnel/名字蓝色背景.png",
   },
   {
-    background: "/src/assets/img/黄色背景框.png",
-    text: "《WHO实验室生物安全手册 (第四版)》",
+    name: "张建坤",
+    code: "YG001",
+    tiwen: 36.5,
+    xinlv: 75,
+    xuya1: 100,
+    xueya2: 145,
+    time: "2024-07-20 20:23:06",
+    img: "/src/assets/img/personnel/名字棕色背景.png",
   },
 ]);
 
@@ -165,133 +248,64 @@ let bigscreenRBChart: any = null;
 const bigscreenRBRef = ref();
 
 const bigscreenRBoption = {
+  tooltip: {
+    trigger: "axis",
+    axisPointer: {
+      type: "shadow",
+    },
+  },
+  legend: {},
   grid: {
-    left: "60px",
-    top: "40px",
-    bottom: "40px",
+    left: "3%",
+    right: "4%",
+    bottom: "3%",
+    containLabel: true,
   },
-  legend: {
-    data: [
-      {
-        name: "设备报警",
-        itemStyle: { color: "RGBA(255, 169, 19, 1)" },
-      },
-      {
-        name: "环境数据",
-        itemStyle: { color: "RGBA(225, 110, 122, 1)" },
-      },
-      {
-        name: "物料数据",
-        itemStyle: { color: "RGBA(65, 195, 142, 1)" },
-      },
-      {
-        name: "工艺节点",
-        itemStyle: { color: "RGBA(210, 114, 255, 1)" },
-      },
-    ],
-    top: "10px",
-    textStyle: {
-      color: "#ffffff",
+  xAxis: [
+    {
+      type: "category",
+      data: [
+        "1月",
+        "2月",
+        "3月",
+        "4月",
+        "5月",
+        "6月",
+        "7月",
+        "8月",
+        "9月",
+        "10月",
+        "11月",
+        "12月",
+      ],
     },
-  },
-  xAxis: {
-    type: "category",
-    data: ["07-21", "07-22", "07-23", "07-24", "07-25", "07-26", "07-27"],
-  },
-  yAxis: {
-    type: "value",
-    splitLine: {
-      show: true,
-      lineStyle: {
-        color: ["rgba(255, 255, 255, 0.15)"],
-        width: 2,
-        type: "dashed",
-      },
+  ],
+  yAxis: [
+    {
+      type: "value",
     },
-  },
+  ],
   series: [
     {
-      name: "设备报警",
-      data: [50, 60, 90, 200, 120, 140, 80],
-      type: "line",
-      smooth: true,
-      symbol: "none",
-      lineStyle: {
-        color: "RGBA(255, 169, 19, 1)", // 线条颜色
+      name: "温度异常",
+      type: "bar",
+      stack: "Ad",
+      emphasis: {
+        focus: "series",
       },
-      areaStyle: createAreaStyle(
-        "RGBA(255, 169, 19, 0.5)",
-        "rgba(255, 169, 19, 0)"
-      ),
+      data: [220, 182, 191, 234, 290, 330, 310, 320, 330, 310, 320, 310],
     },
     {
-      name: "环境数据",
-      data: [20, 40, 60, 210, 90, 140, 50],
-      type: "line",
-      smooth: true,
-      symbol: "none",
-      lineStyle: {
-        color: "RGBA(225, 110, 122, 1)", // 线条颜色
+      name: "血压异常",
+      type: "bar",
+      stack: "Ad",
+      emphasis: {
+        focus: "series",
       },
-      areaStyle: createAreaStyle(
-        "RGBA(225, 110, 122, 0.5)",
-        "rgba(225, 110, 122, 0)"
-      ),
-    },
-    {
-      name: "物料数据",
-      data: [200, 20, 21, 30, 200, 170, 50],
-      type: "line",
-      smooth: true,
-      symbol: "none",
-      lineStyle: {
-        color: "RGBA(65, 195, 142, 1)", // 线条颜色
-      },
-      areaStyle: createAreaStyle(
-        "RGBA(65, 195, 142, 0.5)",
-        "rgba(65, 195, 142, 0)"
-      ),
-    },
-    {
-      name: "工艺节点",
-      data: [200, 180, 40, 30, 50, 170, 50],
-      type: "line",
-      smooth: true,
-      symbol: "none",
-      lineStyle: {
-        color: "RGBA(210, 114, 255, 1)", // 线条颜色
-      },
-      areaStyle: createAreaStyle(
-        "RGBA(210, 114, 255, 0.5)",
-        "rgba(210, 114, 255, 0)"
-      ),
+      data: [150, 232, 201, 154, 190, 330, 410, 420, 190, 330, 410, 420],
     },
   ],
 };
-
-// 创建 areaStyle 的函数
-function createAreaStyle(startColor: string, endColor: string) {
-  return {
-    color: {
-      type: "linear",
-      x: 0,
-      y: 0,
-      x2: 0,
-      y2: 1,
-      colorStops: [
-        {
-          offset: 0,
-          color: startColor,
-        },
-        {
-          offset: 1,
-          color: endColor,
-        },
-      ],
-      global: false,
-    },
-  };
-}
 
 onMounted(() => {
   if (bigscreenLBRef.value) {
@@ -355,58 +369,67 @@ onMounted(() => {
     margin-top: 5px;
     background: url("/src/assets/img/背景下层.png") no-repeat;
     background-size: 100% 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
     .bigscreen_lt_bottom_nei {
-      width: 100%;
-      height: 100%;
+      height: 92px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-
-      .bigscreen_lt_nei1,
-      .bigscreen_lt_nei2,
-      .bigscreen_lt_nei3,
-      .bigscreen_lt_nei4 {
-        width: 93px;
-        height: 210px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        span {
+      &:nth-child(1) {
+        margin-top: 30px;
+      }
+      &:nth-child(3) {
+        margin-bottom: 30px;
+      }
+      .bigscreen_lt_bottom_nei_r {
+        width: 276px;
+        height: 82px;
+        margin-left: 15px;
+        position: relative;
+        div {
+          display: flex;
           &:nth-child(1) {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 14px;
-            font-weight: 400;
-            padding-top: 97px;
+            position: absolute;
+            top: -5px;
+            left: 15px;
+            span {
+              &:nth-child(1) {
+                color: #ffffff;
+                font-size: 13px;
+              }
+              &:nth-child(2) {
+                font-size: 10px;
+                color: #00fff9;
+                border: 1px solid #00fff9;
+                padding: 0 3px;
+                margin-left: 10px;
+              }
+            }
+          }
+          &:nth-child(2),
+          &:nth-child(3) {
+            color: #ffffff;
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between;
           }
           &:nth-child(2) {
-            color: #ffffff;
-            font-size: 20px;
-            font-weight: 500;
+            margin-top: 25px;
+            span {
+              &:nth-child(1) {
+                margin-left: 15px;
+              }
+            }
           }
           &:nth-child(3) {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 8px;
-            font-weight: 400;
+            margin-top: 5px;
+            span {
+              margin-left: 15px;
+            }
           }
         }
-      }
-      .bigscreen_lt_nei1 {
-        background: url("/src/assets/img/设备报警.png") no-repeat;
-        background-size: 100% 100%;
-        margin-left: 18px;
-      }
-      .bigscreen_lt_nei2 {
-        background: url("/src/assets/img/环境数据.png") no-repeat;
-        background-size: 100% 100%;
-      }
-      .bigscreen_lt_nei3 {
-        background: url("/src/assets/img/环境数据.png") no-repeat;
-        background-size: 100% 100%;
-      }
-      .bigscreen_lt_nei4 {
-        background: url("/src/assets/img/环境数据.png") no-repeat;
-        background-size: 100% 100%;
-        margin-right: 18px;
       }
     }
   }
@@ -454,9 +477,54 @@ onMounted(() => {
     margin-top: 5px;
     background: url("/src/assets/img/背景下层.png") no-repeat;
     background-size: 100% 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
     .bigscreen_lb_bottom_nei {
-      width: 100%;
-      height: 100%;
+      width: 394px;
+      height: 85px;
+      position: relative;
+      &:nth-child(1) {
+        margin-top: 40px;
+      }
+      &:nth-child(3) {
+        margin-bottom: 60px;
+      }
+      .bigscreen_lb_bottom_nei_count {
+        height: 100%;
+        display: flex;
+        position: absolute;
+        z-index: 100;
+        .left {
+          width: 79px;
+          height: 100%;
+          margin-left: 30px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .right {
+          margin-left: 30px;
+          height: 50px;
+          display: flex;
+          flex-direction: column;
+          .right_text {
+            span {
+              color: #ffffff;
+              font-size: 13px;
+            }
+          }
+        }
+      }
+      .bigscreen_lb_bottom_nei_dizuo {
+        position: absolute;
+        bottom: 0;
+        background: url("/src/assets/img/personnel/特质指标底座.png") no-repeat;
+        background-size: 100% 100%;
+        width: 100%;
+        height: 49px;
+      }
     }
   }
 }
@@ -586,9 +654,12 @@ onMounted(() => {
     margin-top: 5px;
     background: url("/src/assets/img/背景下层.png") no-repeat;
     background-size: 100% 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     .bigscreen_rb_bottom_nei {
-      width: 100%;
-      height: 100%;
+      width: 403px;
+      height: 366px;
     }
   }
 }

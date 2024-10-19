@@ -6,7 +6,19 @@
         <span>数据展示</span>
       </div>
     </div>
-    <div class="bigscreen_lt_bottom"></div>
+    <div class="bigscreen_lt_bottom">
+      <div class="bigscreen_lt_bottom_nei" v-for="item in list">
+        <div class="bigscreen_lt_bottom_nei_shang">
+          <img :src="item.img" alt="" />
+          <span>{{ item.type }}</span>
+          <span>{{ item.value }}</span>
+          <span>{{ item.unit }}</span>
+          <span>{{ item.equipment }}</span>
+          <span>{{ item.model }}</span>
+        </div>
+        <div class="bigscreen_lt_bottom_nei_xia"></div>
+      </div>
+    </div>
   </div>
   <div class="bigscreen_lb">
     <div class="bigscreen_lb_top">
@@ -75,24 +87,36 @@ import center from "../../components/center.vue";
 const radio1 = ref("zhou");
 const list = ref([
   {
-    name: "物料A库存异常",
-    img: "/src/assets/img/黄色.png",
-    status: "物料报警",
+    img: "/src/assets/img/environment/温度.png",
+    type: "温度",
+    value: "19.28",
+    unit: "℃",
+    equipment: "QC培养箱1",
+    model: "EMSNS-BX1-TT01",
   },
   {
-    name: "设备一监测数据异常",
-    img: "/src/assets/img/绿色.png",
-    status: "设备报警",
+    img: "/src/assets/img/environment/湿度.png",
+    type: "湿度",
+    value: "55",
+    unit: "%",
+    equipment: "QC加湿器",
+    model: "EMSNS-BX1-TT01",
   },
   {
-    name: "XXX产品出现质量问题",
-    img: "/src/assets/img/红色.png",
-    status: "质量问题",
+    img: "/src/assets/img/environment/压差.png",
+    type: "压差",
+    value: "110",
+    unit: "Pa",
+    equipment: "排风过滤器1",
+    model: "EMSNS-BX1-TT01",
   },
   {
-    name: "XXX发生安全事故",
-    img: "/src/assets/img/蓝色.png",
-    status: "事故问题",
+    img: "/src/assets/img/environment/温度.png",
+    type: "温度",
+    value: "51.7",
+    unit: "℃",
+    equipment: "QC冰箱",
+    model: "EMSNS-BX1-TT01",
   },
 ]);
 
@@ -289,58 +313,81 @@ onMounted(() => {
     margin-top: 5px;
     background: url("/src/assets/img/背景下层.png") no-repeat;
     background-size: 100% 100%;
+    display: flex;
     .bigscreen_lt_bottom_nei {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      width: 95px;
+      height: 300px;
 
-      .bigscreen_lt_nei1,
-      .bigscreen_lt_nei2,
-      .bigscreen_lt_nei3,
-      .bigscreen_lt_nei4 {
-        width: 93px;
-        height: 210px;
+      position: relative;
+      background: linear-gradient(
+        180deg,
+        rgba(10, 49, 89, 0) 0%,
+        rgba(10, 49, 89, 0.41) 13%,
+        rgba(13, 62, 102, 0.64) 24%,
+        rgba(14, 60, 109, 0.7) 50%,
+        rgba(11, 54, 97, 0.55) 79%,
+        rgba(11, 54, 97, 0.46) 86%,
+        rgba(10, 49, 89, 0) 100%
+      );
+      .bigscreen_lt_bottom_nei_shang {
+        width: 100%;
+        height: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
-        span {
-          &:nth-child(1) {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 14px;
-            font-weight: 400;
-            padding-top: 97px;
-          }
-          &:nth-child(2) {
-            color: #ffffff;
-            font-size: 20px;
-            font-weight: 500;
-          }
-          &:nth-child(3) {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 8px;
-            font-weight: 400;
-          }
+        position: absolute;
+        z-index: 2;
+      }
+      .bigscreen_lt_bottom_nei_xia {
+        width: 100%;
+        height: 115px;
+        position: absolute;
+        bottom: 0;
+        background: url("/src/assets/img/environment/底座.png") no-repeat;
+        background-position: 0 39px;
+        z-index: 1;
+      }
+      &:nth-child(1) {
+        margin-top: 37px;
+        margin-left: 15px;
+      }
+      &:nth-child(2) {
+        margin-top: 77px;
+        margin-left: 10px;
+      }
+      &:nth-child(3) {
+        margin-top: 37px;
+        margin-left: 10px;
+      }
+      &:nth-child(4) {
+        margin-top: 77px;
+        margin-left: 10px;
+      }
+      span {
+        color: #ffffff;
+        &:nth-child(2) {
+          font-size: 23px;
+          padding-top: 32px;
         }
-      }
-      .bigscreen_lt_nei1 {
-        background: url("/src/assets/img/设备报警.png") no-repeat;
-        background-size: 100% 100%;
-        margin-left: 18px;
-      }
-      .bigscreen_lt_nei2 {
-        background: url("/src/assets/img/环境数据.png") no-repeat;
-        background-size: 100% 100%;
-      }
-      .bigscreen_lt_nei3 {
-        background: url("/src/assets/img/环境数据.png") no-repeat;
-        background-size: 100% 100%;
-      }
-      .bigscreen_lt_nei4 {
-        background: url("/src/assets/img/环境数据.png") no-repeat;
-        background-size: 100% 100%;
-        margin-right: 18px;
+        &:nth-child(3) {
+          font-size: 20px;
+          padding-top: 5px;
+          color: #f96168;
+        }
+        &:nth-child(4) {
+          font-size: 20px;
+          padding-top: 5px;
+        }
+        &:nth-child(5) {
+          font-size: 15px;
+          padding-top: 20px;
+        }
+        &:nth-child(6) {
+          text-align: center;
+          font-size: 12px;
+          // padding-top: 10px;
+          padding: 5px 10px 0;
+        }
       }
     }
   }

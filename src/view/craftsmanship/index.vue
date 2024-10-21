@@ -6,7 +6,41 @@
         <span>报警信息</span>
       </div>
     </div>
-    <div class="bigscreen_lt_bottom"></div>
+    <div class="bigscreen_lt_bottom">
+      <div class="bigscreen_lt_bottom_t">
+        <img src="/src/assets/img/craftsmanship/infoIcon.png" alt="" />
+        <div>
+          <span>报警信息</span>
+          <br />
+          <span>Alarm message</span>
+        </div>
+        <div>
+          <span>一级</span>
+          <br />
+          <span>262</span>
+        </div>
+        <div>
+          <span>二级</span>
+          <br />
+          <span>68</span>
+        </div>
+        <div>
+          <span>三级</span>
+          <br />
+          <span>102</span>
+        </div>
+      </div>
+      <div class="bigscreen_lt_bottom_b">
+        <div class="bigscreen_lt_bottom_b_nei" v-for="item in list">
+          <img :src="item.img" alt="" />
+          <div>
+            <span>{{ item.status }}</span>
+            <span>{{ item.name }}</span>
+            <span>{{ item.type }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="bigscreen_lb">
     <div class="bigscreen_lb_top">
@@ -17,11 +51,30 @@
       <el-input
         class="inputcss"
         style="width: 148px; height: 24px; margin-right: 11px"
-        placeholder="请输入监控报告"
+        placeholder="请输入员工姓名"
         :prefix-icon="Search"
       />
     </div>
-    <div class="bigscreen_lb_bottom"></div>
+    <div class="bigscreen_lb_bottom">
+      <div class="bigscreen_lb_bottom_nei">
+        <div class="bigscreen_lb_bottom_nei_t">
+          <div style="width: 38px; height: 1px"></div>
+          <div class="bigscreen_lb_bottom_nei_t_r">
+            <span>节点名称</span>
+            <span>所属工艺</span>
+            <span>节点状态</span>
+          </div>
+        </div>
+        <div class="bigscreen_lb_bottom_neis" v-for="item in list3">
+          <img :src="item.img" alt="" />
+          <div class="bigscreen_lb_bottom_neis_r">
+            <span>{{ item.name }}</span>
+            <span>{{ item.type }}</span>
+            <span>{{ item.status }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <center></center>
   <div class="bigscreen_rt">
@@ -31,7 +84,53 @@
         <span>工艺要素</span>
       </div>
     </div>
-    <div class="bigscreen_rt_bottom"></div>
+    <div class="bigscreen_rt_bottom">
+      <div class="bigscreen_rt_bottom_count">
+        <img
+          src="/src/assets/img/craftsmanship/yaosuicon.png"
+          style="margin-right: 25px"
+          alt=""
+        />
+        <div style="color: #ffffff">
+          <div style="display: flex; align-items: center">
+            <span style="font-size: 20px">工艺要素</span>
+            <span style="font-size: 30px; padding-left: 25px">30</span>
+          </div>
+          <div style="margin-top: 5px">
+            <span>
+              <img src="/src/assets/img/craftsmanship/lanshang.png" alt="" />
+              <span style="padding-left: 10px">人力要素</span>
+            </span>
+            <span style="padding-left: 15px">
+              <img src="/src/assets/img/craftsmanship/lvshang.png" alt="" />
+              <span style="padding-left: 10px">原料要素</span>
+            </span>
+            <span style="padding-left: 15px">
+              <img src="/src/assets/img/craftsmanship/huangshang.png" alt="" />
+              <span style="padding-left: 10px">设备要素</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="bigscreen_rt_bottom_nei">
+        <span>隔离器工艺</span>
+        <span>人力要素</span>
+        <span>原料要素</span>
+        <span>设备要素</span>
+      </div>
+      <div class="bigscreen_rt_bottom_nei">
+        <span>隔离器工艺</span>
+        <span>人力要素</span>
+        <span>原料要素</span>
+        <span>设备要素</span>
+      </div>
+      <div class="bigscreen_rt_bottom_nei">
+        <span>隔离器工艺</span>
+        <span>人力要素</span>
+        <span>原料要素</span>
+        <span>设备要素</span>
+      </div>
+    </div>
   </div>
   <div class="bigscreen_rb">
     <div class="bigscreen_rb_top">
@@ -94,24 +193,28 @@ import center from "../../components/center.vue";
 const radio1 = ref("zhou");
 const list = ref([
   {
-    name: "物料A库存异常",
-    img: "/src/assets/img/黄色.png",
-    status: "物料报警",
+    name: "病毒加工工艺",
+    img: "/src/assets/img/craftsmanship/erjilan.png",
+    status: "二级报警",
+    type: "节点故障",
   },
   {
-    name: "设备一监测数据异常",
-    img: "/src/assets/img/绿色.png",
-    status: "设备报警",
+    name: "病毒加工工艺",
+    img: "/src/assets/img/craftsmanship/yijilv.png",
+    status: "一级报警",
+    type: "工艺异常",
   },
   {
-    name: "XXX产品出现质量问题",
-    img: "/src/assets/img/红色.png",
-    status: "质量问题",
+    name: "病毒加工工艺",
+    img: "/src/assets/img/craftsmanship/erjilan.png",
+    status: "二级报警",
+    type: "节点故障",
   },
   {
-    name: "XXX发生安全事故",
-    img: "/src/assets/img/蓝色.png",
-    status: "事故问题",
+    name: "病毒加工工艺",
+    img: "/src/assets/img/craftsmanship/sanjihong.png",
+    status: "三级报警",
+    type: "工艺异常",
   },
 ]);
 
@@ -121,6 +224,44 @@ const list2 = ref([
   { code: "编号1", time: "2024-10-11", name: "徐凯品" },
   { code: "编号1", time: "2024-10-11", name: "徐凯品" },
   { code: "编号1", time: "2024-10-11", name: "徐凯品" },
+]);
+const list3 = ref([
+  {
+    img: "/src/assets/img/craftsmanship/1.png",
+    name: "隔离器工艺",
+    type: "病毒加工工艺",
+    status: "进行中",
+  },
+  {
+    img: "/src/assets/img/craftsmanship/2.png",
+    name: "隔离器工艺",
+    type: "病毒加工工艺",
+    status: "进行中",
+  },
+  {
+    img: "/src/assets/img/craftsmanship/3.png",
+    name: "隔离器工艺",
+    type: "病毒加工工艺",
+    status: "进行中",
+  },
+  {
+    img: "/src/assets/img/craftsmanship/4.png",
+    name: "隔离器工艺",
+    type: "病毒加工工艺",
+    status: "进行中",
+  },
+  {
+    img: "/src/assets/img/craftsmanship/1.png",
+    name: "隔离器工艺",
+    type: "病毒加工工艺",
+    status: "进行中",
+  },
+  {
+    img: "/src/assets/img/craftsmanship/2.png",
+    name: "隔离器工艺",
+    type: "病毒加工工艺",
+    status: "进行中",
+  },
 ]);
 
 const bigscreenLBRef = ref();
@@ -371,58 +512,64 @@ onMounted(() => {
     margin-top: 5px;
     background: url("/src/assets/img/背景下层.png") no-repeat;
     background-size: 100% 100%;
-    .bigscreen_lt_bottom_nei {
-      width: 100%;
-      height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .bigscreen_lt_bottom_t {
+      width: 399px;
+      height: 88px;
+      background: url("/src/assets/img/craftsmanship/infoback.png") no-repeat;
+      background-size: 100% 100%;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-
-      .bigscreen_lt_nei1,
-      .bigscreen_lt_nei2,
-      .bigscreen_lt_nei3,
-      .bigscreen_lt_nei4 {
-        width: 93px;
-        height: 210px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+      div {
+        text-align: center;
         span {
-          &:nth-child(1) {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 14px;
-            font-weight: 400;
-            padding-top: 97px;
-          }
-          &:nth-child(2) {
-            color: #ffffff;
-            font-size: 20px;
-            font-weight: 500;
-          }
-          &:nth-child(3) {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 8px;
-            font-weight: 400;
+          color: #ffffff;
+        }
+        &:nth-child(2) {
+          padding: 0 20px;
+          border-right: 2px solid #1f4268;
+          margin-right: 20px;
+          span {
+            &:nth-child(1) {
+              font-size: 20px;
+            }
+            &:nth-child(3) {
+              font-size: 10px;
+            }
           }
         }
+        &:nth-child(4) {
+          margin: 0 20px;
+        }
       }
-      .bigscreen_lt_nei1 {
-        background: url("/src/assets/img/设备报警.png") no-repeat;
-        background-size: 100% 100%;
-        margin-left: 18px;
-      }
-      .bigscreen_lt_nei2 {
-        background: url("/src/assets/img/环境数据.png") no-repeat;
-        background-size: 100% 100%;
-      }
-      .bigscreen_lt_nei3 {
-        background: url("/src/assets/img/环境数据.png") no-repeat;
-        background-size: 100% 100%;
-      }
-      .bigscreen_lt_nei4 {
-        background: url("/src/assets/img/环境数据.png") no-repeat;
-        background-size: 100% 100%;
-        margin-right: 18px;
+    }
+    .bigscreen_lt_bottom_b {
+      width: 399px;
+      margin-top: 20px;
+      .bigscreen_lt_bottom_b_nei {
+        display: flex;
+        img {
+          margin-left: 10px;
+        }
+        div {
+          width: 305px;
+          height: 27px;
+          margin-top: 20px;
+          border: 1px solid red;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          color: #ffffff;
+          margin-left: 15px;
+          span {
+            &:nth-child(3) {
+              font-family: AbhayaLibreExtraBol;
+            }
+          }
+        }
       }
     }
   }
@@ -470,9 +617,47 @@ onMounted(() => {
     margin-top: 5px;
     background: url("/src/assets/img/背景下层.png") no-repeat;
     background-size: 100% 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     .bigscreen_lb_bottom_nei {
-      width: 100%;
-      height: 100%;
+      width: 377px;
+      .bigscreen_lb_bottom_nei_t {
+        display: flex;
+        color: #ffffff;
+        .bigscreen_lb_bottom_nei_t_r {
+          width: calc(100% - 38px);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          span {
+            width: 33%;
+            text-align: center;
+          }
+        }
+      }
+      .bigscreen_lb_bottom_neis {
+        width: 100%;
+        height: 40px;
+        // border: 1px solid red;
+        background: url("/src/assets/img/craftsmanship/jidianback.png")
+          no-repeat;
+        background-position: 30px 0;
+        margin-top: 15px;
+        display: flex;
+        .bigscreen_lb_bottom_neis_r {
+          width: calc(100% - 38px);
+          height: 100%;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          color: #ffffff;
+          span {
+            width: 33%;
+            text-align: center;
+          }
+        }
+      }
     }
   }
 }
@@ -519,36 +704,34 @@ onMounted(() => {
     margin-top: 5px;
     background: url("/src/assets/img/背景下层.png") no-repeat;
     background-size: 100% 100%;
-    .bigscreen_rt_bottom_nei {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .bigscreen_rt_bottom_count {
+      width: 393px;
+      height: 127px;
+      border: 1px solid red;
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 100%;
-      height: 100%;
-      img {
-        width: 126px;
-        height: 176px;
-        margin-right: 28px;
-      }
-      .bigscreen_rt_bottom_r {
-        width: 218px;
-        height: 167px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        div {
-          width: 100%;
-          height: 41px;
-          background: url("/src/assets/img/半透明背景1.png") no-repeat;
-          background-size: 100% 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          span {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 1);
-            margin-left: 10px;
-          }
+    }
+    .bigscreen_rt_bottom_nei {
+      width: 393px;
+      height: 50px;
+      background: url("/src/assets/img/craftsmanship/yaosuback.png") no-repeat;
+      background-size: 100% 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #ffffff;
+      margin-top: 20px;
+      span {
+        &:nth-child(1) {
+          padding-left: 20px;
+        }
+        &:nth-child(4) {
+          padding-right: 20px;
         }
       }
     }

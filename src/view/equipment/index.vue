@@ -17,11 +17,26 @@
       <el-input
         class="inputcss"
         style="width: 148px; height: 24px; margin-right: 11px"
-        placeholder="请输入事件类型"
+        placeholder="请输入设备名称"
         :prefix-icon="Search"
       />
     </div>
-    <div class="bigscreen_lc_bottom"></div>
+    <div class="bigscreen_lc_bottom">
+      <div class="bigscreen_lc_bottom_nei">
+        <div class="bigscreen_lc_bottom_nei_t">
+          <span>设备编号</span>
+          <span>设备名称</span>
+          <span>设备型号</span>
+          <span>安装事件</span>
+        </div>
+        <div class="bigscreen_lc_bottom_nei_b" v-for="item in list">
+          <span>{{ item.code }}</span>
+          <span>{{ item.name }}</span>
+          <span>{{ item.status }}</span>
+          <span>{{ item.time }}</span>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="bigscreen_lb">
     <div class="bigscreen_lb_top">
@@ -87,11 +102,38 @@
       <el-input
         class="inputcss"
         style="width: 148px; height: 24px; margin-right: 11px"
-        placeholder="请输入政策法规"
+        placeholder="请输入设备编号"
         :prefix-icon="Search"
       />
     </div>
-    <div class="bigscreen_rc_bottom"></div>
+    <div class="bigscreen_rc_bottom">
+      <div class="bigscreen_rc_bottom_nei">
+        <div class="bigscreen_rc_bottom_nei_t">
+          <span>设备编号</span>
+          <span>维修日期</span>
+          <span>维修人员</span>
+        </div>
+        <div
+          :class="
+            active == index
+              ? 'bigscreen_rc_bottom_nei_active'
+              : 'bigscreen_rc_bottom_nei_b'
+          "
+          v-for="(item, index) in list3"
+        >
+          <span>
+            <img
+              src="/src/assets/img/equipment/tableicon.png"
+              alt=""
+              v-if="active == index"
+            />
+            {{ item.code }}
+          </span>
+          <span>{{ item.time }}</span>
+          <span>{{ item.name }}</span>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="bigscreen_rb">
     <div class="bigscreen_rb_top">
@@ -160,24 +202,34 @@ import center from "../../components/center.vue";
 const radio1 = ref("zhou");
 const list = ref([
   {
-    name: "物料A库存异常",
-    img: "/src/assets/img/黄色.png",
-    status: "物料报警",
+    code: "001",
+    name: "隔离器",
+    time: "2024-10-09",
+    status: "型号1",
   },
   {
-    name: "设备一监测数据异常",
-    img: "/src/assets/img/绿色.png",
-    status: "设备报警",
+    code: "002",
+    name: "隔离器",
+    time: "2024-10-09",
+    status: "型号2",
   },
   {
-    name: "XXX产品出现质量问题",
-    img: "/src/assets/img/红色.png",
-    status: "质量问题",
+    code: "003",
+    name: "隔离器",
+    time: "2024-10-09",
+    status: "型号3",
   },
   {
-    name: "XXX发生安全事故",
-    img: "/src/assets/img/蓝色.png",
-    status: "事故问题",
+    code: "004",
+    name: "隔离器",
+    time: "2024-10-09",
+    status: "型号4",
+  },
+  {
+    code: "005",
+    name: "隔离器",
+    time: "2024-10-09",
+    status: "型号5",
   },
 ]);
 
@@ -187,6 +239,35 @@ const list2 = ref([
   { code: "编号1", time: "2024-10-11", name: "徐凯品" },
   { code: "编号1", time: "2024-10-11", name: "徐凯品" },
   { code: "编号1", time: "2024-10-11", name: "徐凯品" },
+]);
+
+const active = ref(1);
+const list3 = ref([
+  {
+    code: "001",
+    time: "2024-10-09",
+    name: "王凯",
+  },
+  {
+    code: "002",
+    time: "2024-10-09",
+    name: "王凯",
+  },
+  {
+    code: "003",
+    time: "2024-10-09",
+    name: "王凯",
+  },
+  {
+    code: "004",
+    time: "2024-10-09",
+    name: "王凯",
+  },
+  {
+    code: "005",
+    time: "2024-10-09",
+    name: "王凯",
+  },
 ]);
 
 const bigscreenLBRef = ref();
@@ -302,60 +383,6 @@ onMounted(() => {
     margin-top: 5px;
     background: url("/src/assets/img/背景下层.png") no-repeat;
     background-size: 100% 100%;
-    .bigscreen_lt_bottom_nei {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      .bigscreen_lt_nei1,
-      .bigscreen_lt_nei2,
-      .bigscreen_lt_nei3,
-      .bigscreen_lt_nei4 {
-        width: 93px;
-        height: 210px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        span {
-          &:nth-child(1) {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 14px;
-            font-weight: 400;
-            padding-top: 97px;
-          }
-          &:nth-child(2) {
-            color: #ffffff;
-            font-size: 20px;
-            font-weight: 500;
-          }
-          &:nth-child(3) {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 8px;
-            font-weight: 400;
-          }
-        }
-      }
-      .bigscreen_lt_nei1 {
-        background: url("/src/assets/img/设备报警.png") no-repeat;
-        background-size: 100% 100%;
-        margin-left: 18px;
-      }
-      .bigscreen_lt_nei2 {
-        background: url("/src/assets/img/环境数据.png") no-repeat;
-        background-size: 100% 100%;
-      }
-      .bigscreen_lt_nei3 {
-        background: url("/src/assets/img/环境数据.png") no-repeat;
-        background-size: 100% 100%;
-      }
-      .bigscreen_lt_nei4 {
-        background: url("/src/assets/img/环境数据.png") no-repeat;
-        background-size: 100% 100%;
-        margin-right: 18px;
-      }
-    }
   }
 }
 
@@ -404,42 +431,35 @@ onMounted(() => {
     margin-top: 5px;
     background: url("/src/assets/img/背景下层.png") no-repeat;
     background-size: 100% 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     .bigscreen_lc_bottom_nei {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      .bigscreen_lc_bottom_r {
-        width: 265px;
-        height: 195px;
+      width: 407px;
+      .bigscreen_lc_bottom_nei_t {
+        width: 100%;
+        height: 30px;
+        background: url("/src/assets/img/equipment/tabletop.png") no-repeat;
+        background-size: 100% 100%;
         display: flex;
-        flex-direction: column;
         justify-content: space-between;
-        overflow: hidden;
-        .bigscreen_lc_bottom_rnei {
-          width: 100%;
-          height: 45px;
-          background: url("/src/assets/img/背景1.png") no-repeat;
-          background-size: 100% 100%;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          span {
-            color: rgba(244, 249, 255, 1);
-            font-size: 11px;
-            margin-left: 20px;
-          }
-          div {
-            width: 67px;
-            height: 31px;
-            color: rgba(244, 249, 255, 1);
-            font-size: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-right: 22px;
-          }
+        align-items: center;
+        span {
+          width: 25%;
+          color: #9eabb7;
+          text-align: center;
+        }
+      }
+      .bigscreen_lc_bottom_nei_b {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 15px;
+        span {
+          width: 25%;
+          color: #ffffff;
+          text-align: center;
         }
       }
     }
@@ -615,35 +635,56 @@ onMounted(() => {
     margin-top: 5px;
     background: url("/src/assets/img/背景下层.png") no-repeat;
     background-size: 100% 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     .bigscreen_rc_bottom_nei {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      .bigscreen_rc_bottom_r {
-        width: 381px;
-        height: 207px;
-        margin-left: 15px;
+      width: 407px;
+      .bigscreen_rc_bottom_nei_t {
+        width: 100%;
+        height: 30px;
+        background: url("/src/assets/img/equipment/tabletop.png") no-repeat;
+        background-size: 100% 100%;
         display: flex;
-        flex-direction: column;
         justify-content: space-between;
-        overflow: hidden;
-        .bigscreen_rc_bottom_rnei {
-          width: 100%;
-          height: 57px;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          div {
-            width: 100%;
-            height: 38px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            span {
-              color: rgba(255, 255, 255, 1);
-              font-size: 14px;
+        align-items: center;
+        span {
+          width: 33%;
+          color: #9eabb7;
+          text-align: center;
+        }
+      }
+      .bigscreen_rc_bottom_nei_b {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 15px;
+        span {
+          width: 33%;
+          color: #ffffff;
+          text-align: center;
+        }
+      }
+      .bigscreen_rc_bottom_nei_active {
+        width: 100%;
+        height: 33px;
+        background: url("/src/assets/img/equipment/tableactive.png") no-repeat;
+        background-size: 100% 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 15px;
+        span {
+          width: 33%;
+          color: #58a4cb;
+          text-align: center;
+          position: relative;
+          &:nth-child(1) {
+            img {
+              position: absolute;
+              left: 25px;
+              top: 2px;
             }
           }
         }

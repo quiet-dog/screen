@@ -3,33 +3,25 @@
     <div class="bigscreen_lt_top">
       <div class="bigscreen_lt_top_l">
         <img src="/src/assets/img/光标.png" alt="" />
-        <span>监测数据</span>
+        <span>报警信息</span>
       </div>
     </div>
-    <div class="bigscreen_lt_bottom"></div>
+    <div class="bigscreen_lt_bottom">
+      <div class="bigscreen_lt_bottom_nei" v-for="item in list">
+        <img :src="item.img" alt="" />
+        <div class="bigscreen_lt_bottom_nei_r">
+          <span style="padding-left: 25px">{{ item.name }}</span>
+          <span>{{ item.time }}</span>
+          <span>{{ item.status }}</span>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="bigscreen_lc">
     <div class="bigscreen_lc_top">
       <div class="bigscreen_lc_top_l">
         <img src="/src/assets/img/光标.png" alt="" />
         <span>设备台账</span>
-      </div>
-      <el-input
-        class="inputcss"
-        style="width: 148px; height: 24px; margin-right: 11px"
-        placeholder="请输入事件类型"
-        :prefix-icon="Search"
-      />
-    </div>
-    <div class="bigscreen_lc_bottom">
-      <div class="bigscreen_lc_bottom_nei" ref="bigscreenLCRef"></div>
-    </div>
-  </div>
-  <div class="bigscreen_lb">
-    <div class="bigscreen_lb_top">
-      <div class="bigscreen_lb_top_l">
-        <img src="/src/assets/img/光标.png" alt="" />
-        <span>设备运行状态</span>
       </div>
       <div
         style="
@@ -48,19 +40,41 @@
         </el-radio-group>
       </div>
     </div>
-    <!-- <BorderBox1 class="bigscreen_lb_bottom"> -->
-    <div class="bigscreen_lb_bottom">
-      <div class="bigscreen_lb_bottom_nei" ref="bigscreenLBRef"></div>
+    <div class="bigscreen_lc_bottom">
+      <div class="bigscreen_lc_bottom_nei" ref="bigscreenLCRef"></div>
     </div>
-
-    <!-- </BorderBox1> -->
+  </div>
+  <div class="bigscreen_lb">
+    <div class="bigscreen_lb_top">
+      <div class="bigscreen_lb_top_l">
+        <img src="/src/assets/img/光标.png" alt="" />
+        <span>物料类型</span>
+      </div>
+      <div
+        style="
+          width: 65px;
+          height: 24px;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          margin-right: 11px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        "
+      >
+        <el-radio-group v-model="radio1" class="group">
+          <el-radio-button label="周" value="zhou" />
+          <el-radio-button label="日" value="ri" />
+        </el-radio-group>
+      </div>
+    </div>
+    <div class="bigscreen_lb_bottom"></div>
   </div>
   <center></center>
   <div class="bigscreen_rt">
     <div class="bigscreen_rt_top">
       <div class="bigscreen_rt_top_l">
         <img src="/src/assets/img/光标.png" alt="" />
-        <span>监控视频</span>
+        <span>用量类型分析</span>
       </div>
       <el-input
         class="inputcss"
@@ -84,7 +98,7 @@
     <div class="bigscreen_rc_top">
       <div class="bigscreen_rc_top_l">
         <img src="/src/assets/img/光标.png" alt="" />
-        <span>维修记录</span>
+        <span>用量趋势分析</span>
       </div>
       <el-input
         class="inputcss"
@@ -93,58 +107,42 @@
         :prefix-icon="Search"
       />
     </div>
-    <div class="bigscreen_rc_bottom"></div>
+    <div class="bigscreen_rc_bottom">
+      <div class="bigscreen_rc_bottom_nei" ref="bigscreenRCRef"></div>
+    </div>
   </div>
   <div class="bigscreen_rb">
     <div class="bigscreen_rb_top">
       <div class="bigscreen_rb_top_l">
         <img src="/src/assets/img/光标.png" alt="" />
-        <span>巡检记录</span>
+        <span>领用记录</span>
       </div>
     </div>
     <div class="bigscreen_rb_bottom">
-      <img src="/src/assets/img/xujian.png" alt="" />
-      <div class="bigscreen_rb_bottom_r">
-        <div class="bigscreen_rb_bottom_r_nei" v-for="(item, index) in list2">
-          <div
-            style="
-              color: #ffffff;
-              font-size: 12px;
-              display: flex;
-              align-items: center;
-            "
-          >
-            <div
-              :style="{
-                width: '13px',
-                height: '13px',
-                border: `1px solid ${index % 2 === 0 ? '#01D1E7' : '#DF9819'}`,
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                margin: '0 15px',
-              }"
-            >
-              <div
-                :style="{
-                  width: '5px',
-                  height: '5px',
-                  background: index % 2 === 0 ? '#01D1E7' : '#DF9819',
-                }"
-              ></div>
-            </div>
+      <div class="bigscreen_rb_bottom_nei">
+        <div class="bigscreen_rb_bottom_nei_t">
+          <span>设备编号</span>
+          <span>维修日期</span>
+          <span>维修人员</span>
+        </div>
+        <div
+          :class="
+            active == index
+              ? 'bigscreen_rb_bottom_nei_active'
+              : 'bigscreen_rb_bottom_nei_b'
+          "
+          v-for="(item, index) in list3"
+        >
+          <span>
+            <img
+              src="/src/assets/img/equipment/tableicon.png"
+              alt=""
+              v-if="active == index"
+            />
             {{ item.code }}
-          </div>
-          <div style="color: #ffffff; font-size: 12px">{{ item.time }}</div>
-          <div
-            :style="{
-              color: index % 2 === 0 ? '#01D1E7' : '#DF9819',
-              fontSize: '12px',
-              marginRight: '15px',
-            }"
-          >
-            {{ item.name }}
-          </div>
+          </span>
+          <span>{{ item.time }}</span>
+          <span>{{ item.name }}</span>
         </div>
       </div>
     </div>
@@ -162,37 +160,109 @@ import center from "../../components/center.vue";
 const radio1 = ref("zhou");
 const list = ref([
   {
-    name: "物料A库存异常",
-    img: "/src/assets/img/黄色.png",
-    status: "物料报警",
+    name: "物料一",
+    img: "/src/assets/img/materials/lv.png",
+    status: "库存异常",
+    time: "2024-10-11 12:04:58",
   },
   {
-    name: "设备一监测数据异常",
-    img: "/src/assets/img/绿色.png",
-    status: "设备报警",
+    name: "物料一",
+    img: "/src/assets/img/materials/lan.png",
+    status: "领用异常",
+    time: "2024-10-11 12:04:58",
   },
   {
-    name: "XXX产品出现质量问题",
-    img: "/src/assets/img/红色.png",
-    status: "质量问题",
-  },
-  {
-    name: "XXX发生安全事故",
-    img: "/src/assets/img/蓝色.png",
-    status: "事故问题",
+    name: "物料一",
+    img: "/src/assets/img/materials/hong.png",
+    status: "库存异常",
+    time: "2024-10-11 12:04:58",
   },
 ]);
 
-const list2 = ref([
-  { code: "编号1", time: "2024-10-11", name: "徐凯品" },
-  { code: "编号1", time: "2024-10-11", name: "徐凯品" },
-  { code: "编号1", time: "2024-10-11", name: "徐凯品" },
-  { code: "编号1", time: "2024-10-11", name: "徐凯品" },
-  { code: "编号1", time: "2024-10-11", name: "徐凯品" },
+const active = ref(1);
+const list3 = ref([
+  {
+    code: "001",
+    time: "2024-10-09",
+    name: "王凯",
+  },
+  {
+    code: "002",
+    time: "2024-10-09",
+    name: "王凯",
+  },
+  {
+    code: "003",
+    time: "2024-10-09",
+    name: "王凯",
+  },
+  {
+    code: "004",
+    time: "2024-10-09",
+    name: "王凯",
+  },
+  {
+    code: "005",
+    time: "2024-10-09",
+    name: "王凯",
+  },
 ]);
 
 const bigscreenLCRef = ref();
 const bigscreenLCoption = {
+  grid: {
+    left: "60px",
+    top: "40px",
+    bottom: "40px",
+  },
+
+  xAxis: {
+    type: "category",
+    data: ["07-21", "07-22", "07-23", "07-24", "07-25", "07-26", "07-27"],
+  },
+  yAxis: {
+    type: "value",
+    splitLine: {
+      show: true, //让网格显示
+      lineStyle: {
+        //网格样式
+        color: ["rgba(255, 255, 255, 0.15)"], //网格的颜色
+        width: 2, //网格的宽度
+        type: "dashed", //网格是实实线，可以修改成虚线以及其他的类型
+      },
+    },
+  },
+  series: [
+    {
+      data: [820, 932, 901, 934, 1290, 1330, 1320],
+      type: "line",
+      smooth: true,
+      symbol: "none",
+      areaStyle: {
+        color: {
+          type: "linear",
+          x: 0,
+          y: 0,
+          x2: 0,
+          y2: 1,
+          colorStops: [
+            {
+              offset: 0,
+              color: "rgba(54, 161, 255, 0.60)", // 0% 处的颜色
+            },
+            {
+              offset: 1,
+              color: "rgba(25, 104, 255, 0)", // 100% 处的颜色
+            },
+          ],
+          global: false, // 缺省为 false
+        },
+      },
+    },
+  ],
+};
+const bigscreenRCRef = ref();
+const bigscreenRCoption = {
   grid: {
     left: "60px",
     top: "40px",
@@ -250,6 +320,10 @@ onMounted(() => {
     const bigscreenLBChart = echarts.init(bigscreenLCRef.value);
     bigscreenLBChart.setOption(bigscreenLCoption);
   }
+  if (bigscreenRCRef.value) {
+    const bigscreenRCChart = echarts.init(bigscreenRCRef.value);
+    bigscreenRCChart.setOption(bigscreenRCoption);
+  }
 });
 </script>
 
@@ -304,58 +378,32 @@ onMounted(() => {
     margin-top: 5px;
     background: url("/src/assets/img/背景下层.png") no-repeat;
     background-size: 100% 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     .bigscreen_lt_bottom_nei {
       width: 100%;
-      height: 100%;
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
 
-      .bigscreen_lt_nei1,
-      .bigscreen_lt_nei2,
-      .bigscreen_lt_nei3,
-      .bigscreen_lt_nei4 {
-        width: 93px;
-        height: 210px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+      &:nth-child(2) {
+        margin: 15px 0;
+      }
+      .bigscreen_lt_bottom_nei_r {
+        margin-left: 20px;
+        background: url("/src/assets/img/back.png") no-repeat;
+        background-size: 100% 100%;
+        height: 33px;
         span {
-          &:nth-child(1) {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 14px;
-            font-weight: 400;
-            padding-top: 97px;
-          }
+          color: #ffffff;
           &:nth-child(2) {
-            color: #ffffff;
-            font-size: 20px;
-            font-weight: 500;
+            padding: 0 10px;
           }
           &:nth-child(3) {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 8px;
-            font-weight: 400;
+            font-size: 20px;
           }
         }
-      }
-      .bigscreen_lt_nei1 {
-        background: url("/src/assets/img/设备报警.png") no-repeat;
-        background-size: 100% 100%;
-        margin-left: 18px;
-      }
-      .bigscreen_lt_nei2 {
-        background: url("/src/assets/img/环境数据.png") no-repeat;
-        background-size: 100% 100%;
-      }
-      .bigscreen_lt_nei3 {
-        background: url("/src/assets/img/环境数据.png") no-repeat;
-        background-size: 100% 100%;
-      }
-      .bigscreen_lt_nei4 {
-        background: url("/src/assets/img/环境数据.png") no-repeat;
-        background-size: 100% 100%;
-        margin-right: 18px;
       }
     }
   }
@@ -667,23 +715,58 @@ onMounted(() => {
     background: url("/src/assets/img/背景下层.png") no-repeat;
     background-size: 100% 100%;
     display: flex;
-    align-items: center;
     justify-content: center;
-    .bigscreen_rb_bottom_r {
-      width: 290px;
-      height: 211px;
-      margin-left: 15px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      .bigscreen_rb_bottom_r_nei {
+    align-items: center;
+    .bigscreen_rb_bottom_nei {
+      width: 407px;
+      .bigscreen_rb_bottom_nei_t {
         width: 100%;
-        height: 35px;
-        background: rgba(4, 30, 62);
+        height: 30px;
+        background: url("/src/assets/img/equipment/tabletop.png") no-repeat;
+        background-size: 100% 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        span {
+          width: 33%;
+          color: #9eabb7;
+          text-align: center;
+        }
+      }
+      .bigscreen_rb_bottom_nei_b {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 15px;
+        span {
+          width: 33%;
+          color: #ffffff;
+          text-align: center;
+        }
+      }
+      .bigscreen_rb_bottom_nei_active {
+        width: 100%;
+        height: 33px;
+        background: url("/src/assets/img/equipment/tableactive.png") no-repeat;
+        background-size: 100% 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 15px;
+        span {
+          width: 33%;
+          color: #58a4cb;
+          text-align: center;
+          position: relative;
+          &:nth-child(1) {
+            img {
+              position: absolute;
+              left: 25px;
+              top: 2px;
+            }
+          }
+        }
       }
     }
   }

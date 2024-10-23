@@ -7,26 +7,30 @@
       </div>
     </div>
     <div class="bigscreen_lt_bottom">
-      <div class="bigscreen_lt_bottom_nei">
-        <div class="bigscreen_lt_nei1">
-          <span>设备报警</span>
-          <span>二级</span>
-          <span>2024-07-31 22:58:15</span>
-        </div>
-        <div class="bigscreen_lt_nei2">
-          <span>环境数据</span>
-          <span>三级</span>
-          <span>2024-07-31 22:58:15</span>
-        </div>
-        <div class="bigscreen_lt_nei3">
-          <span>物料数据</span>
-          <span>二级</span>
-          <span>2024-07-31 22:58:15</span>
-        </div>
-        <div class="bigscreen_lt_nei4">
-          <span>工艺节点</span>
-          <span>三级</span>
-          <span>2024-07-31 22:58:15</span>
+      <img src="/src/assets/img/xujian.png" alt="" />
+      <div class="bigscreen_lt_bottom_r">
+        <div class="bigscreen_lt_bottom_r_nei" v-for="(item, index) in list3">
+          <div
+            style="
+              color: #ffffff;
+              font-size: 12px;
+              display: flex;
+              align-items: center;
+              margin-left: 20px;
+            "
+          >
+            {{ item.code }}
+          </div>
+          <div style="color: #ffffff; font-size: 12px">{{ item.time }}</div>
+          <div
+            :style="{
+              color: index % 2 === 0 ? '#01D1E7' : '#DF9819',
+              fontSize: '12px',
+              marginRight: '15px',
+            }"
+          >
+            {{ item.name }}
+          </div>
         </div>
       </div>
     </div>
@@ -35,7 +39,7 @@
     <div class="bigscreen_lc_top">
       <div class="bigscreen_lc_top_l">
         <img src="/src/assets/img/光标.png" alt="" />
-        <span>事件报告</span>
+        <span>区域统计</span>
       </div>
       <el-input
         class="inputcss"
@@ -44,40 +48,7 @@
         :prefix-icon="Search"
       />
     </div>
-    <div class="bigscreen_lc_bottom">
-      <div class="bigscreen_lc_bottom_nei">
-        <img
-          style="width: 163px; height: 159px"
-          src="/src/assets/img/事件报告图标.png"
-          alt=""
-        />
-        <div class="bigscreen_lc_bottom_r">
-          <Vue3SeamlessScroll
-            :list="list"
-            :class-option="{
-              step: 5,
-            }"
-            class="scrool"
-          >
-            <div
-              v-for="(item, index) in list"
-              :key="index"
-              class="bigscreen_lc_bottom_rnei"
-            >
-              <span>{{ item.name }}</span>
-              <div
-                :style="{
-                  background: ` url(${item.img}) no-repeat`,
-                  'background-size': '100% 100%',
-                }"
-              >
-                {{ item.status }}
-              </div>
-            </div>
-          </Vue3SeamlessScroll>
-        </div>
-      </div>
-    </div>
+    <div class="bigscreen_lc_bottom"></div>
   </div>
   <div class="bigscreen_lb">
     <div class="bigscreen_lb_top">
@@ -114,7 +85,7 @@
     <div class="bigscreen_rt_top">
       <div class="bigscreen_rt_top_l">
         <img src="/src/assets/img/光标.png" alt="" />
-        <span>监控报告</span>
+        <span>事件报告</span>
       </div>
       <el-input
         class="inputcss"
@@ -125,11 +96,35 @@
     </div>
     <div class="bigscreen_rt_bottom">
       <div class="bigscreen_rt_bottom_nei">
-        <img src="/src/assets/img/监控报告图标.png" alt="" />
+        <img
+          style="width: 163px; height: 159px"
+          src="/src/assets/img/事件报告图标.png"
+          alt=""
+        />
         <div class="bigscreen_rt_bottom_r">
-          <div><span>JK218 科学大道点位1</span></div>
-          <div><span>JK218 科学大道点位1</span></div>
-          <div><span>JK218 科学大道点位1</span></div>
+          <Vue3SeamlessScroll
+            :list="list"
+            :class-option="{
+              step: 5,
+            }"
+            class="scrool"
+          >
+            <div
+              v-for="(item, index) in list"
+              :key="index"
+              class="bigscreen_rt_bottom_rnei"
+            >
+              <span>{{ item.name }}</span>
+              <div
+                :style="{
+                  background: ` url(${item.img}) no-repeat`,
+                  'background-size': '100% 100%',
+                }"
+              >
+                {{ item.status }}
+              </div>
+            </div>
+          </Vue3SeamlessScroll>
         </div>
       </div>
     </div>
@@ -137,6 +132,36 @@
   <div class="bigscreen_rc">
     <div class="bigscreen_rc_top">
       <div class="bigscreen_rc_top_l">
+        <img src="/src/assets/img/光标.png" alt="" />
+        <span>SOP管理</span>
+      </div>
+      <el-input
+        class="inputcss"
+        style="width: 148px; height: 24px; margin-right: 11px"
+        placeholder="请输入SOP名称"
+        :prefix-icon="Search"
+      />
+    </div>
+    <div class="bigscreen_rc_bottom">
+      <div class="bigscreen_rc_bottom_nei">
+        <div class="bigscreen_rc_bottom_nei_t">
+          <span>SOP名称</span>
+          <span>发布部门</span>
+          <span>适用范围</span>
+        </div>
+        <div class="bigscreen_rc_bottom_nei_b" v-for="(item, index) in list4">
+          <span>
+            {{ item.code }}
+          </span>
+          <span>{{ item.time }}</span>
+          <span>{{ item.name }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bigscreen_rb">
+    <div class="bigscreen_rb_top">
+      <div class="bigscreen_rb_top_l">
         <img src="/src/assets/img/光标.png" alt="" />
         <span>政策法规</span>
       </div>
@@ -147,8 +172,8 @@
         :prefix-icon="Search"
       />
     </div>
-    <div class="bigscreen_rc_bottom">
-      <div class="bigscreen_rc_bottom_nei">
+    <div class="bigscreen_rb_bottom">
+      <div class="bigscreen_rb_bottom_nei">
         <div
           style="
             width: 20px;
@@ -173,7 +198,7 @@
             alt=""
           />
         </div>
-        <div class="bigscreen_rc_bottom_r">
+        <div class="bigscreen_rb_bottom_r">
           <Vue3SeamlessScroll
             :list="list2"
             :class-option="{
@@ -184,7 +209,7 @@
             <div
               v-for="(item, index) in list2"
               :key="index"
-              class="bigscreen_rc_bottom_rnei"
+              class="bigscreen_rb_bottom_rnei"
             >
               <span style="color: rgba(172, 223, 255, 1); font-size: 11px"
                 >2024年09月23日 22:15:53</span
@@ -206,33 +231,6 @@
           </Vue3SeamlessScroll>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="bigscreen_rb">
-    <div class="bigscreen_rb_top">
-      <div class="bigscreen_rb_top_l">
-        <img src="/src/assets/img/光标.png" alt="" />
-        <span>安全生产曲线</span>
-      </div>
-      <div
-        style="
-          width: 65px;
-          height: 24px;
-          border: 1px solid rgba(255, 255, 255, 0.2);
-          margin-right: 11px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        "
-      >
-        <el-radio-group v-model="radio1" class="group">
-          <el-radio-button label="周" value="zhou" />
-          <el-radio-button label="日" value="ri" />
-        </el-radio-group>
-      </div>
-    </div>
-    <div class="bigscreen_rb_bottom">
-      <div class="bigscreen_rb_bottom_nei" ref="bigscreenRBRef"></div>
     </div>
   </div>
 </template>
@@ -281,6 +279,43 @@ const list2 = ref([
   {
     background: "/src/assets/img/黄色背景框.png",
     text: "《WHO实验室生物安全手册 (第四版)》",
+  },
+]);
+
+const list3 = ref([
+  { code: "编号1", time: "2024-10-11", name: "徐凯品" },
+  { code: "编号1", time: "2024-10-11", name: "徐凯品" },
+  { code: "编号1", time: "2024-10-11", name: "徐凯品" },
+  { code: "编号1", time: "2024-10-11", name: "徐凯品" },
+  { code: "编号1", time: "2024-10-11", name: "徐凯品" },
+]);
+
+const active = ref(1);
+const list4 = ref([
+  {
+    code: "001",
+    time: "2024-10-09",
+    name: "王凯",
+  },
+  {
+    code: "002",
+    time: "2024-10-09",
+    name: "王凯",
+  },
+  {
+    code: "003",
+    time: "2024-10-09",
+    name: "王凯",
+  },
+  {
+    code: "004",
+    time: "2024-10-09",
+    name: "王凯",
+  },
+  {
+    code: "005",
+    time: "2024-10-09",
+    name: "王凯",
   },
 ]);
 
@@ -534,58 +569,24 @@ onMounted(() => {
     margin-top: 5px;
     background: url("/src/assets/img/背景下层.png") no-repeat;
     background-size: 100% 100%;
-    .bigscreen_lt_bottom_nei {
-      width: 100%;
-      height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .bigscreen_lt_bottom_r {
+      width: 290px;
+      height: 211px;
+      margin-left: 15px;
       display: flex;
+      flex-direction: column;
       justify-content: space-between;
       align-items: center;
-
-      .bigscreen_lt_nei1,
-      .bigscreen_lt_nei2,
-      .bigscreen_lt_nei3,
-      .bigscreen_lt_nei4 {
-        width: 93px;
-        height: 210px;
+      .bigscreen_lt_bottom_r_nei {
+        width: 100%;
+        height: 35px;
+        background: rgba(4, 30, 62);
         display: flex;
-        flex-direction: column;
+        justify-content: space-between;
         align-items: center;
-        span {
-          &:nth-child(1) {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 14px;
-            font-weight: 400;
-            padding-top: 97px;
-          }
-          &:nth-child(2) {
-            color: #ffffff;
-            font-size: 20px;
-            font-weight: 500;
-          }
-          &:nth-child(3) {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 8px;
-            font-weight: 400;
-          }
-        }
-      }
-      .bigscreen_lt_nei1 {
-        background: url("/src/assets/img/设备报警.png") no-repeat;
-        background-size: 100% 100%;
-        margin-left: 18px;
-      }
-      .bigscreen_lt_nei2 {
-        background: url("/src/assets/img/环境数据.png") no-repeat;
-        background-size: 100% 100%;
-      }
-      .bigscreen_lt_nei3 {
-        background: url("/src/assets/img/环境数据.png") no-repeat;
-        background-size: 100% 100%;
-      }
-      .bigscreen_lt_nei4 {
-        background: url("/src/assets/img/环境数据.png") no-repeat;
-        background-size: 100% 100%;
-        margin-right: 18px;
       }
     }
   }
@@ -636,45 +637,6 @@ onMounted(() => {
     margin-top: 5px;
     background: url("/src/assets/img/背景下层.png") no-repeat;
     background-size: 100% 100%;
-    .bigscreen_lc_bottom_nei {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      .bigscreen_lc_bottom_r {
-        width: 265px;
-        height: 195px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        overflow: hidden;
-        .bigscreen_lc_bottom_rnei {
-          width: 100%;
-          height: 45px;
-          background: url("/src/assets/img/背景1.png") no-repeat;
-          background-size: 100% 100%;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          span {
-            color: rgba(244, 249, 255, 1);
-            font-size: 11px;
-            margin-left: 20px;
-          }
-          div {
-            width: 67px;
-            height: 31px;
-            color: rgba(244, 249, 255, 1);
-            font-size: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-right: 22px;
-          }
-        }
-      }
-    }
   }
 }
 
@@ -770,34 +732,40 @@ onMounted(() => {
     background: url("/src/assets/img/背景下层.png") no-repeat;
     background-size: 100% 100%;
     .bigscreen_rt_bottom_nei {
+      width: 100%;
+      height: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 100%;
-      height: 100%;
-      img {
-        width: 126px;
-        height: 176px;
-        margin-right: 28px;
-      }
       .bigscreen_rt_bottom_r {
-        width: 218px;
-        height: 167px;
+        width: 265px;
+        height: 195px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        div {
+        overflow: hidden;
+        .bigscreen_rt_bottom_rnei {
           width: 100%;
-          height: 41px;
-          background: url("/src/assets/img/半透明背景1.png") no-repeat;
+          height: 45px;
+          background: url("/src/assets/img/背景1.png") no-repeat;
           background-size: 100% 100%;
           display: flex;
           align-items: center;
-          justify-content: center;
+          justify-content: space-between;
           span {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 1);
-            margin-left: 10px;
+            color: rgba(244, 249, 255, 1);
+            font-size: 11px;
+            margin-left: 20px;
+          }
+          div {
+            width: 67px;
+            height: 31px;
+            color: rgba(244, 249, 255, 1);
+            font-size: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 22px;
           }
         }
       }
@@ -847,35 +815,56 @@ onMounted(() => {
     margin-top: 5px;
     background: url("/src/assets/img/背景下层.png") no-repeat;
     background-size: 100% 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     .bigscreen_rc_bottom_nei {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      .bigscreen_rc_bottom_r {
-        width: 381px;
-        height: 207px;
-        margin-left: 15px;
+      width: 407px;
+      .bigscreen_rc_bottom_nei_t {
+        width: 100%;
+        height: 30px;
+        background: url("/src/assets/img/equipment/tabletop.png") no-repeat;
+        background-size: 100% 100%;
         display: flex;
-        flex-direction: column;
         justify-content: space-between;
-        overflow: hidden;
-        .bigscreen_rc_bottom_rnei {
-          width: 100%;
-          height: 57px;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          div {
-            width: 100%;
-            height: 38px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            span {
-              color: rgba(255, 255, 255, 1);
-              font-size: 14px;
+        align-items: center;
+        span {
+          width: 33%;
+          color: #9eabb7;
+          text-align: center;
+        }
+      }
+      .bigscreen_rc_bottom_nei_b {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 15px;
+        span {
+          width: 33%;
+          color: #ffffff;
+          text-align: center;
+        }
+      }
+      .bigscreen_rc_bottom_nei_active {
+        width: 100%;
+        height: 33px;
+        background: url("/src/assets/img/equipment/tableactive.png") no-repeat;
+        background-size: 100% 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 15px;
+        span {
+          width: 33%;
+          color: #58a4cb;
+          text-align: center;
+          position: relative;
+          &:nth-child(1) {
+            img {
+              position: absolute;
+              left: 25px;
+              top: 2px;
             }
           }
         }
@@ -892,10 +881,10 @@ onMounted(() => {
     width: 100%;
     height: 34px;
     background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
+    background-size: 100% 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-size: 100% 100%;
     .bigscreen_rb_top_l {
       display: flex;
       align-items: center;
@@ -919,11 +908,6 @@ onMounted(() => {
         padding-left: 10px;
       }
     }
-    .bigscreen_rb_top_r {
-      display: flex;
-      align-items: center;
-      margin-right: 11px;
-    }
   }
   .bigscreen_rb_bottom {
     width: 100%;
@@ -934,6 +918,36 @@ onMounted(() => {
     .bigscreen_rb_bottom_nei {
       width: 100%;
       height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .bigscreen_rb_bottom_r {
+        width: 381px;
+        height: 207px;
+        margin-left: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow: hidden;
+        .bigscreen_rb_bottom_rnei {
+          width: 100%;
+          height: 57px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          div {
+            width: 100%;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            span {
+              color: rgba(255, 255, 255, 1);
+              font-size: 14px;
+            }
+          }
+        }
+      }
     }
   }
 }

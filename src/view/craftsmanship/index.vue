@@ -34,7 +34,7 @@
         <div class="bigscreen_lt_bottom_b_nei" v-for="item in list">
           <img :src="item.img" alt="" />
           <div>
-            <span>{{ item.status }}</span>
+            <span style="margin-left: 25px">{{ item.status }}</span>
             <span>{{ item.name }}</span>
             <span>{{ item.type }}</span>
           </div>
@@ -556,9 +556,11 @@ onMounted(() => {
         }
         div {
           width: 305px;
-          height: 27px;
+          height: 35px;
           margin-top: 20px;
-          border: 1px solid red;
+          // border: 1px solid red;
+          background: url("/src/assets/img/back.png") no-repeat;
+          background-size: 100% 100%;
           display: flex;
           justify-content: space-between;
           align-items: center;

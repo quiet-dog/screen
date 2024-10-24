@@ -510,7 +510,7 @@ onMounted(() => {
     width: 100%;
     height: 406px;
     margin-top: 5px;
-    background: url("/src/assets/img/背景下层.png") no-repeat;
+    background: url("/src/assets/img/bigback.png") no-repeat;
     background-size: 100% 100%;
     display: flex;
     flex-direction: column;
@@ -617,7 +617,7 @@ onMounted(() => {
     width: 100%;
     height: 406px;
     margin-top: 5px;
-    background: url("/src/assets/img/背景下层.png") no-repeat;
+    background: url("/src/assets/img/bigback.png") no-repeat;
     background-size: 100% 100%;
     display: flex;
     align-items: center;
@@ -704,7 +704,7 @@ onMounted(() => {
     width: 100%;
     height: 406px;
     margin-top: 5px;
-    background: url("/src/assets/img/背景下层.png") no-repeat;
+    background: url("/src/assets/img/bigback.png") no-repeat;
     background-size: 100% 100%;
     display: flex;
     flex-direction: column;
@@ -780,7 +780,7 @@ onMounted(() => {
     width: 100%;
     height: 406px;
     margin-top: 5px;
-    background: url("/src/assets/img/背景下层.png") no-repeat;
+    background: url("/src/assets/img/bigback.png") no-repeat;
     background-size: 100% 100%;
     display: flex;
     flex-direction: column;

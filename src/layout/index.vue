@@ -41,6 +41,9 @@
               align-items: center;
               cursor: pointer;
             "
+            :style="{
+              color: $route.path === item.path ? '#ffffff' : '#00ABFF',
+            }"
           >
             {{ item.title }}
           </div>
@@ -157,7 +160,8 @@ onUnmounted(() => {
 .bigscreen {
   width: 100vw;
   height: 100vh;
-  background-color: #041726;
+  // background-color: #002857;
+  background-color: #021322;
   position: relative;
   .bigscreen_header {
     width: 100%;

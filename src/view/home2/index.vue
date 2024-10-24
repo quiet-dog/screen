@@ -109,7 +109,7 @@
 
     <!-- </BorderBox1> -->
   </div>
-  <center></center>
+  <center2></center2>
   <div class="bigscreen_rt">
     <div class="bigscreen_rt_top">
       <div class="bigscreen_rt_top_l">
@@ -308,7 +308,7 @@ import * as echarts from "echarts";
 // import { BorderBox1 } from "@dataview/datav-vue3/es";
 import { Search } from "@element-plus/icons-vue";
 import { Vue3SeamlessScroll } from "vue3-seamless-scroll";
-import center from "../../components/center.vue";
+import center2 from "../../components/center2.vue";
 
 const radio1 = ref("zhou");
 const list = ref([
@@ -416,20 +416,20 @@ const bigscreenRBoption = {
     data: [
       {
         name: "设备报警",
-        itemStyle: { color: "RGBA(255, 169, 19, 1)" },
+        itemStyle: { color: "rgba(124, 178, 76, 1)" },
       },
       {
         name: "环境数据",
-        itemStyle: { color: "RGBA(225, 110, 122, 1)" },
+        itemStyle: { color: "rgba(104,177,166,1)" },
       },
       {
         name: "物料数据",
-        itemStyle: { color: "RGBA(65, 195, 142, 1)" },
+        itemStyle: { color: "rgba(91,146,200,1)" },
       },
-      {
-        name: "工艺节点",
-        itemStyle: { color: "RGBA(210, 114, 255, 1)" },
-      },
+      //   {
+      //     name: "工艺节点",
+      //     itemStyle: { color: "RGBA(210, 114, 255, 1)" },
+      //   },
     ],
     top: "10px",
     textStyle: {
@@ -459,11 +459,11 @@ const bigscreenRBoption = {
       smooth: true,
       symbol: "none",
       lineStyle: {
-        color: "RGBA(255, 169, 19, 1)", // 线条颜色
+        color: "rgba(124, 178, 76, 1)", // 线条颜色
       },
       areaStyle: createAreaStyle(
-        "RGBA(255, 169, 19, 0.5)",
-        "rgba(255, 169, 19, 0)"
+        "rgba(124, 178, 76, 0.5)",
+        "rgba(124, 178, 76, 0)"
       ),
     },
     {
@@ -473,11 +473,11 @@ const bigscreenRBoption = {
       smooth: true,
       symbol: "none",
       lineStyle: {
-        color: "RGBA(225, 110, 122, 1)", // 线条颜色
+        color: "rgba(104,177,166,1)", // 线条颜色
       },
       areaStyle: createAreaStyle(
-        "RGBA(225, 110, 122, 0.5)",
-        "rgba(225, 110, 122, 0)"
+        "rgba(104,177,166,0.5)",
+        "rgba(104,177,166,0)"
       ),
     },
     {
@@ -487,33 +487,25 @@ const bigscreenRBoption = {
       smooth: true,
       symbol: "none",
       lineStyle: {
-        color: "RGBA(65, 195, 142, 1)", // 线条颜色
+        color: "rgba(91,146,200,1)", // 线条颜色
       },
-      areaStyle: createAreaStyle(
-        "RGBA(65, 195, 142, 0.5)",
-        "rgba(65, 195, 142, 0)"
-      ),
+      areaStyle: createAreaStyle("rgba(91,146,200,0.5)", "rgba(91,146,200,0)"),
     },
-    {
-      name: "工艺节点",
-      data: [200, 180, 40, 30, 50, 170, 50],
-      type: "line",
-      smooth: true,
-      symbol: "none",
-      lineStyle: {
-        color: "RGBA(210, 114, 255, 1)", // 线条颜色
-      },
-      areaStyle: createAreaStyle(
-        "RGBA(210, 114, 255, 0.5)",
-        "rgba(210, 114, 255, 0)"
-      ),
-    },
+    // {
+    //   name: "工艺节点",
+    //   data: [200, 180, 40, 30, 50, 170, 50],
+    //   type: "line",
+    //   smooth: true,
+    //   symbol: "none",
+    //   lineStyle: {
+    //     color: "RGBA(210, 114, 255, 1)", // 线条颜色
+    //   },
+    //   areaStyle: createAreaStyle(
+    //     "RGBA(210, 114, 255, 0.5)",
+    //     "rgba(210, 114, 255, 0)"
+    //   ),
+    // },
   ],
-};
-
-const nei4Status = ref(false);
-const nei4Click = () => {
-  nei4Status.value = !nei4Status.value;
 };
 
 // 创建 areaStyle 的函数
@@ -539,6 +531,10 @@ function createAreaStyle(startColor: string, endColor: string) {
     },
   };
 }
+const nei4Status = ref(false);
+const nei4Click = () => {
+  nei4Status.value = !nei4Status.value;
+};
 
 onMounted(() => {
   if (bigscreenLBRef.value) {
@@ -570,7 +566,7 @@ onMounted(() => {
   .bigscreen_lt_top {
     width: 100%;
     height: 34px;
-    background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
+    background: url("/src/assets/img/shen1.png") no-repeat;
     background-size: 100% 100%;
     display: flex;
     align-items: center;
@@ -602,7 +598,7 @@ onMounted(() => {
     width: 100%;
     height: 251px;
     margin-top: 5px;
-    background: url("/src/assets/img/背景下层.png") no-repeat;
+    background: url("/src/assets/img/shen2.png") no-repeat;
     background-size: 100% 100%;
     .bigscreen_lt_bottom_nei {
       width: 100%;
@@ -671,7 +667,7 @@ onMounted(() => {
   .bigscreen_lc_top {
     width: 100%;
     height: 34px;
-    background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
+    background: url("/src/assets/img/shen1.png") no-repeat;
     background-size: 100% 100%;
     display: flex;
     justify-content: space-between;
@@ -704,7 +700,7 @@ onMounted(() => {
     width: 100%;
     height: 251px;
     margin-top: 5px;
-    background: url("/src/assets/img/背景下层.png") no-repeat;
+    background: url("/src/assets/img/shen2.png") no-repeat;
     background-size: 100% 100%;
     .bigscreen_lc_bottom_nei {
       width: 100%;
@@ -755,7 +751,7 @@ onMounted(() => {
   .bigscreen_lb_top {
     width: 100%;
     height: 34px;
-    background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
+    background: url("/src/assets/img/shen1.png") no-repeat;
     background-size: 100% 100%;
     display: flex;
     justify-content: space-between;
@@ -788,7 +784,7 @@ onMounted(() => {
     width: 100%;
     height: 251px;
     margin-top: 5px;
-    background: url("/src/assets/img/背景下层.png") no-repeat;
+    background: url("/src/assets/img/shen2.png") no-repeat;
     background-size: 100% 100%;
     .bigscreen_lb_bottom_nei {
       width: 100%;
@@ -804,7 +800,7 @@ onMounted(() => {
   .bigscreen_rt_top {
     width: 100%;
     height: 34px;
-    background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
+    background: url("/src/assets/img/shen1.png") no-repeat;
     background-size: 100% 100%;
     display: flex;
     justify-content: space-between;
@@ -837,7 +833,7 @@ onMounted(() => {
     width: 100%;
     height: 251px;
     margin-top: 5px;
-    background: url("/src/assets/img/背景下层.png") no-repeat;
+    background: url("/src/assets/img/shen2.png") no-repeat;
     background-size: 100% 100%;
     .bigscreen_rt_bottom_nei {
       display: flex;
@@ -882,7 +878,7 @@ onMounted(() => {
   .bigscreen_rc_top {
     width: 100%;
     height: 34px;
-    background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
+    background: url("/src/assets/img/shen1.png") no-repeat;
     background-size: 100% 100%;
     display: flex;
     justify-content: space-between;
@@ -915,7 +911,7 @@ onMounted(() => {
     width: 100%;
     height: 251px;
     margin-top: 5px;
-    background: url("/src/assets/img/背景下层.png") no-repeat;
+    background: url("/src/assets/img/shen2.png") no-repeat;
     background-size: 100% 100%;
     .bigscreen_rc_bottom_nei {
       width: 100%;
@@ -961,7 +957,7 @@ onMounted(() => {
   .bigscreen_rb_top {
     width: 100%;
     height: 34px;
-    background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
+    background: url("/src/assets/img/shen1.png") no-repeat;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -999,7 +995,7 @@ onMounted(() => {
     width: 100%;
     height: 251px;
     margin-top: 5px;
-    background: url("/src/assets/img/背景下层.png") no-repeat;
+    background: url("/src/assets/img/shen2.png") no-repeat;
     background-size: 100% 100%;
     .bigscreen_rb_bottom_nei {
       width: 100%;

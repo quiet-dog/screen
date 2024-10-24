@@ -311,7 +311,7 @@ onMounted(() => {
     width: 100%;
     height: 406px;
     margin-top: 5px;
-    background: url("/src/assets/img/背景下层.png") no-repeat;
+    background: url("/src/assets/img/bigback.png") no-repeat;
     background-size: 100% 100%;
     display: flex;
     .bigscreen_lt_bottom_nei {
@@ -433,7 +433,7 @@ onMounted(() => {
     width: 100%;
     height: 406px;
     margin-top: 5px;
-    background: url("/src/assets/img/背景下层.png") no-repeat;
+    background: url("/src/assets/img/bigback.png") no-repeat;
     background-size: 100% 100%;
     .bigscreen_lb_bottom_nei {
       width: 100%;
@@ -482,7 +482,7 @@ onMounted(() => {
     width: 100%;
     height: 406px;
     margin-top: 5px;
-    background: url("/src/assets/img/背景下层.png") no-repeat;
+    background: url("/src/assets/img/bigback.png") no-repeat;
     background-size: 100% 100%;
     .bigscreen_rt_bottom_nei {
       display: flex;
@@ -565,7 +565,7 @@ onMounted(() => {
     width: 100%;
     height: 406px;
     margin-top: 5px;
-    background: url("/src/assets/img/背景下层.png") no-repeat;
+    background: url("/src/assets/img/bigback.png") no-repeat;
     background-size: 100% 100%;
     .bigscreen_rb_bottom_nei {
       width: 100%;

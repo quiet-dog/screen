@@ -536,7 +536,8 @@ onMounted(() => {
     width: 100%;
     height: 34px;
     background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
-    background-size: 100% 100%;
+    background-size: 110% 100%;
+    // background-position: ;
     display: flex;
     align-items: center;
     .bigscreen_lt_top_l {
@@ -603,7 +604,7 @@ onMounted(() => {
     width: 100%;
     height: 34px;
     background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
-    background-size: 100% 100%;
+    background-size: 110% 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -648,7 +649,7 @@ onMounted(() => {
     width: 100%;
     height: 34px;
     background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
-    background-size: 100% 100%;
+    background-size: 110% 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -697,7 +698,7 @@ onMounted(() => {
     width: 100%;
     height: 34px;
     background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
-    background-size: 100% 100%;
+    background-size: 110% 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -781,7 +782,7 @@ onMounted(() => {
     width: 100%;
     height: 34px;
     background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
-    background-size: 100% 100%;
+    background-size: 110% 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -881,7 +882,7 @@ onMounted(() => {
     width: 100%;
     height: 34px;
     background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
-    background-size: 100% 100%;
+    background-size: 110% 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;

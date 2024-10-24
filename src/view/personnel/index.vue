@@ -114,7 +114,7 @@
       >
         <el-radio-group v-model="radio1" class="group">
           <el-radio-button label="周" value="zhou" />
-          <el-radio-button label="日" value="ri" />
+          <el-radio-button label="月" value="ri" />
         </el-radio-group>
       </div>
     </div>
@@ -254,7 +254,21 @@ const bigscreenRBoption = {
       type: "shadow",
     },
   },
-  legend: {},
+  legend: {
+    data: [
+      {
+        name: "温度异常",
+        itemStyle: { color: "#79B24C" },
+      },
+      {
+        name: "血压异常",
+        itemStyle: { color: "#68B1A6" },
+      },
+    ],
+    textStyle: {
+      color: "#ffffff",
+    },
+  },
   grid: {
     left: "3%",
     right: "4%",
@@ -278,11 +292,27 @@ const bigscreenRBoption = {
         "11月",
         "12月",
       ],
+      axisLine: {
+        lineStyle: {
+          color: "#ffffff", // 修改 X 轴线条颜色
+        },
+      },
+      axisLabel: {
+        color: "#ffffff", // 修改 X 轴标签颜色
+      },
     },
   ],
   yAxis: [
     {
       type: "value",
+      axisLine: {
+        lineStyle: {
+          color: "#ffffff", // 修改 Y 轴线条颜色
+        },
+      },
+      axisLabel: {
+        color: "#ffffff", // 修改 Y 轴标签颜色
+      },
     },
   ],
   series: [
@@ -293,6 +323,9 @@ const bigscreenRBoption = {
       emphasis: {
         focus: "series",
       },
+      itemStyle: {
+        color: "#79B24C", // 线条颜色
+      },
       data: [220, 182, 191, 234, 290, 330, 310, 320, 330, 310, 320, 310],
     },
     {
@@ -301,6 +334,9 @@ const bigscreenRBoption = {
       stack: "Ad",
       emphasis: {
         focus: "series",
+      },
+      itemStyle: {
+        color: "#68B1A6", // 线条颜色
       },
       data: [150, 232, 201, 154, 190, 330, 410, 420, 190, 330, 410, 420],
     },
@@ -336,7 +372,7 @@ onMounted(() => {
     width: 100%;
     height: 34px;
     background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
-    background-size: 100% 100%;
+    background-size: 110% 100%;
     display: flex;
     align-items: center;
     .bigscreen_lt_top_l {
@@ -443,7 +479,7 @@ onMounted(() => {
     width: 100%;
     height: 34px;
     background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
-    background-size: 100% 100%;
+    background-size: 110% 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -537,7 +573,7 @@ onMounted(() => {
     width: 100%;
     height: 34px;
     background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
-    background-size: 100% 100%;
+    background-size: 110% 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -618,7 +654,7 @@ onMounted(() => {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-size: 100% 100%;
+    background-size: 110% 100%;
     .bigscreen_rb_top_l {
       display: flex;
       align-items: center;

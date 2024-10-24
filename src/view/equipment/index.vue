@@ -27,7 +27,7 @@
           <span>设备编号</span>
           <span>设备名称</span>
           <span>设备型号</span>
-          <span>安装事件</span>
+          <span>安装时间</span>
         </div>
         <div class="bigscreen_lc_bottom_nei_b" v-for="item in list">
           <span>{{ item.code }}</span>
@@ -78,7 +78,7 @@
       <el-input
         class="inputcss"
         style="width: 148px; height: 24px; margin-right: 11px"
-        placeholder="请输入监控报告"
+        placeholder="请输入监控点位"
         :prefix-icon="Search"
       />
     </div>
@@ -350,7 +350,7 @@ onMounted(() => {
     width: 100%;
     height: 34px;
     background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
-    background-size: 100% 100%;
+    background-size: 110% 100%;
     display: flex;
     align-items: center;
     .bigscreen_lt_top_l {
@@ -397,7 +397,7 @@ onMounted(() => {
     width: 100%;
     height: 34px;
     background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
-    background-size: 100% 100%;
+    background-size: 110% 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -474,7 +474,7 @@ onMounted(() => {
     width: 100%;
     height: 34px;
     background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
-    background-size: 100% 100%;
+    background-size: 110% 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -523,7 +523,7 @@ onMounted(() => {
     width: 100%;
     height: 34px;
     background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
-    background-size: 100% 100%;
+    background-size: 110% 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -601,7 +601,7 @@ onMounted(() => {
     width: 100%;
     height: 34px;
     background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
-    background-size: 100% 100%;
+    background-size: 110% 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -704,7 +704,7 @@ onMounted(() => {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-size: 100% 100%;
+    background-size: 110% 100%;
     .bigscreen_rb_top_l {
       display: flex;
       align-items: center;

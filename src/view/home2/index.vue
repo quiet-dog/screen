@@ -568,6 +568,7 @@ onMounted(() => {
     height: 34px;
     background: url("/src/assets/img/shen1.png") no-repeat;
     background-size: 100% 100%;
+    // background-position: 10px;
     display: flex;
     align-items: center;
     .bigscreen_lt_top_l {

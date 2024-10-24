@@ -99,6 +99,11 @@ const setMidnightTimer = () => {
 };
 
 const btnfun = [
+  // {
+  //     title: "总体态势",
+  //     name: "home",
+  //     path: "/home",
+  //   },
   {
     title: "总体态势",
     name: "home",

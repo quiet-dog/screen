@@ -345,7 +345,7 @@ onMounted(() => {
     width: 100%;
     height: 34px;
     background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
-    background-size: 100% 100%;
+    background-size: 110% 100%;
     display: flex;
     align-items: center;
     .bigscreen_lt_top_l {
@@ -402,6 +402,17 @@ onMounted(() => {
           }
           &:nth-child(3) {
             font-size: 20px;
+            font-family: youshe;
+            text-align: center;
+            font-style: normal;
+            text-transform: none;
+            background: linear-gradient(
+              to bottom,
+              #ffffff 30%,
+              #3582c7 100%
+            ); /* 渐变背景 */
+            background-clip: text; /* 让背景应用到文本 */
+            -webkit-text-fill-color: transparent; /* 使文本颜色透明 */
           }
         }
       }
@@ -420,7 +431,7 @@ onMounted(() => {
     width: 100%;
     height: 34px;
     background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
-    background-size: 100% 100%;
+    background-size: 110% 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -469,7 +480,7 @@ onMounted(() => {
     width: 100%;
     height: 34px;
     background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
-    background-size: 100% 100%;
+    background-size: 110% 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -518,7 +529,7 @@ onMounted(() => {
     width: 100%;
     height: 34px;
     background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
-    background-size: 100% 100%;
+    background-size: 110% 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -596,7 +607,7 @@ onMounted(() => {
     width: 100%;
     height: 34px;
     background: url("/src/assets/img/背景-上层(1).gif") no-repeat;
-    background-size: 100% 100%;
+    background-size: 110% 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -678,7 +689,7 @@ onMounted(() => {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-size: 100% 100%;
+    background-size: 110% 100%;
     .bigscreen_rb_top_l {
       display: flex;
       align-items: center;

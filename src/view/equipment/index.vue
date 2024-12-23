@@ -121,6 +121,7 @@
       <el-input
         class="inputcss"
         placeholder="请输入监控点位"
+         v-model="channelQuery.name"
         :prefix-icon="Search"
       />
     </div>
@@ -128,9 +129,12 @@
       <div class="bigscreen_rt_bottom_nei">
         <img src="/public/img/监控报告图标.png" alt="" />
         <div class="bigscreen_rt_bottom_r">
-          <div @click="rtClick"><span>JK218 科学大道点位1</span></div>
+          <div @click="rtClick(item)" v-for="item in videoList">
+            <span>{{ item.name }}</span>
+          </div>
+          <!-- <div @click="rtClick"><span>JK218 科学大道点位1</span></div>
           <div><span>JK218 科学大道点位1</span></div>
-          <div><span>JK218 科学大道点位1</span></div>
+          <div><span>JK218 科学大道点位1</span></div> -->
         </div>
       </div>
     </div>
@@ -362,14 +366,14 @@
       <img :src="img9" alt="" srcset="" @click="rtcanleClick" />
     </div>
     <div class="rtDialog_bottom">
-      <img src="/public/img/监控视频尺寸.png" alt="" />
+      <Video class="rtDialog_bottom_video" ref="videoRef" />
       <!-- <div>倍速播放×1</div> -->
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, nextTick } from "vue";
 import * as echarts from "echarts";
 import { Search } from "@element-plus/icons-vue";
 import center from "../../components/center.vue";
@@ -385,10 +389,25 @@ import {
 import dayjs from "dayjs";
 import { Vue3SeamlessScroll } from "vue3-seamless-scroll";
 import img9 from "../../../public/img/叉号.png";
+import { getChannelListApi, getStreamUrlApi } from "../../api/video";
+import Video from "../home/components/Video.vue";
 
 const rtStatus = ref(false);
-const rtClick = () => {
+const videoRef =ref();
+const rtClick = (item) => {
   rtStatus.value = !rtStatus.value;
+  getStreamUrlApi(item.channelid).then((res) => {
+        console.log("res.data.data.wsflv", res.data.data.wsflv);
+        videoRef.value.play(res.data.data.wsflv);
+        videoRef.value.setChannelId(res.data.data.channelId);
+      });
+    // nextTick(() => {
+    //   getStreamUrlApi(item.channelid).then((res) => {
+    //     console.log("res.data.data.wsflv", res.data.data.wsflv);
+    //     videoRef.value.play(res.data.data.wsflv);
+    //     videoRef.value.setChannelId(res.data.data.channelId);
+    //   });
+    // });
 };
 const rtcanleClick = () => {
   rtStatus.value = false;
@@ -681,6 +700,19 @@ function yzRadioChange(){
   getYzData();
 }
 
+const channelQuery = ref({
+  name: "",
+  pageNum: 1,
+  pageSize: 3,
+});
+const videoList =ref([]);
+
+const getVideoList = () => {
+  getChannelListApi(channelQuery.value).then((res) => {
+    videoList.value = res.data.data.List;
+  });
+};
+
 window.onresize = function () {
   bigscreenLBChart.resize();
 };
@@ -690,6 +722,7 @@ onMounted(() => {
   inspectionListFun();
   equipmentListFun();
   ltequipmentListFun();
+  getVideoList()
 });
 </script>
 
@@ -1339,6 +1372,24 @@ $design-height: 1080;
     flex-direction: column;
     // align-items: center;
     justify-content: center;
+
+    .rtDialog_bottom_video {
+      :deep(#container){
+        width: adaptiveWidth(420);
+        height: adaptiveHeight(215);
+        object-fit: cover;
+      }
+      object-fit: cover;
+    }
+
+    // :deep(.rtDialog_bottom_video) {
+    //   #container[data-v-39551662] {
+    //     width: adaptiveWidth(420);
+    //     height: adaptiveHeight(215);
+    //     object-fit: cover;
+    //   }
+    //   object-fit: cover;
+    // }
     img {
       width: 100%;
       height: adaptiveHeight(195);

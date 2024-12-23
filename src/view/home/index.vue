@@ -117,10 +117,6 @@
           <div @click="rtClick(item)" v-for="item in videoList">
             <span>{{ item.name }}</span>
           </div>
-
-          <!-- <div @click="rtClick"><span>JK218 科学大道点位1</span></div>
-          <div><span>JK218 科学大道点位1</span></div>
-          <div><span>JK218 科学大道点位1</span></div> -->
         </div>
       </div>
     </div>
@@ -1396,8 +1392,8 @@ $design-height: 1080;
     // align-items: center;
     justify-content: center;
     overflow: hidden;
-    :deep(.rtDialog_bottom_video) {
-      #container[data-v-39551662] {
+    .rtDialog_bottom_video {
+      :deep(#container){
         width: adaptiveWidth(420);
         height: adaptiveHeight(215);
         object-fit: cover;

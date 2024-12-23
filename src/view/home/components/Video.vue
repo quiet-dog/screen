@@ -54,7 +54,7 @@ defineExpose({
 </script>
 
 <template>
-  <div >
+  <div style="width: 100%;" >
       <div style="margin: 0 auto;" id="container" ref="videoRef"></div>
   </div>
 </template>
@@ -62,6 +62,7 @@ defineExpose({
 <style scoped>
 #container {
   background: rgba(13, 14, 27, 0.7);
+  width: 100%;
   /* width: 360px;
   height: 597px; */
 }

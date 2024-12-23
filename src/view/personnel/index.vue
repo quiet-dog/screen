@@ -157,8 +157,8 @@
     </div>
   </div>
 
-  <template v-for="item in accesscontrollist">
-    <div v-if="item.status" class="ltDialog">
+  <!-- <template v-for="item in accesscontrollist"> -->
+    <div v-if="personnelShow" class="ltDialog">
       <div class="ltDialog_top">
         <span>查看人员信息</span>
         <img :src="img9" alt="" srcset="" @click="ltcanleClick(item)" />
@@ -169,33 +169,33 @@
           <div class="ltDialog_bottomr">
             <div>
               <span>员工编号：</span>
-              <span>{{ item.personnel?.code }}</span>
+              <span>{{ personnelInfo?.personnel?.code }}</span>
             </div>
             <div>
               <span>姓名：</span>
-              <span>{{ item.personnel?.name }}</span>
+              <span>{{ personnelInfo?.personnel?.name }}</span>
             </div>
             <div>
               <span>性别：</span>
-              <span>{{ item.personnel?.sex }}</span>
+              <span>{{ personnelInfo?.personnel?.sex }}</span>
             </div>
             <div>
               <span>部门：</span>
-              <span>{{ item.personnel?.department }}</span>
+              <span>{{ personnelInfo?.personnel?.department }}</span>
             </div>
             <div>
               <span>岗位：</span>
-              <span>{{ item.personnel?.post }}</span>
+              <span>{{ personnelInfo?.personnel?.post }}</span>
             </div>
             <div>
               <span>联系方式：</span>
-              <span>{{ item.personnel?.contact }}</span>
+              <span>{{ personnelInfo?.personnel?.contact }}</span>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </template>
+  <!-- </template> -->
 
   <div v-show="showPersonnelDialog" class="lbDialog">
     <div class="lbDialog_top">
@@ -488,17 +488,22 @@ const accesscontrolFun = async () => {
     return { ...item, img: img[index % img.length], status: false };
   });
 };
+const personnelInfo = ref()
+const personnelShow =ref(false)
 const ltClick = (item: any) => {
-  accesscontrollist.value.forEach((v) => {
-    if (item.personnelId == v.personnelId) {
-      v.status = !v.status;
-    } else {
-      v.status = false;
-    }
-  });
+  personnelInfo.value = item;
+  personnelShow.value = true;
+  // accesscontrollist.value.forEach((v) => {
+  //   if (item.personnelId == v.personnelId) {
+  //     v.status = !v.status;
+  //   } else {
+  //     v.status = false;
+  //   }
+  // });
 };
 const ltcanleClick = (item: any) => {
-  item.status = false;
+  // item.status = false;
+  personnelShow.value = false;
 };
 
 //人员健康数据

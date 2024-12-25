@@ -10,24 +10,24 @@ defineOptions({
 });
 const { list, tuRef, xAspectRatio,yAspectRatio, urlInfo, deviceStyles } = useThreeDeviceHook();
 const deviceStore = useDeviceStore();
-watch(() => deviceStore.currentData, (newVal) => {
-  list.value.forEach(item => {
-    if (newVal.content.deviceType === item.type) {
-      if (newVal.content.equipmentInfo != null) {
-        item.thresholds.forEach(threshold => {
-          if (threshold.thresholdId === newVal?.content.equipmentInfo.thresholdId) {
-            threshold.sensorValue = newVal?.content.equipmentInfo.value;
-            useDeviceStore().isShowDetail = true;
-          }
-        });
-      }
-      if (newVal.content.environmentAlarmInfo != null ) {
-        item.environment.sensorValue = newVal?.content.environmentAlarmInfo.value;
-      }
-    }
+// watch(() => deviceStore.currentData, (newVal) => {
+//   deviceStore.tuThree.forEach(item => {
+//     if (newVal.content.deviceType === item.type) {
+//       if (newVal.content.equipmentInfo != null) {
+//         item.thresholds.forEach(threshold => {
+//           if (threshold.thresholdId === newVal?.content.equipmentInfo.thresholdId) {
+//             threshold.sensorValue = newVal?.content.equipmentInfo.value;
+//             useDeviceStore().isShowDetail = true;
+//           }
+//         });
+//       }
+//       if (newVal.content.environmentAlarmInfo != null ) {
+//         item.environment.sensorValue = newVal?.content.environmentAlarmInfo.value;
+//       }
+//     }
 
-  })
-}, { deep: true });
+//   })
+// }, { deep: true });
 
 </script>
 
@@ -35,8 +35,8 @@ watch(() => deviceStore.currentData, (newVal) => {
   <div class="main">
     <div class="my-container">
       <img ref="tuRef" style="max-width: 100%;" @load="urlInfo" :src="BgThree" alt="" srcset="">
-      <template v-for="(item, index) in list">
-        <ElPopover  v-model:visible="deviceStyles[index].showPopover" :width="500">
+      <template v-for="(item, index) in deviceStore.tuThree">
+        <ElPopover  v-model:visible="item.showPopover" :width="500">
           <template #reference>
             <div class="device-1" :style="deviceStyles[index]?.style"></div>
           </template>

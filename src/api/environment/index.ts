@@ -11,6 +11,10 @@ export function environmentalFilesList(params: environmentalFilesListRes) {
   return http.get("/manage/environment", { params });
 }
 
+export function environmentalDetectionList(params: environmentalFilesListRes) {
+  return http.get("/manage/detection", { params });
+}
+
 //数据大屏获取环境档案区域的历史报警数量
 export function historyStatistics(params: {
   environmentId: number;
@@ -53,6 +57,17 @@ export function powerByAreaTotalStatic(params: {
 }) {
   return http.get("/manage/detection/powerByAreaTotal", { params });
 }
+
+
+//区域报警数量统计
+export function eventByAreaTotalStatic(params: {
+  des: string;
+  dayType: string;
+  type: string;
+}) {
+  return http.get("/manage/event/getAreaStatisticsTotal", { params });
+}
+
 
 export const getFiveEnvironment = async () => {
   let list = [];

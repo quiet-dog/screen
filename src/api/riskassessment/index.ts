@@ -10,3 +10,7 @@ export interface thresholdListRes {
 export function thresholdList(params: thresholdListRes) {
   return http.get("/manage/threshold", { params });
 }
+
+export function thresholdDataList(params: thresholdListRes) {
+  return http.get("/manage/equipment-data", { params });
+}

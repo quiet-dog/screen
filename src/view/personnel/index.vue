@@ -129,16 +129,21 @@
       </div>
     </div>
     <div class="bigscreen_rt_bottom">
-      <swiper
+      <!-- <swiper
         :slides-per-view="1"
         :space-between="10"
         pagination
         style="width: 100%; height: 100%"
-      >
-        <swiper-slide v-for="(item, index) in slides" :key="index">
+      > -->
+      <div class="rtDialog_bottom">
+      <!-- <img src="/public/img/监控视频尺寸.png" alt="" /> -->
+      <Video style="width:100%" class="rtDialog_bottom_video" ref="videoRef" />
+      <!-- <div>倍速播放×1</div> -->
+    </div>
+        <!-- <swiper-slide v-for="(item, index) in slides" :key="index">
           <img :src="item.image" alt="" />
-        </swiper-slide>
-      </swiper>
+        </swiper-slide> -->
+      <!-- </swiper> -->
     </div>
   </div>
   <div class="bigscreen_rb">
@@ -222,7 +227,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, nextTick, reactive } from "vue";
+import { ref, onMounted, nextTick, reactive,onUnmounted } from "vue";
 import * as echarts from "echarts";
 import { Search } from "@element-plus/icons-vue";
 import center from "../../components/center.vue";
@@ -230,6 +235,7 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/swiper-bundle.css";
 import img1 from "../../../public/img/视频监控尺寸.png";
 import img9 from "../../../public/img/叉号.png";
+import Video from "../home/components/Video.vue";
 
 import {
   indicatorStatistics,
@@ -239,6 +245,10 @@ import {
   accesscontrolList,
 } from "../../api/personnel/index";
 import { Vue3SeamlessScroll } from "vue3-seamless-scroll";
+import { getChannelListApi, getStreamUrlApi } from "../../api/video/index.ts";
+import { useIntervalFn } from '@vueuse/core'
+
+
 
 const radio1 = ref("week");
 const slides = [{ image: img1 }, { image: img1 }, { image: img1 }];
@@ -367,6 +377,12 @@ const bigscreenRBoption = {
   yAxis: {
     type: "value",
     axisLine: { lineStyle: { color: "#ffffff" } },
+  },
+  tooltip: {
+					trigger: 'axis', //坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用
+					axisPointer: {// 坐标轴指示器，坐标轴触发有效
+						type: 'line' // 默认为直线，可选为：'line' | 'shadow'
+					}
   },
   series: [
     {
@@ -619,6 +635,40 @@ const healthySelect = reactive([
   },
 ]);
 
+const videoRef = ref(null);
+const videoInfo = ref({});
+const channelQuery = ref({
+  name: "",
+  pageNum: 1,
+  pageSize: 1,
+});
+const getVideoList = () => {
+  nextTick(() => {
+    getChannelListApi(channelQuery.value).then((res) => {
+    
+    videoInfo.value = res.data.data.List[0];
+    getStreamUrlApi(videoInfo.value.channelid).then((ress) => {
+        console.log("res.data.data.wsflv", ress.data.data.wsflv);
+        videoRef.value.play(ress.data.data.wsflv);
+        videoRef.value.setChannelId(ress.data.data.channelId);
+        channelQuery.value.pageNum += 1;
+        if (channelQuery.value.pageNum > ress.data.data.Total) {
+          channelQuery.value.pageNum = 1;
+        }
+      }).catch((err) => {
+        channelQuery.value.pageNum = 1
+      });
+  });
+  });
+  
+};
+
+
+const videoTimer = useIntervalFn(() => {
+  /* your function */
+  getVideoList();
+}, 20000)
+
 const healthyStatisticsFun = async () => {
   const { data } = await healthyStatistics(healthyStatisticsData.value);
   lbDialogBottomoption.xAxis.data = data.data.time;
@@ -648,10 +698,15 @@ const showPersonnelDialogRef = ref(null);
 
 onMounted(() => {
   lbDialogBottomChart = echarts.init(showPersonnelDialogRef.value);
+  getVideoList();
   initChart();
   indicatorStatisticsList();
   healthylistFun();
   accesscontrolFun();
+});
+
+onUnmounted(() => {
+  videoTimer.pause();
 });
 </script>
 
@@ -669,6 +724,26 @@ $design-height: 1080;
 
 @function adaptiveFontSize($px) {
   @return #{$px / $design-width * 100}vw;
+}
+
+.rtDialog_bottom {
+    width: adaptiveWidth(420);
+    height: adaptiveHeight(415);
+    margin-left: adaptiveWidth(10);
+    display: flex;
+    flex-direction: column;
+    // align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+    .rtDialog_bottom_video {
+      :deep(#container){
+        width: adaptiveWidth(420);
+        height: adaptiveHeight(215);
+        object-fit: cover;
+      }
+      object-fit: cover;
+    }
 }
 
 .bigscreen_lt,

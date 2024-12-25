@@ -488,7 +488,7 @@ const alarmEventslistFun = async () => {
 const alarmInformationFormData = ref({
   eventName: "",
   pageNum: 1,
-  pageSize: 10000,
+  pageSize: 10,
   orderColumn: "createTime",
   orderDirection: "descending",
 });

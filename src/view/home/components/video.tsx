@@ -26,7 +26,7 @@ export function useVideoHook() {
         isReize: false,
         loadingText: "加载中",
         debug: true,
-        showBandwidth: true,
+        showBandwidth: false,
         heartTimeoutReplay: true,
         heartTimeoutReplayTimes: -1,
         operateBtns: {

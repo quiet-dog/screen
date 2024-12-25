@@ -347,7 +347,6 @@ const ltDialogoption = {
     bottom: "6%",
     containLabel: true,
   },
-
   xAxis: {
     type: "category",
     data: [],
@@ -404,6 +403,12 @@ const ltDialogoption = {
       },
     },
   ],
+  tooltip: {
+					trigger: 'item', //坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用
+					axisPointer: {// 坐标轴指示器，坐标轴触发有效
+						type: 'line' // 默认为直线，可选为：'line' | 'shadow'
+					}
+  },
 };
 const historyStatisticsFormData = ref({
   environmentId: 0,
@@ -615,6 +620,13 @@ const bigscreenRToption = {
       data: [2, 0.5, 1, 0.7, 3, 3.5, 1],
     },
   ],
+  tooltip: {
+					trigger: 'item', //坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用
+					axisPointer: {// 坐标轴指示器，坐标轴触发有效
+						type: 'line' // 默认为直线，可选为：'line' | 'shadow'
+					}
+  },
+  
 };
 const powerStaticData = ref({
   des: "",
@@ -674,6 +686,12 @@ const bigscreenRBoption = {
       },
     },
   ],
+  tooltip: {
+					trigger: 'axis', //坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用
+					axisPointer: {// 坐标轴指示器，坐标轴触发有效
+						type: 'line' // 默认为直线，可选为：'line' | 'shadow'
+					}
+  },
 };
 const powerByAreaTotalStaticData = ref({
   des: "",

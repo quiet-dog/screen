@@ -10,24 +10,24 @@ defineOptions({
 });
 const { list, tuRef, xAspectRatio,yAspectRatio, urlInfo, deviceStyles } = useTwoDeviceHook();
 const deviceStore = useDeviceStore();
-watch(() => deviceStore.currentData, (newVal) => {
-  list.value.forEach(item => {
-    if (newVal.content.deviceType === item.type) {
-      if (newVal.content.equipmentInfo != null) {
-        item.thresholds.forEach(threshold => {
-          if (threshold.thresholdId === newVal?.content.equipmentInfo.thresholdId) {
-            threshold.sensorValue = newVal?.content.equipmentInfo.value;
-            useDeviceStore().isShowDetail = true;
-          }
-        });
-      }
-      if (newVal.content.environmentAlarmInfo != null ) {
-        item.environment.sensorValue = newVal?.content.environmentAlarmInfo.value;
-      }
-    }
+// watch(() => deviceStore.currentData, (newVal) => {
+//   deviceStore.tuTwo.forEach(item => {
+//     if (newVal.content.deviceType === item.type) {
+//       if (newVal.content.equipmentInfo != null) {
+//         item.thresholds.forEach(threshold => {
+//           if (threshold.thresholdId === newVal?.content.equipmentInfo.thresholdId) {
+//             threshold.sensorValue = newVal?.content.equipmentInfo.value;
+//             useDeviceStore().isShowDetail = true;
+//           }
+//         });
+//       }
+//       if (newVal.content.environmentAlarmInfo != null ) {
+//         item.environment.sensorValue = newVal?.content.environmentAlarmInfo.value;
+//       }
+//     }
 
-  })
-}, { deep: true });
+//   })
+// }, { deep: true });
 
 </script>
 
@@ -35,7 +35,7 @@ watch(() => deviceStore.currentData, (newVal) => {
   <div class="main">
     <div class="my-container">
       <img class="my-img" style="max-width: 100%;" ref="tuRef" @load="urlInfo" :src="BgTwo" alt="" srcset="">
-      <template v-for="(item, index) in list">
+      <template v-for="(item, index) in deviceStore.tuTwo">
         <ElPopover  v-model:visible="deviceStyles[index].showPopover" :width="500">
           <template #reference>
             <div class="device-1" :style="deviceStyles[index]?.style"></div>

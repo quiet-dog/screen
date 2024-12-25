@@ -86,61 +86,6 @@ export function useTwoDeviceHook() {
       thresholds: [],
       type: "设备档案"
     },
-    // {
-    //   style: {
-    //     'width': '100px',
-    //     'height': '200px',
-    //     'backgroundColor': 'rgba(0, 0, 0, .1)',
-    //     'top': '370px',
-    //     'left': Math.floor(xAspectRatio.value * 2000) + "px",
-    //   },
-    //   equipmentId: 10,
-    //   value: 0,
-    //   thresholds: [],
-    //   type: "设备档案"
-    // },
-    // {
-    //   style: {
-    //     'width': '100px',
-    //     'height': '200px',
-    //     'backgroundColor': 'rgba(0, 0, 0, .1)',
-    //     'top': '370px',
-    //     'left': Math.floor(xAspectRatio.value * 2000) + "px",
-    //   },
-    //   value: 0,
-    //   thresholds: [],
-    //   type: "环境档案",
-    //   environmentId: 2,
-    //   environment: {}
-    // },
-    // {
-    //   style: {
-    //     'width': '100px',
-    //     'height': '200px',
-    //     'backgroundColor': 'rgba(0, 0, 0, .1)',
-    //     'top': '370px',
-    //     'left': Math.floor(xAspectRatio.value * 2000) + "px",
-    //   },
-    //   value: 0,
-    //   thresholds: [],
-    //   type: "环境档案",
-    //   environmentId: 3,
-    //   environment: {}
-    // },
-    // {
-    //   style: {
-    //     'width': '100px',
-    //     'height': '200px',
-    //     'backgroundColor': 'rgba(0, 0, 0, .1)',
-    //     'top': '370px',
-    //     'left': Math.floor(xAspectRatio.value * 2000) + "px",
-    //   },
-    //   value: 0,
-    //   thresholds: [],
-    //   type: "环境档案",
-    //   environmentId: 4,
-    //   environment: {}
-    // },
   ])
 
   const urlInfo = (el) => {
@@ -161,57 +106,57 @@ export function useTwoDeviceHook() {
     })
   }
 
-  onMounted(() => {
-    http.get("/manage/threshold", {
-      params: {
-        pageNum: 1,
-        pageSize: 10000
-      }
-    }).then((res) => {
-      res.data.rows.forEach((item: any) => {
-        list.value.forEach((item2: any) => {
-          if (item.equipment != null && item.equipment.equipmentId === item2.equipmentId) {
-            item2.thresholds.push(item)
-          }
-        })
-      })
-    }).catch((err) => { })
+  // onMounted(() => {
+  //   http.get("/manage/threshold", {
+  //     params: {
+  //       pageNum: 1,
+  //       pageSize: 10000
+  //     }
+  //   }).then((res) => {
+  //     res.data.data.rows.forEach((item: any) => {
+  //       list.value.forEach((item2: any) => {
+  //         if (item.equipment != null && item.equipment.equipmentId === item2.equipmentId) {
+  //           item2.thresholds.push(item)
+  //         }
+  //       })
+  //     })
+  //   }).catch((err) => { })
 
-    http.get("/manage/environment", {
-      params: {
-        pageNum: 1,
-        pageSize: 10000
-      }
-    }).then((res) => {
-
-
-      res.data.data.rows.forEach((item: any) => {
-        list.value.forEach((item2: any) => {
-          if (item.environmentId === item2.environmentId) {
-            item2.environment = item
-          }
-        })
-      })
-    })
-
-    http.get("/manage/equipment", {
-      params: {
-        pageNum: 1,
-        pageSize: 10000
-      }
-    }).then((res) => {
+  //   http.get("/manage/environment", {
+  //     params: {
+  //       pageNum: 1,
+  //       pageSize: 10000
+  //     }
+  //   }).then((res) => {
 
 
-      res.data.data.rows.forEach((item: any) => {
-        list.value.forEach((item2: any) => {
-          if (item.equipmentId === item2.equipmentId) {
-            item2.equipment = item
-          }
-        })
-      })
-    })
-    console.log("list.value", list.value)
-  })
+  //     res.data.data.rows.forEach((item: any) => {
+  //       list.value.forEach((item2: any) => {
+  //         if (item.environmentId === item2.environmentId) {
+  //           item2.environment = item
+  //         }
+  //       })
+  //     })
+  //   })
+
+  //   http.get("/manage/equipment", {
+  //     params: {
+  //       pageNum: 1,
+  //       pageSize: 10000
+  //     }
+  //   }).then((res) => {
+
+
+  //     res.data.data.rows.forEach((item: any) => {
+  //       list.value.forEach((item2: any) => {
+  //         if (item.equipmentId === item2.equipmentId) {
+  //           item2.equipment = item
+  //         }
+  //       })
+  //     })
+  //   })
+  //   console.log("list.value", list.value)
+  // })
   // setInterval(() => {
   //   list.value.forEach((item: any) => {
   //     item.thresholds.forEach((item2: any) => {

@@ -512,6 +512,12 @@ const bigscreenLBoption = {
       color: "rgba(255,255,255,0.65)",
     },
   },
+  tooltip: {
+					trigger: 'axis', //坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用
+					axisPointer: {// 坐标轴指示器，坐标轴触发有效
+						type: 'line' // 默认为直线，可选为：'line' | 'shadow'
+					}
+  },
   series: [
     {
       data: [],

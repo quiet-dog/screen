@@ -22,22 +22,22 @@
     <div class="bigscreen_cb_dialog" v-if="useDeviceStore().isShowDetail">
       <div class="bigscreen_cb_dialog_top"></div>
       <div class="bigscreen_cb_dialog_bottom" style="background-color: white;display: flex; justify-content: right; " >
-       <ElButton @click="useDeviceStore().isShowDetail = false"  text >
+       <ElButton @click="closeDevice"  text >
         <el-icon style="font-size: 30px;color: gray;"><Close /></el-icon>
        </ElButton>
       </div>
-      <ElTabs  id="my-tabs" v-model="activeName">
+      <ElTabs  id="my-tabs" v-model="useDeviceStore().activeName">
         <ElTabPane label="一层" name="一层" >
-          <TuOne v-if="activeName == '一层'" />
+          <TuOne v-if="useDeviceStore().activeName == '一层'" />
         </ElTabPane>
         <ElTabPane label="二层" name="二层">
-          <TuFour v-if="activeName == '二层'" />
+          <TuFour v-if="useDeviceStore().activeName == '二层'" />
         </ElTabPane>
         <ElTabPane label="三层" name="三层">
-          <TuThree v-if="activeName == '三层'" />
+          <TuThree v-if="useDeviceStore().activeName == '三层'" />
         </ElTabPane>
         <ElTabPane label="四层" name="四层">
-          <TuTwo v-if="activeName == '四层'" />
+          <TuTwo v-if="useDeviceStore().activeName == '四层'" />
         </ElTabPane>
       </ElTabs>
     </div>
@@ -45,7 +45,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted,onUnmounted } from "vue";
 import { geteventTotal } from "../api/home";
 import {Close} from "@element-plus/icons-vue";
 import img from "../../public/img/0.png";
@@ -64,10 +64,12 @@ import TuThree from "./tuthree/index.vue";
 import TuFour from "./tufour/index.vue";
 import { ElButton, ElTabs } from "element-plus";
 import { useDeviceStore } from "./device";
+import { useIntervalFn } from '@vueuse/core'
+
 
 const count1 = ref(0);
 const count2 = ref(0);
-const activeName = ref("一层");
+// const activeName = ref("一层");
 
 
 const geteventTotalFun = async () => {
@@ -75,6 +77,11 @@ const geteventTotalFun = async () => {
   count1.value = data.data.todayTotal;
   count2.value = data.data.allTotal;
 };
+
+const closeDevice=()=>{
+  useDeviceStore().isShowDetail = false;
+  useDeviceStore().initPopover();
+}
 
 function shuimg(val: string): string {
   const imgMap: Record<string, string> = {
@@ -91,9 +98,17 @@ function shuimg(val: string): string {
   };
   return imgMap[val] || ""; // 如果值不存在，则返回空字符串
 }
+
+const { pause, resume, isActive } =  useIntervalFn(() => {
+  geteventTotalFun();
+}, 5000)
 onMounted(() => {
   geteventTotalFun();
 });
+onUnmounted(() => {
+  pause()
+  useDeviceStore().initPopover();
+})
 </script>
 
 <style lang="scss" scoped>

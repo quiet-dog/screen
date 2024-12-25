@@ -11,16 +11,16 @@
         <div class="bigscreen_lt_bottom_nei_t">
           <span>描述</span>
           <span>位号</span>
-          <span>信号</span>
+          <span>数值</span>
           <span>时间</span>
         </div>
         <div
           class="bigscreen_lt_bottom_nei_b"
           v-for="(item, index) in environmentFileList"
         >
-          <span>{{ `${item.description}-${item.unitName}` }}</span>
-          <span>{{ item.tag }}</span>
-          <span>{{ item.esignal }}</span>
+          <span>{{ `${item?.environment?.description}-${item?.environment?.unitName}` }}</span>
+          <span>{{ item?.environment?.tag }}</span>
+          <span :class="getValueColorClass(item)" >{{ item.value }}</span>
           <span>{{ item.createTime }}</span>
         </div>
       </div>
@@ -77,7 +77,7 @@
         <div class="bigscreen_rb_bottom_nei_t">
           <span>传感器编号</span>
           <span>传感器名称</span>
-          <span>级别层级</span>
+          <span>数值</span>
           <span>时间</span>
         </div>
         <div class="bigscreen_rb_bottom_neib">
@@ -96,9 +96,9 @@
               <span>
                 {{ item.thresholdId }}
               </span>
-              <span>{{ item.sensorName }}</span>
-              <span>{{ item.values.length }}</span>
-              <span>{{ dayjs(item.purchaseDate).format("YYYY-MM-DD") }}</span>
+              <span>{{ item?.threshold.sensorName }}</span>
+              <span :style="{color:getEquipmentDataColor(item)}" >{{ item?.equipmentData }}</span>
+              <span>{{ dayjs(item?.createTime).format("YYYY-MM-DD hh:mm:ss") }}</span>
             </div>
           </Vue3SeamlessScroll>
         </div>
@@ -108,28 +108,85 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, nextTick } from "vue";
+import { ref, onMounted, nextTick, onUnmounted } from "vue";
 import * as echarts from "echarts";
 import {
+  environmentalDetectionList,
   environmentalFilesList,
+  eventByAreaTotalStatic,
   powerByAreaTotalStatic,
 } from "../../api/environment";
-import { thresholdList } from "../../api/riskassessment";
+import { thresholdDataList, thresholdList } from "../../api/riskassessment";
 import { getstatistics } from "../../api/incident";
 import center from "../../components/center.vue";
 import { Vue3SeamlessScroll } from "vue3-seamless-scroll";
 import dayjs from "dayjs";
+import { useIntervalFn } from '@vueuse/core'
+
+
+// 修改获取设备数据颜色的方法
+const getEquipmentDataColor = row => {
+  if (!row.threshold?.values?.length) return "inherit";
+
+  const value = Number(row.equipmentData);
+  const thresholds = row.threshold.values;
+
+  // 按照level等级排序
+  const sortedThresholds = [...thresholds].sort((a, b) => {
+    const levelA = Number(a.level.replace(/[^0-9]/g, ""));
+    const levelB = Number(b.level.replace(/[^0-9]/g, ""));
+    return levelB - levelA;
+  });
+
+  for (const threshold of sortedThresholds) {
+    if (value >= threshold.min && value <= threshold.max) {
+      // 根据不同等级返回不同颜色
+      switch (threshold.level) {
+        case "一级":
+          return "#F53F3F"; // 紧急 - 红色
+        case "紧急":
+          return "#F53F3F"; // 紧急 - 红色
+        case "二级":
+          return "#FF7D00"; // 重要 - 橙色
+        case "重要":
+          return "#FF7D00"; // 重要 - 橙色
+        case "三级":
+          return "#FADC19"; // 一般 - 黄色
+        case "中度":
+          return "#FADC19"; // 一般 - 黄色
+        case "四级":
+          return "#168CFF"; // 一般 - 蓝色
+        case "一般":
+          return "#168CFF"; // 一般 - 绿色
+        case "五级":
+          return "#00B42A"; // 一般 - 绿色
+        case "轻微":
+          return "#00B42A"; // 一般 - 绿色
+
+        default:
+          return "#168CFF";
+      }
+    }
+  }
+
+  return "inherit";
+};
 
 //环境信息
 const environmentFileFormData = ref({
   pageNum: 1,
-  pageSize: 10000,
+  pageSize: 10,
   orderColumn: "createTime",
   orderDirection: "descending",
+  // startTime:dayjs().format("YYYY-MM-DD"),
+  // endTime:dayjs().add(1,"day").format("YYYY-MM-DD")
 });
 const environmentFileList = ref<any[]>([]);
 const environmentFileFun = async () => {
-  const { data } = await environmentalFilesList(environmentFileFormData.value);
+  // environmentFileFormData.value.startTime = dayjs().format("YYYY-MM-DD");
+  // environmentFileFormData.value.endTime = dayjs().add(1,"day").format("YYYY-MM-DD")
+  const { data } = await environmentalDetectionList(environmentFileFormData.value);
+  console.log("aaaa",data)
   let list = data.data.rows.slice(0, 9);
   environmentFileList.value = list.map((item, index) => {
     return {
@@ -138,6 +195,44 @@ const environmentFileFun = async () => {
     };
   });
 };
+
+// 修改 getValueColorClass 方法
+const getValueColorClass = row => {
+  const value = row.value;
+  const alarmLevels = row.environment?.alarmlevels || [];
+  console.log("alarmLevels",row)
+  for (const level of alarmLevels) {
+    if (value >= level.min && value <= level.max) {
+      switch (level.level) {
+        case "一级":
+        case "紧急":
+          return "text-urgent";
+        case "二级":
+        case "重要":
+          return "text-important";
+        case "三级":
+        case "中度":
+          return "text-warning";
+        case "四级":
+        case "一般":
+          return "text-info";
+        case "五级":
+        case "轻微":
+          return "text-success";
+        default:
+          return "";
+      }
+    }
+  }
+  return "text-info"; // 默认颜色
+};
+
+const environmentFileTimer = useIntervalFn(() => {
+  environmentFileTimer.pause();
+  environmentFileFun().finally(()=>{
+    environmentFileTimer.resume();
+  })
+}, 5000)
 
 //历史告警统计
 let bigscreenLBChart: any = null;
@@ -167,6 +262,12 @@ const bigscreenLBoption = {
     axisLabel: {
       color: "#ffffff",
     },
+  },
+  tooltip: {
+					trigger: 'axis', //坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用
+					axisPointer: {// 坐标轴指示器，坐标轴触发有效
+						type: 'line' // 默认为直线，可选为：'line' | 'shadow'
+					}
   },
   series: [
     {
@@ -205,16 +306,27 @@ const historyStatistics = async () => {
 //设备数据
 const equipmentFormData = ref({
   pageNum: 1,
-  pageSize: 10000,
+  pageSize: 20,
   orderColumn: "createTime",
   orderDirection: "descending",
 });
 const equipmentlist = ref<any[]>([]);
 const equipmentListFun = async () => {
-  const { data } = await thresholdList(equipmentFormData.value);
+  // const { data } = await thresholdList(equipmentFormData.value);
+  // let list = data.data.rows;
+  // equipmentlist.value = list;
+  const {data} = await thresholdDataList(equipmentFormData.value);
+  console.log("dadad",data)
   let list = data.data.rows;
   equipmentlist.value = list;
 };
+
+const equipmentListTimer = useIntervalFn(()=>{
+  equipmentListTimer.pause();
+  equipmentListFun().finally(()=>{
+    equipmentListTimer.resume();
+  })
+},5000)
 
 let bigscreenRTChart: any = null;
 const bigscreenRTRef = ref();
@@ -225,6 +337,12 @@ const bigscreenRToption = {
     right: "6%",
     bottom: "6%",
     containLabel: true,
+  },
+  tooltip: {
+					trigger: 'axis', //坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用
+					axisPointer: {// 坐标轴指示器，坐标轴触发有效
+						type: 'line' // 默认为直线，可选为：'line' | 'shadow'
+					}
   },
   xAxis: {
     type: "category",
@@ -265,10 +383,10 @@ const powerByAreaTotalStaticData = ref({
   type: "电",
 });
 const powerByAreaTotalStaticFun = async () => {
-  const { data } = await powerByAreaTotalStatic(
+  const { data } = await eventByAreaTotalStatic(
     powerByAreaTotalStaticData.value
   );
-  bigscreenRToption.xAxis.data = data.data.time;
+  bigscreenRToption.xAxis.data = data.data.times;
   bigscreenRToption.series[0].data = data.data.data;
   if (bigscreenRTRef.value) {
     bigscreenRTChart = echarts.init(bigscreenRTRef.value);
@@ -287,6 +405,10 @@ onMounted(() => {
   historyStatistics();
   powerByAreaTotalStaticFun();
 });
+
+onUnmounted(()=>{
+  environmentFileTimer.pause();
+})
 </script>
 
 <style lang="scss" scoped>
@@ -303,6 +425,22 @@ $design-height: 1080;
 
 @function adaptiveFontSize($px) {
   @return #{$px / $design-width * 100}vw;
+}
+
+.text-urgent {
+  color: #f53f3f !important;
+}
+.text-important {
+  color: #ff7d00 !important;
+}
+.text-warning {
+  color: #fadc19 !important;
+}
+.text-info {
+  color: #168cff !important;
+}
+.text-success {
+  color: #00b42a !important;
 }
 
 .bigscreen_lt,

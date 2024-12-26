@@ -319,7 +319,7 @@ const alarmInformationlistFun = async () => {
 const receiveFormData = ref({
   materialName: "",
   pageNum: 1,
-  pageSize: 10000,
+  pageSize: 20,
   orderColumn: "createTime",
   orderDirection: "descending",
 });
@@ -340,7 +340,7 @@ const rbcanleClick = () => {
 const receiveFormData2 = ref({
   materialName: "",
   pageNum: 1,
-  pageSize: 10000,
+  pageSize: 20,
   orderColumn: "createTime",
   orderDirection: "descending",
 });
@@ -420,7 +420,7 @@ const materiaStatus = ref("week");
 const materialsId = ref<number | null>(null);
 const materialFiles = ref({
   pageNum: 1,
-  pageSize: 10000,
+  pageSize: 20,
   orderColumn: "createTime",
   orderDirection: "descending",
 });
@@ -719,8 +719,8 @@ const bigscreenRCoption = {
 const receivestatisticsData = ref({
   materialsId: null,
   materialsName: "",
-  startTime: dayjs().subtract(7, 'day').format("YYYY-MM-DD"),
-  endTime: dayjs().format("YYYY-MM-DD"),
+  startTime: dayjs().subtract(6, 'day').startOf("day").format("YYYY-MM-DD HH:mm:ss"),
+  endTime: dayjs().endOf("day").format("YYYY-MM-DD HH:mm:ss"),
 });
 const receivestatisticsFun = async () => {
   const { data } = await receivestatistics(receivestatisticsData.value);
@@ -731,35 +731,36 @@ const receivestatisticsFun = async () => {
     bigscreenRCChart = echarts.init(bigscreenRCRef.value);
     bigscreenRCChart.setOption(bigscreenRCoption);
   }
+  console.log("====================asd")
 };
 const timeLeftClick = () => {
   const currentStart = dayjs(
     receivestatisticsData.value.startTime,
-    "YYYY-MM-DD"
+    "YYYY-MM-DD HH:mm:ss"
   );
   receivestatisticsData.value.startTime = currentStart
-    .subtract(7, "day")
-    // .startOf("month")
-    .format("YYYY-MM-DD");
+    .subtract(6, "day")
+    .startOf("day")
+    .format("YYYY-MM-DD HH:mm:ss");
   receivestatisticsData.value.endTime = currentStart
     // .subtract(7, "day")
-    // .endOf("month")
-    .format("YYYY-MM-DD");
+    .endOf("day")
+    .format("YYYY-MM-DD HH:mm:ss");
   receivestatisticsFun(); // 更新数据
 };
 const timeRightClick = () => {
   const currentStart = dayjs(
     receivestatisticsData.value.startTime,
-    "YYYY-MM-DD"
+    "YYYY-MM-DD HH:mm:ss"
   );
   receivestatisticsData.value.startTime = currentStart
-    .add(7, "day")
-    // .startOf("month")
-    .format("YYYY-MM-DD");
+    .add(6, "day")
+    .startOf("day")
+    .format("YYYY-MM-DD HH:mm:ss");
   receivestatisticsData.value.endTime = currentStart
-    .add(14, "day")
-    // .endOf("month")
-    .format("YYYY-MM-DD");
+    .add(12, "day")
+    .endOf("day")
+    .format("YYYY-MM-DD HH:mm:ss");
   receivestatisticsFun(); // 更新数据
 };
 

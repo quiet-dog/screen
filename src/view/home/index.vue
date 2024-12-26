@@ -324,7 +324,7 @@ const rtcanleClick = () => {
 const policiesFormData = ref({
   policiesName: "",
   pageNum: 1,
-  pageSize: 10000,
+  pageSize: 20,
   orderColumn: "createTime",
   orderDirection: "descending",
 });

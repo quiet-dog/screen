@@ -14,7 +14,16 @@
           <span>数值</span>
           <span>时间</span>
         </div>
-        <div
+        <div class="bigscreen_lt_bottom_neib">
+          <Vue3SeamlessScroll
+            :list="equipmentlist"
+            :class-option="{
+              step: 5,
+            }"
+            hover
+            class="scrool"
+          >
+          <div
           class="bigscreen_lt_bottom_nei_b"
           v-for="(item, index) in environmentFileList"
         >
@@ -23,6 +32,18 @@
           <span :class="getValueColorClass(item)" >{{ item.value }}</span>
           <span>{{ item.createTime }}</span>
         </div>
+          </Vue3SeamlessScroll>
+        </div>
+  
+        <!-- <div
+          class="bigscreen_lt_bottom_nei_b"
+          v-for="(item, index) in environmentFileList"
+        >
+          <span>{{ `${item?.environment?.description}-${item?.environment?.unitName}` }}</span>
+          <span>{{ item?.environment?.tag }}</span>
+          <span :class="getValueColorClass(item)" >{{ item.value }}</span>
+          <span>{{ item.createTime }}</span>
+        </div> -->
       </div>
     </div>
   </div>
@@ -503,6 +524,11 @@ $design-height: 1080;
     .bigscreen_lt_bottom_nei {
       width: adaptiveWidth(407);
       margin: 0 auto;
+      .bigscreen_lt_bottom_neib{
+        width: 100%;
+        height: adaptiveHeight(350);
+        overflow: hidden;
+      }
       .bigscreen_lt_bottom_nei_t {
         width: 100%;
         height: adaptiveHeight(30);

@@ -147,6 +147,7 @@ import {
 } from "../../api/environment";
 import center from "../../components/center.vue";
 import img9 from "../../../public/img/叉号.png";
+import { useIntervalFn } from "@vueuse/core";
 
 const zsRadio =ref("week");
 const zsRadioChange = async () => {
@@ -250,7 +251,7 @@ const powerByTypeStatisticsFun = async () => {
 //数据展示
 const environmentFileFormData = ref({
   pageNum: 1,
-  pageSize: 10000,
+  pageSize: 20,
   orderColumn: "createTime",
   orderDirection: "descending",
 });
@@ -265,6 +266,12 @@ const environmentFileFun = async () => {
     };
   });
 };
+const  environmentFileTimer = useIntervalFn(()=>{
+  environmentFileTimer.pause();
+  environmentFileFun().finally(()=>{
+    environmentFileTimer.resume();
+  })
+},5000)
 const environmentFileDialog = ref(false);
 const environmentFileDialogRef = ref(null);
 

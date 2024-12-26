@@ -10,9 +10,8 @@
       <div class="bigscreen_lt_bottomnei">
         <Vue3SeamlessScroll
           :list="ltequipmentlist"
-          :class-option="{
-            step: 5,
-          }"
+          :step="1"
+          :singleHeight="70"
           hover
           class="scrool"
         >
@@ -27,13 +26,17 @@
                 backgroundSize: '100% 100%',
               }"
             >
-              <span>{{ item.equipmentCode }}</span>
+              <span>{{ item?.equipment?.equipmentCode }}</span>
               <span
                 :style="{
-                  color: index % 2 === 0 ? '#00FFF9' : '#FFBCC0',
+                  color: item.back  !== '/img/红色背景.png' ? '#00FFF9' : '#FFBCC0',
                 }"
               >
-                {{ item.equipmentName }}
+                {{ item?.equipment?.equipmentName }}
+              </span>
+              <span style="color: white;" >
+                {{ item.equipmentData +""+item?.threshold?.unit }}
+                <!-- {{ item?.threshold?.unitName }} -->
               </span>
             </div>
           </div>
@@ -351,7 +354,7 @@
   <div v-if="rcStatus" class="rctDialog">
     <div class="rctDialog_top">
       <span>维修统计分析</span>
-      <ElInput v-model="yzInput" @keydown.enter="yzRadioChange" class="inputcss yzInput"  />
+      <ElInput placeholder="请输入设备编号" v-model="yzInput"  @keydown.enter="yzRadioChange" class="inputcss yzInput"  />
       <el-radio-group v-model="yzRadio"  class="group yzRadio" @change="yzRadioChange">
         <el-radio-button label="周" value="week" />
         <el-radio-button label="年" value="year" />
@@ -391,6 +394,9 @@ import { Vue3SeamlessScroll } from "vue3-seamless-scroll";
 import img9 from "../../../public/img/叉号.png";
 import { getChannelListApi, getStreamUrlApi } from "../../api/video";
 import Video from "../home/components/Video.vue";
+import { thresholdDataList } from "../../api/riskassessment";
+import { useIntervalFn } from '@vueuse/core'
+
 
 const rtStatus = ref(false);
 const videoRef =ref();
@@ -417,30 +423,72 @@ const rtcanleClick = () => {
 const ltequipmentFormData = ref({
   equipmentName: "",
   pageNum: 1,
-  pageSize: 10000,
+  pageSize: 20,
   orderColumn: "createTime",
   orderDirection: "descending",
 });
 const ltequipmentlist = ref<any[]>([]);
 const ltequipmentListFun = async () => {
-  const { data } = await equipmentList(ltequipmentFormData.value);
+  // const { data } = await equipmentList(ltequipmentFormData.value);
+  // let list = data.data.rows;
+  // let img = ["/img/正常状态.png", "/img/异常状态.png"];
+  // let back = ["/img/绿色背景.png", "/img/红色背景.png"];
+  // ltequipmentlist.value = list.map((item, index) => {
+  //   return {
+  //     ...item,
+  //     img: img[index % img.length],
+  //     back: back[index % back.length],
+  //   };
+  // });
+  const {data} = await thresholdDataList(ltequipmentFormData.value);
   let list = data.data.rows;
-  let img = ["/img/正常状态.png", "/img/异常状态.png"];
-  let back = ["/img/绿色背景.png", "/img/红色背景.png"];
-  ltequipmentlist.value = list.map((item, index) => {
-    return {
-      ...item,
-      img: img[index % img.length],
-      back: back[index % back.length],
-    };
+  ltequipmentlist.value  = list.map((item,index)=>{
+    if (!item.threshold?.values?.length){
+      return {
+        ...item,
+        img: "/img/正常状态.png",
+        back: "/img/绿色背景.png",
+      }
+    }
+
+  const value = Number(item.equipmentData);
+  const thresholds = item.threshold.values;
+
+  // 按照level等级排序
+  const sortedThresholds = [...thresholds].sort((a, b) => {
+    const levelA = Number(a.level.replace(/[^0-9]/g, ""));
+    const levelB = Number(b.level.replace(/[^0-9]/g, ""));
+    return levelB - levelA;
   });
+  for (const threshold of sortedThresholds) {
+    if (value >= threshold.min && value <= threshold.max) {
+      // 根据不同等级返回不同颜色
+      return {
+        ...item,
+        img: `/img/异常状态.png`,
+        back: `/img/红色背景.png`,
+      }
+    }
+  }
+  return {
+    ...item,
+    img: `/img/正常状态.png`,
+    back: `/img/绿色背景.png`,
+  }
+  })
 };
+const ltequipmentlistTimer = useIntervalFn(()=>{
+  ltequipmentlistTimer.pause();
+  ltequipmentListFun().finally(()=>{
+    ltequipmentlistTimer.resume();
+  })
+},5000)
 
 //设备台账
 const equipmentFormData = ref({
   equipmentName: "",
   pageNum: 1,
-  pageSize: 10000,
+  pageSize: 20,
   orderColumn: "createTime",
   orderDirection: "descending",
 });
@@ -569,7 +617,7 @@ const cascaderChange = (val) => {
 const repairformData = ref<equipmentRepairListRes>({
   equipmentCode: "",
   pageNum: 1,
-  pageSize: 10000,
+  pageSize: 20,
   orderColumn: "createTime",
   orderDirection: "descending",
 });
@@ -670,7 +718,7 @@ const rctcanleClick = () => {
 //巡检记录
 const inspectionformData = ref<dailyInspectionRes>({
   pageNum: 1,
-  pageSize: 10000,
+  pageSize: 20,
   orderColumn: "createTime",
   orderDirection: "descending",
 });
@@ -718,6 +766,13 @@ const getVideoList = () => {
     videoList.value = res.data.data.List;
   });
 };
+
+const jianceTimer = useIntervalFn(()=>{
+  jianceTimer.pause();
+  ltequipmentListFun().finally(()=>{
+    jianceTimer.resume();
+  })
+},10000)
 
 window.onresize = function () {
   bigscreenLBChart.resize();
@@ -835,6 +890,11 @@ $design-height: 1080;
             &:nth-child(2) {
               font-family: youshe;
               font-size: adaptiveFontSize(20);
+            }
+            &:nth-child(3) {
+              // font-family: youshe;
+              font-size: adaptiveFontSize(12);
+              margin-left: adaptiveFontSize(30);
             }
           }
         }

@@ -421,6 +421,8 @@ import { alarmEventsList } from "../../api/incident";
 import center from "../../components/center.vue";
 import img9 from "../../../public/img/叉号.png";
 import { Vue3SeamlessScroll } from "vue3-seamless-scroll";
+import { useIntervalFn } from '@vueuse/core'
+
 
 const bigscreenLBRef = ref();
 const bigscreenLBoption = {
@@ -611,7 +613,7 @@ function createAreaStyle(startColor: string, endColor: string) {
 //工艺档案
 const archiveFormData = ref({
   pageNum: 1,
-  pageSize: 10000,
+  pageSize: 20,
   orderColumn: "createTime",
   orderDirection: "descending",
 });
@@ -623,6 +625,12 @@ const archivelistFun = async () => {
     return { ...item, status: false };
   });
 };
+const archiveTimer = useIntervalFn(()=>{
+  archiveTimer.pause();
+  archivelistFun().finally(()=>{
+    archiveTimer.resume();
+  })
+},5000)
 const rbClick = (item: any) => {
   archivelist.value.forEach((v) => {
     if (item.craftArchiveId == v.craftArchiveId) {
@@ -700,7 +708,7 @@ const lbcanleClick = (item: any) => {
 const alarmEventsFormData = ref({
   type: "工艺节点报警",
   pageNum: 1,
-  pageSize: 10000,
+  pageSize: 20,
   orderColumn: "createTime",
   orderDirection: "descending",
 });
@@ -740,11 +748,18 @@ const alarmEventsListFun = async () => {
   });
 };
 
+const alarmEventsTimer = useIntervalFn(()=>{
+  alarmEventsTimer.pause();
+  alarmEventsListFun().finally(()=>{
+    alarmEventsTimer.resume();
+  })
+},5000)
+
 //工艺流程图
 const processFormData = ref({
   craftArchiveId: null,
   pageNum: 1,
-  pageSize: 10000,
+  pageSize: 20,
   orderColumn: "createTime",
   orderDirection: "descending",
 });
@@ -756,6 +771,13 @@ const processlistFun = async () => {
   processTotal.value = data.data.total;
   processlist.value = data.data.rows;
 };
+
+const processlistTimer = useIntervalFn(()=>{
+  processlistTimer.pause();
+  processlistFun().finally(()=>{
+    processlistTimer.resume();
+  })
+},5000)
 const rtClcik = (item) => {
   processlist.value.forEach((v) => {
     if (item.craftProcessId == v.craftProcessId) {

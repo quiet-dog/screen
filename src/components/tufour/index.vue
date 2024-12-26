@@ -35,7 +35,7 @@ const deviceStore = useDeviceStore();
   <div class="main">
     <div class="my-container">
       <img class="my-img" style="max-width: 100%;" ref="tuRef" @load="urlInfo" :src="BgFour" alt="" srcset="">
-      <template v-for="(item, index) in deviceStore.tuFour">
+      <template v-for="(item, index) in deviceStore.tuTwo">
         <ElPopover  v-model:visible="item.showPopover" :width="500">
           <template #reference>
             <div class="device-1" :style="deviceStyles[index]?.style"></div>

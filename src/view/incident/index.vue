@@ -338,6 +338,16 @@ const bigscreenLBoption = {
       },
     },
   ],
+  tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                        type: 'line',        // 默认为直线，可选为：'line' | 'shadow' 'cross'
+                        lable:{
+                        }
+                    },
+                 
+                },
+
 };
 
 let bigscreenLCChart: any = null;
@@ -383,7 +393,7 @@ const bigscreenLCoption = {
 const sopFormData = ref({
   name: "",
   pageNum: 1,
-  pageSize: 10000,
+  pageSize: 20,
   orderColumn: "createTime",
   orderDirection: "descending",
 });
@@ -412,7 +422,7 @@ const previewcanleClick2 = (item: any) => {
 const policiesFormData = ref({
   policiesName: "",
   pageNum: 1,
-  pageSize: 10000,
+  pageSize: 20,
   orderColumn: "createTime",
   orderDirection: "descending",
 });
@@ -445,7 +455,7 @@ const previewcanleClick = (item: any) => {
 const alarmEventsFormData = ref({
   type: "",
   pageNum: 1,
-  pageSize: 10000,
+  pageSize: 20,
   orderColumn: "createTime",
   orderDirection: "descending",
 });
@@ -504,8 +514,8 @@ const zxChangeSelect = () => {
 };
 
 const areaStatisticsFormData = ref({
-  startTime: dayjs().subtract(7,"day").format("YYYY-MM-DD"),
-  endTime: dayjs().format("YYYY-MM-DD"),
+  startTime: dayjs().subtract(6,"day").startOf('day').format("YYYY-MM-DD HH:mm:ss"),
+  endTime: dayjs().endOf("day").format("YYYY-MM-DD HH:mm:ss"),
 });
 const areaStatisticsFun = async () => {
   const { data } = await areaStatistics(areaStatisticsFormData.value);
@@ -523,27 +533,29 @@ const areaStatisticsFun = async () => {
 const timeLeftClick = () => {
   const currentStart = dayjs(
     areaStatisticsFormData.value.startTime,
-    "YYYY-MM-DD"
+    "YYYY-MM-DD HH:mm:ss"
   );
   areaStatisticsFormData.value.startTime = currentStart
-    .subtract(7, "day")
-    .format("YYYY-MM-DD");
+    .subtract(6, "day").startOf("day")
+    .format("YYYY-MM-DD HH:mm:ss");
   areaStatisticsFormData.value.endTime = currentStart
-    .format("YYYY-MM-DD");
+  .endOf("day")
+    .format("YYYY-MM-DD HH:mm:ss");
   areaStatisticsFun(); // 更新数据
 };
 const timeRightClick = () => {
   const currentStart = dayjs(
     areaStatisticsFormData.value.startTime,
-    "YYYY-MM-DD"
+    "YYYY-MM-DD HH:mm:ss"
   );
   areaStatisticsFormData.value.startTime = currentStart
-    .add(7, "day")
-    .format("YYYY-MM-DD");
+    .add(6, "day")
+    .startOf("day")
+    .format("YYYY-MM-DD HH:mm:ss");
   areaStatisticsFormData.value.endTime = currentStart
-    .add(14, "day")
-    // .endOf("month")
-    .format("YYYY-MM-DD");
+    .add(12, "day")
+    .endOf("day")
+    .format("YYYY-MM-DD HH:mm:ss");
   areaStatisticsFun(); // 更新数据
 };
 

@@ -16,11 +16,8 @@
           <span>位号</span>
           <span>信号</span>
         </div>
-        <div
-          class="bigscreen_lt_bottom_nei_b"
-          v-for="(item, index) in environmentFileList"
-          @click="ltClick2(item, index)"
-        >
+        <div class="bigscreen_lt_bottom_nei_b" v-for="(item, index) in environmentFileList"
+          @click="ltClick2(item, index)">
           <span>{{ `${item.description}-${item.unitName}` }}</span>
           <span>{{ item.tag }}</span>
           <span>{{ item.esignal }}</span>
@@ -34,11 +31,7 @@
         <img src="/public/img/光标.png" alt="" />
         <span>当前总功耗</span>
       </div>
-      <el-radio-group
-        v-model="powerByTypeStatisticsData.type"
-        @change="powerByTypeStatisticsFun"
-        class="group"
-      >
+      <el-radio-group v-model="powerByTypeStatisticsData.type" @change="powerByTypeStatisticsFun" class="group">
         <el-radio-button label="电" value="电" />
         <el-radio-button label="水" value="水" />
       </el-radio-group>
@@ -54,35 +47,20 @@
         <img src="/public/img/光标.png" alt="" />
         <span>历史功耗</span>
       </div>
-      <el-radio-group
-        v-model="powerStaticData.dayType"
-        @change="powerStaticFun"
-        class="group"
-      >
+      <el-radio-group v-model="powerStaticData.dayType" @change="powerStaticFun" class="group">
         <el-radio-button label="周" value="week" />
         <el-radio-button label="年" value="year" />
       </el-radio-group>
     </div>
     <div class="bigscreen_rt_bottom">
-      <el-select
-        size="small"
-        class="selectcss"
-        v-model="powerStaticData.type"
-        @change="powerStaticFun"
-        style="
+      <el-select size="small" class="selectcss" v-model="powerStaticData.type" @change="powerStaticFun" style="
           width: 80px;
           position: absolute;
           right: 20px;
           top: 15px;
           z-index: 99;
-        "
-      >
-        <el-option
-          v-for="item in options2"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        />
+        ">
+        <el-option v-for="item in options2" :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
       <div class="bigscreen_rt_bottom_nei" ref="bigscreenRTRef"></div>
     </div>
@@ -93,11 +71,7 @@
         <img src="/public/img/光标.png" alt="" />
         <span>区域环境指标</span>
       </div>
-      <el-radio-group
-        v-model="powerByAreaTotalStaticData.dayType"
-        @change="powerByAreaTotalStaticFun"
-        class="group"
-      >
+      <el-radio-group v-model="powerByAreaTotalStaticData.dayType" @change="powerByAreaTotalStaticFun" class="group">
         <el-radio-button label="周" value="week" />
         <el-radio-button label="年" value="year" />
       </el-radio-group>
@@ -110,27 +84,24 @@
   <div v-if="ltstatus" class="ltDialog">
     <div class="ltDialog_top">
       <span>报警历史分析</span>
-      <el-radio-group v-model="envrionmentStatisticsData.dayType"  class="group yzRadio" @change="zsRadioChange">
+      <el-radio-group v-model="envrionmentStatisticsData.dayType" class="group yzRadio" @change="zsRadioChange">
         <el-radio-button label="周" value="week" />
         <el-radio-button label="月" value="month" />
         <el-radio-button label="年" value="year" />
       </el-radio-group>
       <img :src="img9" alt="" srcset="" @click="ltcloneClick" />
-    
+
     </div>
     <div class="ltDialog_bottom" ref="bigscreenLtdialogRef"></div>
   </div>
   <!-- <template v-for="(item, index) in environmentFileList"> -->
-    <div v-show="environmentFileDialog" class="ltTrendDialog">
-      <div class="ltTrendDialog_top">
-        <span>趋势分析</span>
-        <img :src="img9" alt="" srcset="" @click="ltcanleClick2(item, index)" />
-      </div>
-      <div
-        class="ltTrendDialog_bottom"
-        ref="environmentFileDialogRef"
-      ></div>
+  <div v-show="environmentFileDialog" class="ltTrendDialog">
+    <div class="ltTrendDialog_top">
+      <span>趋势分析</span>
+      <img :src="img9" alt="" srcset="" @click="ltcanleClick2(item, index)" />
     </div>
+    <div class="ltTrendDialog_bottom" ref="environmentFileDialogRef"></div>
+  </div>
   <!-- </template> -->
 </template>
 
@@ -149,7 +120,7 @@ import center from "../../components/center.vue";
 import img9 from "../../../public/img/叉号.png";
 import { useIntervalFn } from "@vueuse/core";
 
-const zsRadio =ref("week");
+const zsRadio = ref("week");
 const zsRadioChange = async () => {
   zsEchartData();
 };
@@ -266,12 +237,12 @@ const environmentFileFun = async () => {
     };
   });
 };
-const  environmentFileTimer = useIntervalFn(()=>{
+const environmentFileTimer = useIntervalFn(() => {
   environmentFileTimer.pause();
-  environmentFileFun().finally(()=>{
+  environmentFileFun().finally(() => {
     environmentFileTimer.resume();
   })
-},5000)
+}, 5000)
 const environmentFileDialog = ref(false);
 const environmentFileDialogRef = ref(null);
 
@@ -329,7 +300,7 @@ const envrionmentStatisticsFun = async () => {
   bigscreenLtdialogoption.xAxis.data = data.data.unitNames;
   bigscreenLtdialogoption.series[0].data = data.data.datas;
 };
-const zsEchartData =async ()=>{
+const zsEchartData = async () => {
   await envrionmentStatisticsFun();
   if (bigscreenLtdialogRef.value) {
     bigscreenLtdialogChart = echarts.init(bigscreenLtdialogRef.value);
@@ -411,10 +382,10 @@ const ltDialogoption = {
     },
   ],
   tooltip: {
-					trigger: 'item', //坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用
-					axisPointer: {// 坐标轴指示器，坐标轴触发有效
-						type: 'line' // 默认为直线，可选为：'line' | 'shadow'
-					}
+    trigger: 'item', //坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用
+    axisPointer: {// 坐标轴指示器，坐标轴触发有效
+      type: 'line' // 默认为直线，可选为：'line' | 'shadow'
+    }
   },
 };
 const historyStatisticsFormData = ref({
@@ -539,6 +510,7 @@ const bigscreenRToption = {
   yAxis: {
     type: "value",
     nameTextStyle: {
+      // 黑色
       color: "#ffffff",
       padding: [0, 30, 5, 0],
     },
@@ -561,7 +533,7 @@ const bigscreenRToption = {
           show: true,
           position: "top",
           fontSize: 14,
-          color: "#101010",
+          color: "white",
           offset: [0, -10],
         },
       },
@@ -628,12 +600,12 @@ const bigscreenRToption = {
     },
   ],
   tooltip: {
-					trigger: 'item', //坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用
-					axisPointer: {// 坐标轴指示器，坐标轴触发有效
-						type: 'line' // 默认为直线，可选为：'line' | 'shadow'
-					}
+    trigger: 'item', //坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用
+    axisPointer: {// 坐标轴指示器，坐标轴触发有效
+      type: 'line' // 默认为直线，可选为：'line' | 'shadow'
+    }
   },
-  
+
 };
 const powerStaticData = ref({
   des: "",
@@ -694,10 +666,10 @@ const bigscreenRBoption = {
     },
   ],
   tooltip: {
-					trigger: 'axis', //坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用
-					axisPointer: {// 坐标轴指示器，坐标轴触发有效
-						type: 'line' // 默认为直线，可选为：'line' | 'shadow'
-					}
+    trigger: 'axis', //坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用
+    axisPointer: {// 坐标轴指示器，坐标轴触发有效
+      type: 'line' // 默认为直线，可选为：'line' | 'shadow'
+    }
   },
 };
 const powerByAreaTotalStaticData = ref({
@@ -757,6 +729,7 @@ $design-height: 1080;
   width: adaptiveWidth(443);
   height: adaptiveHeight(445);
 }
+
 .bigscreen_lt {
   position: absolute;
   top: adaptiveHeight(91);
@@ -764,6 +737,7 @@ $design-height: 1080;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
   .bigscreen_lt_top {
     width: 100%;
     height: adaptiveHeight(40);
@@ -772,28 +746,33 @@ $design-height: 1080;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     .bigscreen_lt_top_l {
       display: flex;
       align-items: center;
+
       img {
         margin-left: adaptiveWidth(11);
       }
+
       span {
         font-weight: 600;
         font-size: adaptiveFontSize(16);
         text-align: center;
         font-style: normal;
         text-transform: none;
-        background: linear-gradient(
-          to bottom,
-          #c7e5fd 42%,
-          #3582c7 100%
-        ); /* 渐变背景 */
-        background-clip: text; /* 让背景应用到文本 */
-        -webkit-text-fill-color: transparent; /* 使文本颜色透明 */
+        background: linear-gradient(to bottom,
+            #c7e5fd 42%,
+            #3582c7 100%);
+        /* 渐变背景 */
+        background-clip: text;
+        /* 让背景应用到文本 */
+        -webkit-text-fill-color: transparent;
+        /* 使文本颜色透明 */
         padding-left: adaptiveWidth(10);
       }
     }
+
     .bigscreen_lt_top_r {
       color: #ffffff;
       font-size: adaptiveFontSize(14);
@@ -801,15 +780,18 @@ $design-height: 1080;
       cursor: pointer;
     }
   }
+
   .bigscreen_lt_bottom {
     width: 100%;
     height: adaptiveHeight(406);
     margin-top: adaptiveHeight(5);
     background: url("/public/img/bigback.png") no-repeat;
     background-size: 100% 100%;
+
     .bigscreen_lt_bottom_nei {
       width: adaptiveWidth(407);
       margin: 0 auto;
+
       .bigscreen_lt_bottom_nei_t {
         width: 100%;
         height: adaptiveHeight(30);
@@ -819,6 +801,7 @@ $design-height: 1080;
         display: flex;
         justify-content: space-between;
         align-items: center;
+
         span {
           width: 33%;
           color: #9eabb7;
@@ -826,6 +809,7 @@ $design-height: 1080;
           text-align: center;
         }
       }
+
       .bigscreen_lt_bottom_nei_b {
         width: 100%;
         height: adaptiveHeight(33);
@@ -834,14 +818,18 @@ $design-height: 1080;
         align-items: center;
         margin-top: adaptiveHeight(5);
         cursor: pointer;
+
         span {
           width: 33%;
           color: #ffffff;
           font-size: adaptiveFontSize(12);
           text-align: center;
-          white-space: nowrap; /* 禁止换行 */
-          overflow: hidden; /* 超出内容隐藏 */
-          text-overflow: ellipsis; /* 显示省略号 */
+          white-space: nowrap;
+          /* 禁止换行 */
+          overflow: hidden;
+          /* 超出内容隐藏 */
+          text-overflow: ellipsis;
+          /* 显示省略号 */
         }
       }
     }
@@ -852,6 +840,7 @@ $design-height: 1080;
   position: absolute;
   bottom: adaptiveHeight(85);
   left: adaptiveWidth(26);
+
   .bigscreen_lb_top {
     width: 100%;
     height: adaptiveHeight(40);
@@ -860,35 +849,41 @@ $design-height: 1080;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     .bigscreen_lb_top_l {
       display: flex;
       align-items: center;
+
       img {
         margin-left: adaptiveWidth(11);
       }
+
       span {
         font-weight: 600;
         font-size: adaptiveFontSize(16);
         text-align: center;
         font-style: normal;
         text-transform: none;
-        background: linear-gradient(
-          to bottom,
-          #c7e5fd 42%,
-          #3582c7 100%
-        ); /* 渐变背景 */
-        background-clip: text; /* 让背景应用到文本 */
-        -webkit-text-fill-color: transparent; /* 使文本颜色透明 */
+        background: linear-gradient(to bottom,
+            #c7e5fd 42%,
+            #3582c7 100%);
+        /* 渐变背景 */
+        background-clip: text;
+        /* 让背景应用到文本 */
+        -webkit-text-fill-color: transparent;
+        /* 使文本颜色透明 */
         padding-left: adaptiveWidth(10);
       }
     }
   }
+
   .bigscreen_lb_bottom {
     width: 100%;
     height: adaptiveHeight(406);
     margin-top: adaptiveHeight(5);
     background: url("/public/img/bigback.png") no-repeat;
     background-size: 100% 100%;
+
     .bigscreen_lb_bottom_nei {
       width: 100%;
       height: 100%;
@@ -900,6 +895,7 @@ $design-height: 1080;
   position: absolute;
   top: adaptiveHeight(91);
   right: adaptiveWidth(26);
+
   .bigscreen_rt_top {
     width: 100%;
     height: adaptiveHeight(40);
@@ -908,29 +904,34 @@ $design-height: 1080;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     .bigscreen_rt_top_l {
       display: flex;
       align-items: center;
+
       img {
         margin-left: adaptiveWidth(11);
       }
+
       span {
         font-weight: 600;
         font-size: adaptiveFontSize(16);
         text-align: center;
         font-style: normal;
         text-transform: none;
-        background: linear-gradient(
-          to bottom,
-          #c7e5fd 42%,
-          #3582c7 100%
-        ); /* 渐变背景 */
-        background-clip: text; /* 让背景应用到文本 */
-        -webkit-text-fill-color: transparent; /* 使文本颜色透明 */
+        background: linear-gradient(to bottom,
+            #c7e5fd 42%,
+            #3582c7 100%);
+        /* 渐变背景 */
+        background-clip: text;
+        /* 让背景应用到文本 */
+        -webkit-text-fill-color: transparent;
+        /* 使文本颜色透明 */
         padding-left: adaptiveWidth(10);
       }
     }
   }
+
   .bigscreen_rt_bottom {
     width: 100%;
     height: adaptiveHeight(406);
@@ -938,6 +939,7 @@ $design-height: 1080;
     background: url("/public/img/bigback.png") no-repeat;
     background-size: 100% 100%;
     position: relative;
+
     .bigscreen_rt_bottom_nei {
       width: 100%;
       height: 100%;
@@ -949,6 +951,7 @@ $design-height: 1080;
   position: absolute;
   bottom: adaptiveHeight(85);
   right: adaptiveWidth(26);
+
   .bigscreen_rb_top {
     width: 100%;
     height: adaptiveHeight(40);
@@ -957,25 +960,29 @@ $design-height: 1080;
     justify-content: space-between;
     align-items: center;
     background-size: 110% 110%;
+
     .bigscreen_rb_top_l {
       display: flex;
       align-items: center;
+
       img {
         margin-left: 11px;
       }
+
       span {
         font-weight: 600;
         font-size: adaptiveFontSize(16);
         text-align: center;
         font-style: normal;
         text-transform: none;
-        background: linear-gradient(
-          to bottom,
-          #c7e5fd 42%,
-          #3582c7 100%
-        ); /* 渐变背景 */
-        background-clip: text; /* 让背景应用到文本 */
-        -webkit-text-fill-color: transparent; /* 使文本颜色透明 */
+        background: linear-gradient(to bottom,
+            #c7e5fd 42%,
+            #3582c7 100%);
+        /* 渐变背景 */
+        background-clip: text;
+        /* 让背景应用到文本 */
+        -webkit-text-fill-color: transparent;
+        /* 使文本颜色透明 */
         padding-left: adaptiveWidth(10);
       }
     }
@@ -986,12 +993,14 @@ $design-height: 1080;
       margin-right: 11px;
     }
   }
+
   .bigscreen_rb_bottom {
     width: 100%;
     height: adaptiveHeight(406);
     margin-top: adaptiveHeight(5);
     background: url("/public/img/bigback.png") no-repeat;
     background-size: 100% 100%;
+
     .bigscreen_rb_bottom_nei {
       width: 100%;
       height: 100%;
@@ -1008,18 +1017,21 @@ $design-height: 1080;
   top: adaptiveHeight(100);
   left: adaptiveWidth(480);
   z-index: 10;
+
   .ltDialog_top {
     width: 100%;
     height: adaptiveHeight(45);
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     span {
       font-size: adaptiveFontSize(20);
       color: #ffffff;
       padding-left: adaptiveWidth(15);
       font-family: youshe;
     }
+
     img {
       width: adaptiveWidth(8);
       height: adaptiveHeight(8);
@@ -1027,11 +1039,13 @@ $design-height: 1080;
       cursor: pointer;
     }
   }
+
   .ltDialog_bottom {
     width: adaptiveWidth(420);
     height: adaptiveHeight(215);
   }
 }
+
 .ltTrendDialog {
   width: adaptiveWidth(440);
   height: adaptiveHeight(280);
@@ -1041,18 +1055,21 @@ $design-height: 1080;
   top: adaptiveHeight(100);
   left: adaptiveWidth(480);
   z-index: 10;
+
   .ltTrendDialog_top {
     width: 100%;
     height: adaptiveHeight(45);
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     span {
       font-size: adaptiveFontSize(20);
       color: #ffffff;
       padding-left: adaptiveWidth(15);
       font-family: youshe;
     }
+
     img {
       width: adaptiveWidth(8);
       height: adaptiveHeight(8);
@@ -1060,6 +1077,7 @@ $design-height: 1080;
       cursor: pointer;
     }
   }
+
   .ltTrendDialog_bottom {
     width: adaptiveWidth(420);
     height: adaptiveHeight(215);
@@ -1070,6 +1088,7 @@ $design-height: 1080;
   .el-select__wrapper {
     background-color: transparent !important;
   }
+
   .el-select__placeholder {
     color: #ffffff !important;
   }
@@ -1084,13 +1103,14 @@ $design-height: 1080;
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: none;
 }
+
 .scroll {
   height: adaptiveHeight(195);
   width: 100%;
   overflow: hidden;
 }
 
-.yzRadio{
+.yzRadio {
   position: relative;
   left: adaptiveWidth(100);
   top: adaptiveHeight(10);
@@ -1099,17 +1119,14 @@ $design-height: 1080;
 .group {
   margin-right: adaptiveWidth(11);
 }
-.group
-  :deep(
-    .el-radio-button.is-active
-      .el-radio-button__original-radio:not(:disabled)
-      + .el-radio-button__inner
-  ) {
+
+.group :deep(.el-radio-button.is-active .el-radio-button__original-radio:not(:disabled) + .el-radio-button__inner) {
   background: rgba(255, 255, 255, 0.8);
   color: rgba(7, 36, 57, 1);
   border-color: rgba(255, 255, 255, 0);
   font-size: adaptiveFontSize(12);
 }
+
 .group :deep(.el-radio-button .el-radio-button__inner) {
   padding: adaptiveWidth(2) adaptiveHeight(6);
   background: rgba(255, 255, 255, 0);

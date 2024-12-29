@@ -1,5 +1,5 @@
 <template>
-  <div class="bigscreen_lt">
+  <div @mouseenter="closeShow" class="bigscreen_lt" @click="closeShow">
     <div class="bigscreen_lt_top">
       <div class="bigscreen_lt_top_l">
         <img src="/public/img/光标.png" alt="" />
@@ -50,12 +50,47 @@
         <el-radio-button label="年" value="year" />
       </el-radio-group>
     </div>
+    <div v-show="hisShow" class="lb_table">
+      <ElTable style="width: 100%" height="100%" :data="hisList">
+        <el-table-column width="100" fixed prop="createTime" label="报警时间">
+          <template #default="{ row }">
+            <span>{{ historyStatisticsData.dayType === "week" ?
+              dayjs(row.createTime).format("hh:mm:ss") : dayjs(row.createTime).format("YYYY:MM:DD") }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column fixed width="80" prop="level" label="级别">
+          <template #default="{ row }">
+            <el-tag :style="getLevelStyle(row.level)" effect="plain" size="small">
+              {{ row.level ? row.level : "-" }}
+            </el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column prop="type" label="类型">
+          <template #default="{ row }">
+            <span>{{ row.type }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column width="100" prop="description" label="报警编号">
+          <template #default="{ row }">
+            <span>{{ row.eventId }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column width="200" prop="description" label="描述">
+          <template #default="{ row }">
+            <span>{{ row.description }}</span>
+          </template>
+        </el-table-column>
+
+
+      </ElTable>
+    </div>
     <div class="bigscreen_lb_bottom">
       <div class="bigscreen_lb_bottom_nei" ref="bigscreenLBRef"></div>
     </div>
   </div>
+
   <center></center>
-  <div class="bigscreen_rt">
+  <div @mouseenter="closeShow" class="bigscreen_rt">
     <div class="bigscreen_rt_top">
       <div class="bigscreen_rt_top_l">
         <img src="/public/img/光标.png" alt="" />
@@ -70,7 +105,7 @@
       <div class="bigscreen_rt_bottom_nei" ref="bigscreenRTRef"></div>
     </div>
   </div>
-  <div class="bigscreen_rb">
+  <div @mouseenter="closeShow" class="bigscreen_rb">
     <div class="bigscreen_rb_top">
       <div class="bigscreen_rb_top_l">
         <img src="/public/img/光标.png" alt="" />
@@ -114,7 +149,7 @@ import {
   powerByAreaTotalStatic,
 } from "../../api/environment";
 import { thresholdDataList, thresholdList } from "../../api/riskassessment";
-import { getstatistics } from "../../api/incident";
+import { alarmEventsList, getstatistics } from "../../api/incident";
 import center from "../../components/center.vue";
 import { Vue3SeamlessScroll } from "vue3-seamless-scroll";
 import dayjs from "dayjs";
@@ -183,7 +218,6 @@ const environmentFileFun = async () => {
   // environmentFileFormData.value.startTime = dayjs().format("YYYY-MM-DD");
   // environmentFileFormData.value.endTime = dayjs().add(1,"day").format("YYYY-MM-DD")
   const { data } = await environmentalDetectionList(environmentFileFormData.value);
-  console.log("aaaa", data)
   let list = data.data.rows.slice(0, 9);
   environmentFileList.value = list.map((item, index) => {
     return {
@@ -197,7 +231,6 @@ const environmentFileFun = async () => {
 const getValueColorClass = row => {
   const value = row.value;
   const alarmLevels = row.environment?.alarmlevels || [];
-  console.log("alarmLevels", row)
   for (const level of alarmLevels) {
     if (value >= level.min && value <= level.max) {
       switch (level.level) {
@@ -234,6 +267,78 @@ const environmentFileTimer = useIntervalFn(() => {
 //历史告警统计
 let bigscreenLBChart: any = null;
 const bigscreenLBRef = ref();
+let histData = ([])
+let hisStart = "";
+let hisEnd = "";
+let hisIndex = 0;
+let hisList = ref([])
+let hisDayType = ref("week");
+const hisShow = ref(false);
+// 修改报警级别样式映射函数
+const getLevelStyle = (level: string) => {
+  const colorMap = {
+    一级: {
+      color: "#F53F3F",
+      backgroundColor: "#FFECE8",
+      borderColor: "#F53F3F"
+    },
+    紧急: {
+      color: "#F53F3F",
+      backgroundColor: "#FFECE8",
+      borderColor: "#F53F3F"
+    },
+    二级: {
+      color: "#FF7D00",
+      backgroundColor: "#FFF3E8",
+      borderColor: "#FF7D00"
+    },
+    重要: {
+      color: "#FF7D00",
+      backgroundColor: "#FFF3E8",
+      borderColor: "#FF7D00"
+    },
+    三级: {
+      color: "#B99E00",
+      backgroundColor: "#FFF7CC",
+      borderColor: "#FADC19"
+    },
+    中度: {
+      color: "#B99E00",
+      backgroundColor: "#FFF7CC",
+      borderColor: "#FADC19"
+    },
+    四级: {
+      color: "#168CFF",
+      backgroundColor: "#E8F3FF",
+      borderColor: "#168CFF"
+    },
+    一般: {
+      color: "#168CFF",
+      backgroundColor: "#E8F3FF",
+      borderColor: "#168CFF"
+    },
+    五级: {
+      color: "#00B42A",
+      backgroundColor: "#E8FFEA",
+      borderColor: "#00B42A"
+    },
+
+    轻微: {
+      color: "#00B42A",
+      backgroundColor: "#E8FFEA",
+      borderColor: "#00B42A"
+    }
+  };
+  return (
+    colorMap[level] || {
+      color: "#000000",
+      backgroundColor: "transparent",
+      borderColor: "transparent"
+    }
+  );
+};
+
+const table = ref([]);
 const bigscreenLBoption = {
   grid: {
     left: "6%",
@@ -264,6 +369,25 @@ const bigscreenLBoption = {
     trigger: 'axis', //坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用
     axisPointer: {// 坐标轴指示器，坐标轴触发有效
       type: 'line' // 默认为直线，可选为：'line' | 'shadow'
+    },
+    formatter: function (params, index) {
+      // console.log("params", params, index)
+      // return `${params[0].name}<br/>${params[0].marker} ${params[0].seriesName} :${params[0].dataIndex}-- ${params[0].value}`;
+      // 获取原来的数据
+      // 获取数据的月份的开始和月的结束
+
+
+
+      let html = "";
+      if (histData.length === 0) {
+        return html;
+      }
+      histData.forEach((item) => {
+        const value = item.data[params[0].dataIndex];
+        const type = item.type;
+        html += `<div>${type}:${value}</div>`
+      });
+      return html;
     }
   },
   series: [
@@ -275,27 +399,70 @@ const bigscreenLBoption = {
       },
     },
   ],
+
 };
 const historyStatisticsData = ref({
   dayType: "week",
 });
+const isInit = ref(false)
+
 const historyStatistics = async () => {
   const { data } = await getstatistics({
     dayType: historyStatisticsData.value.dayType,
   });
 
   let sum = new Array(data.data[0].times.length).fill(0);
-  sum.forEach((item, index) => {
-    data.data.forEach((element) => {
-      item += element.data[index]
-    });
-  });
+  for (let i = 0; i < data.data.length; i++) {
+    for (let j = 0; j < data.data[i].data.length; j++) {
+      sum[j] += data.data[i].data[j];
+    }
+  }
+  histData = data.data;
+  // sum.forEach((item, index) => {
+  //   data.data.forEach((element) => {
+  //     item += element.data[index]
+  //   });
+  // });
   bigscreenLBoption.xAxis.data = data.data[0].times;
   bigscreenLBoption.series[0].data = sum;
   if (bigscreenLBRef.value) {
-    bigscreenLBChart = echarts.init(bigscreenLBRef.value);
+    if (!isInit.value) {
+      bigscreenLBChart = echarts.init(bigscreenLBRef.value);
+      bigscreenLBChart.off().on("click", params => {
+        console.log("params", params)
+        let cuData = "";
+        let enData = "";
+        hisShow.value = true;
+
+        if (hisIndex != params.dataIndex || hisDayType.value != historyStatisticsData.value.dayType) {
+          hisIndex = params.dataIndex;
+          hisDayType.value = historyStatisticsData.value.dayType;
+          if (historyStatisticsData.value.dayType === "week") {
+            // 将年份换成今年的年份
+            cuData = dayjs(params.name).startOf("day").format("YYYY-MM-DD").replace("2001", dayjs().format("YYYY"));
+            enData = dayjs(cuData).endOf("day").format("YYYY-MM-DD")
+          } else {
+            cuData = dayjs(params.name).startOf("month").format("YYYY-MM-DD")
+            enData = dayjs(cuData).endOf("month").format("YYYY-MM-DD")
+          }
+
+          hisStart = cuData;
+          hisEnd = enData;
+          alarmEventsList({
+            beginTime: cuData,
+            endTime: enData,
+            pageNum: 1,
+            pageSize: 1000
+          }).then((res) => {
+            hisList.value = res.data.data.rows;
+          })
+        }
+      });
+    }
+    isInit.value = true;
     bigscreenLBChart.setOption(bigscreenLBoption);
   }
+
 };
 
 const historyStatisticsTimer = useIntervalFn(() => {
@@ -318,7 +485,6 @@ const equipmentListFun = async () => {
   // let list = data.data.rows;
   // equipmentlist.value = list;
   const { data } = await thresholdDataList(equipmentFormData.value);
-  console.log("dadad", data)
   let list = data.data.rows;
   equipmentlist.value = list;
 };
@@ -401,6 +567,9 @@ const powerTimer = useIntervalFn(() => {
     powerTimer.resume();
   })
 }, 5000)
+const closeShow = () => {
+  hisShow.value = false;
+}
 
 window.onresize = function () {
   bigscreenLBChart.resize();
@@ -433,6 +602,16 @@ $design-height: 1080;
 
 @function adaptiveFontSize($px) {
   @return #{$px / $design-width * 100}vw;
+}
+
+.lb_table {
+  width: adaptiveWidth(500);
+  height: adaptiveHeight(400);
+  position: fixed;
+  left: adaptiveWidth(470);
+  top: adaptiveHeight(600);
+  z-index: 999;
+  background-color: red;
 }
 
 .text-urgent {

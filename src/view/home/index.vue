@@ -6,21 +6,12 @@
         <span>报警信息</span>
       </div>
     </div>
-    <div
-      class="bigscreen_lt_bottom"
-      @mouseenter="mouseEnterBaoJingXinxi"
-      @mouseleave="mouseLeaveBaoJingXinxi"
-    >
+    <div class="bigscreen_lt_bottom" @mouseenter="mouseEnterBaoJingXinxi" @mouseleave="mouseLeaveBaoJingXinxi">
       <div class="bigscreen_lt_bottom_nei">
-        <div
-          v-for="item in alarmEvnetListLt"
-          class="bigscreen_lt_nei"
-          :style="{
-            background: `url(${item.back}) no-repeat`,
-            'background-size': '100% 100%',
-          }"
-          @click="neiClick(item)"
-        >
+        <div v-for="item in alarmEvnetListLt" class="bigscreen_lt_nei" :style="{
+          background: `url(${item.back}) no-repeat`,
+          'background-size': '100% 100%',
+        }" @click="neiClick(item)">
           <span class="bigscreen_lt_nei_span">{{ item.type }}</span>
           <span class="bigscreen_lt_nei_span">{{ item.level }}</span>
           <span class="bigscreen_lt_nei_span">{{ item.createTime }}</span>
@@ -34,41 +25,24 @@
         <img src="/public/img/光标.png" alt="" />
         <span>事件报告</span>
       </div>
-      <el-input
-        class="inputcss"
-        placeholder="请输入事件类型"
-        v-model="alarmEventsFormData.type"
-        @change="alarmEventslistFun"
-        clearable
-        :prefix-icon="Search"
-      />
+      <el-input class="inputcss" placeholder="请输入事件类型" v-model="alarmEventsFormData.type" @change="alarmEventslistFun"
+        clearable :prefix-icon="Search" />
     </div>
     <div class="bigscreen_lc_bottom">
       <div class="bigscreen_lc_bottom_nei">
         <img src="/public/img/事件报告图标.png" alt="" />
         <div class="bigscreen_lc_bottom_r">
-          <Vue3SeamlessScroll
-            :list="alarmEventslist"
-            :class-option="{
-              step: 5,
-            }"
-            hover
-            class="scrool"
-          >
-            <div
-              v-for="(item, index) in alarmEventslist"
-              :key="index"
-              class="bigscreen_lc_bottom_rnei"
-            >
+          <Vue3SeamlessScroll :list="alarmEventslist" :class-option="{
+            step: 5,
+          }" hover class="scrool">
+            <div v-for="(item, index) in alarmEventslist" :key="index" class="bigscreen_lc_bottom_rnei">
               <ElTooltip :content="item.description">
                 <span>{{ item.description }}</span>
               </ElTooltip>
-              <div
-                :style="{
-                  background: ` url(${item.img}) no-repeat`,
-                  'background-size': '100% 100%',
-                }"
-              >
+              <div :style="{
+                background: ` url(${item.img}) no-repeat`,
+                'background-size': '100% 100%',
+              }">
                 <span v-if="item.type == '工艺节点报警'">工艺节点</span>
                 <span v-else>{{ item.type }}</span>
               </div>
@@ -101,14 +75,8 @@
         <span>监控报告</span>
       </div>
       <!-- @keyup.enter="getVideoList" -->
-      <el-input
-        class="inputcss"
-        v-model="channelQuery.name"
-        @keyup.enter="getVideoList"
-        style="width: 148px; height: 24px; margin-right: 11px"
-        placeholder="请输入监控点位"
-        :prefix-icon="Search"
-      />
+      <el-input class="inputcss" v-model="channelQuery.name" @keyup.enter="getVideoList"
+        style="width: 148px; height: 24px; margin-right: 11px" placeholder="请输入监控点位" :prefix-icon="Search" />
     </div>
     <div class="bigscreen_rt_bottom">
       <div class="bigscreen_rt_bottom_nei">
@@ -127,14 +95,8 @@
         <img src="/public/img/光标.png" alt="" />
         <span>政策法规</span>
       </div>
-      <el-input
-        class="inputcss"
-        placeholder="请输入政策法规名称"
-        :prefix-icon="Search"
-        clearable
-        v-model="policiesFormData.policiesName"
-        @change="policieslistFun"
-      />
+      <el-input class="inputcss" placeholder="请输入政策法规名称" :prefix-icon="Search" clearable
+        v-model="policiesFormData.policiesName" @change="policieslistFun" />
     </div>
     <div class="bigscreen_rc_bottom">
       <div class="bigscreen_rc_bottom_nei">
@@ -144,35 +106,20 @@
           <img style="margin-top: 70px" src="/public/img/圆形标记.png" alt="" />
         </div>
         <div class="bigscreen_rc_bottom_r">
-          <Vue3SeamlessScroll
-            :list="policieslist"
-            :class-option="{
-              step: 5,
-            }"
-            hover
-            class="scrool"
-          >
-            <div
-              v-for="(item, index) in policieslist"
-              @click="rcClick(item)"
-              :key="index"
-              class="bigscreen_rc_bottom_rnei"
-            >
+          <Vue3SeamlessScroll :list="policieslist" :class-option="{
+            step: 5,
+          }" hover class="scrool">
+            <div v-for="(item, index) in policieslist" @click="rcClick(item)" :key="index"
+              class="bigscreen_rc_bottom_rnei">
               <span style="color: rgba(172, 223, 255, 1); font-size: 11px">{{
                 dayjs(item.createTime).format("YYYY-MM-DD")
               }}</span>
-              <div
-                :style="{
-                  background: `url(${item.img}) no-repeat`,
-                  'background-size': '100% 100%',
-                }"
-              >
+              <div :style="{
+                background: `url(${item.img}) no-repeat`,
+                'background-size': '100% 100%',
+              }">
                 <span style="margin-left: 10px">{{ item.policiesName }}</span>
-                <img
-                  style="margin-right: 18px; cursor: pointer"
-                  src="/public/img/查看详情.png"
-                  alt=""
-                />
+                <img style="margin-right: 18px; cursor: pointer" src="/public/img/查看详情.png" alt="" />
               </div>
             </div>
           </Vue3SeamlessScroll>
@@ -197,12 +144,7 @@
   </div>
 
   <template v-for="item in alarmEvnetListLt">
-    <div
-      v-if="item.status"
-      class="ltDialog"
-      @mouseenter="mouseEnterBaoJingXinxi"
-      @mouseleave="mouseLeaveBaoJingXinxi"
-    >
+    <div v-if="item.status" class="ltDialog" @mouseenter="mouseEnterBaoJingXinxi" @mouseleave="mouseLeaveBaoJingXinxi">
       <div class="ltDialog_top">
         <span>报警信息详情</span>
         <img :src="img9" alt="" srcset="" @click="canleClick(item)" />
@@ -250,15 +192,8 @@
   <template v-for="(item, _index) in policieslist">
     <div v-if="item.status" class="preview">
       <div class="preview_top">
-        <span
-          >文件预览
-          <ElButton
-            size="large"
-            @click="() => download(item.paths[0].path)"
-            link
-            type="success"
-            text="success"
-          >
+        <span>文件预览
+          <ElButton size="large" @click="() => download(item.paths[0].path)" link type="success" text="success">
             <el-icon style="vertical-align: middle; font-size: 25px">
               <Download />
             </el-icon>
@@ -337,6 +272,12 @@ const policieslistFun = async () => {
     return { ...item, img: imgList[index % imgList.length], status: false };
   });
 };
+const policiesTimer = useIntervalFn(() => {
+  policiesTimer.pause();
+  policieslistFun().finally(() => {
+    policiesTimer.resume();
+  });
+}, 50000);
 const rcClick = (item: any) => {
   policieslist.value.forEach((v) => {
     if (item.policiesId == v.policiesId) {
@@ -620,6 +561,12 @@ const getstatisticsList = async () => {
     bigscreenRBChart.setOption(bigscreenRBoption);
   }
 };
+const rbRadioTimer = useIntervalFn(() => {
+  rbRadioTimer.pause();
+  getstatisticsList().finally(() => {
+    rbRadioTimer.resume();
+  });
+}, 50000);
 const rbRadioChange = (val: string) => {
   rbRadio.value = val;
   getstatisticsList();
@@ -722,6 +669,12 @@ const geteventTotalFun = async () => {
     bigscreenLBChart.setOption(bigscreenLBoption);
   }
 };
+const lbRadioTimer = useIntervalFn(() => {
+  lbRadioTimer.pause();
+  geteventTotalFun().finally(() => {
+    lbRadioTimer.resume();
+  });
+}, 50000);
 const lbRadioChange = (val: string) => {
   lbRadio.value = val;
   geteventTotalFun();
@@ -1392,14 +1345,17 @@ $design-height: 1080;
     // align-items: center;
     justify-content: center;
     overflow: hidden;
+
     .rtDialog_bottom_video {
-      :deep(#container){
+      :deep(#container) {
         width: adaptiveWidth(420);
         height: adaptiveHeight(215);
         object-fit: cover;
       }
+
       object-fit: cover;
     }
+
     img {
       width: 100%;
       height: adaptiveHeight(195);
@@ -1592,12 +1548,7 @@ $design-height: 1080;
   margin-right: adaptiveWidth(11);
 }
 
-.group
-  :deep(
-    .el-radio-button.is-active
-      .el-radio-button__original-radio:not(:disabled)
-      + .el-radio-button__inner
-  ) {
+.group :deep(.el-radio-button.is-active .el-radio-button__original-radio:not(:disabled) + .el-radio-button__inner) {
   background: rgba(255, 255, 255, 0.8);
   color: rgba(7, 36, 57, 1);
   border-color: rgba(255, 255, 255, 0);

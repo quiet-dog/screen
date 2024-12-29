@@ -7,18 +7,10 @@
       </div>
     </div>
     <div class="bigscreen_lt_bottom">
-      <div class="bigscreen_lt_bottom_neis">
-        <Vue3SeamlessScroll
-          :list="alarmInformationlist"
-          :step="1"
-          :singleHeight="70"
-          hover
-          class="scrool"
-        >
-          <div
-            class="bigscreen_lt_bottom_nei"
-            v-for="item in alarmInformationlist"
-          >
+      <div @mouseenter="alarmInfomationTimer.pause()" @mouseleave="alarmInfomationTimer.resume()"
+        class="bigscreen_lt_bottom_neis">
+        <Vue3SeamlessScroll :list="alarmInformationlist" :step="1" :singleHeight="70" hover class="scrool">
+          <div class="bigscreen_lt_bottom_nei" v-for="item in alarmInformationlist">
             <img :src="item.img" alt="" />
             <div class="bigscreen_lt_bottom_nei_r">
               <span style="padding-left: 25px">{{ item.materials?.name }}</span>
@@ -38,35 +30,22 @@
         <img src="/public/img/光标.png" alt="" />
         <span>库存信息</span>
       </div>
-      <el-radio-group
-        v-model="materialsStatisticsData.dayType"
-        class="group"
-        @change="materiaChange"
-      >
+      <el-radio-group v-model="materialsStatisticsData.dayType" class="group" @change="materiaChange">
         <el-radio-button label="周" value="week" />
         <el-radio-button label="年" value="year" />
       </el-radio-group>
     </div>
     <div class="bigscreen_lc_bottom">
-      <el-select
-        size="small"
-        class="selectcss"
-        v-model="materialsStatisticsData.materialsId"
-        @change="materialsChange"
+      <el-select size="small" class="selectcss" v-model="materialsStatisticsData.materialsId" @change="materialsChange"
         style="
           width: 80px;
           position: absolute;
           right: 20px;
           top: 15px;
           z-index: 100;
-        "
-      >
-        <el-option
-          v-for="item in materialFileslist"
-          :key="item.materialsId"
-          :label="item.name"
-          :value="item.materialsId"
-        />
+        ">
+        <el-option v-for="item in materialFileslist" :key="item.materialsId" :label="item.name"
+          :value="item.materialsId" />
       </el-select>
       <div class="bigscreen_lc_bottom_nei" ref="bigscreenLCRef"></div>
     </div>
@@ -77,13 +56,8 @@
         <img src="/public/img/光标.png" alt="" />
         <span>物料类型</span>
       </div>
-      <el-select
-        size="small"
-        class="selectcss"
-        v-model="materialsName"
-        @change="dosagetypeStatisticsFun"
-        style="width: 80px; position: absolute; right: 20px; z-index: 100"
-      >
+      <el-select size="small" class="selectcss" v-model="materialsName" @change="dosagetypeStatisticsFun"
+        style="width: 80px; position: absolute; right: 20px; z-index: 100">
         <el-option label="营养物质类" value="营养物质类" />
         <el-option label="反应调节类" value="反应调节类" />
         <el-option label="监测分析类" value="监测分析类" />
@@ -114,12 +88,7 @@
         <span>用量趋势分析</span>
       </div>
       <div class="pickerCss">
-        <img
-          src="/public/img/zuo.svg"
-          alt=""
-          @click="timeLeftClick"
-          style="margin-left: 5px"
-        />
+        <img src="/public/img/zuo.svg" alt="" @click="timeLeftClick" style="margin-left: 5px" />
         <span>
           {{ dayjs(receivestatisticsData.startTime).format("MM月DD日") }}
         </span>
@@ -127,34 +96,20 @@
         <span>
           {{ dayjs(receivestatisticsData.endTime).format("MM月DD日") }}
         </span>
-        <img
-          src="/public/img/you.svg"
-          alt=""
-          @click="timeRightClick"
-          style="margin-right: 5px"
-        />
+        <img src="/public/img/you.svg" alt="" @click="timeRightClick" style="margin-right: 5px" />
       </div>
     </div>
     <div class="bigscreen_rc_bottom">
-      <el-select
-        size="small"
-        class="selectcss"
-        v-model="receivestatisticsData.materialsId"
-        @change="receivestatisticsFun"
-        style="
+      <el-select size="small" class="selectcss" v-model="receivestatisticsData.materialsId"
+        @change="receivestatisticsFun" style="
           width: 80px;
           position: absolute;
           right: 20px;
           top: 15px;
           z-index: 100;
-        "
-      >
-        <el-option
-          v-for="item in materialFileslist"
-          :key="item.materialsId"
-          :label="item.name"
-          :value="item.materialsId"
-        />
+        ">
+        <el-option v-for="item in materialFileslist" :key="item.materialsId" :label="item.name"
+          :value="item.materialsId" />
       </el-select>
       <div class="bigscreen_rc_bottom_nei" ref="bigscreenRCRef"></div>
     </div>
@@ -178,24 +133,12 @@
           <span>领用数量</span>
         </div>
         <div class="bigscreen_rb_bottom_neib">
-          <Vue3SeamlessScroll
-            :list="receivelist"
-            :class-option="{
-              step: 5,
-            }"
-            hover
-            class="scrool"
-          >
-            <div
-              class="bigscreen_rb_bottom_nei_b"
-              v-for="(item, index) in receivelist"
-            >
+          <Vue3SeamlessScroll :list="receivelist" :class-option="{
+            step: 5,
+          }" hover class="scrool">
+            <div class="bigscreen_rb_bottom_nei_b" v-for="(item, index) in receivelist">
               <span>
-                <img
-                  src="/public/img/equipment/tableicon.png"
-                  alt=""
-                  v-if="item.status"
-                />
+                <img src="/public/img/equipment/tableicon.png" alt="" v-if="item.status" />
                 {{ item.materialsInfo.name }}
               </span>
               <span>{{ dayjs(item.createTime).format("YYYY-MM-DD") }} </span>
@@ -214,33 +157,21 @@
       <img :src="img9" alt="" srcset="" @click="rbcanleClick" />
     </div>
     <div class="rbDialog_bottom">
-      <el-input
-        class="inputcss"
-        v-model="receiveFormData2.materialName"
-        @change="receivelistFun2"
-        style="width: 148px; height: 24px"
-        placeholder="请输入物料名称"
-        :prefix-icon="Search"
-      />
+      <el-input class="inputcss" v-model="receiveFormData2.materialName" @change="receivelistFun2"
+        style="width: 148px; height: 24px" placeholder="请输入物料名称" :prefix-icon="Search" />
       <el-scrollbar class="bigscreen_rc_bottom_nei">
         <div class="bigscreen_rc_bottom_l">
           <img src="/public/img/圆形标记.png" alt="" />
         </div>
         <div class="bigscreen_rc_bottom_r">
-          <div
-            v-for="(item, index) in receivelist2"
-            :key="index"
-            class="bigscreen_rc_bottom_rnei"
-          >
+          <div v-for="(item, index) in receivelist2" :key="index" class="bigscreen_rc_bottom_rnei">
             <span style="color: rgba(172, 223, 255, 1); font-size: 11px">{{
               dayjs(item.createTime).format("YYYY-MM-DD")
             }}</span>
-            <div
-              :style="{
-                background: `url(${item.background}) no-repeat`,
-                'background-size': '100% 100%',
-              }"
-            >
+            <div :style="{
+              background: `url(${item.background}) no-repeat`,
+              'background-size': '100% 100%',
+            }">
               <span>领用人员：{{ item.receiverInfo.name }}</span>
               <span>领用数量：{{ item.receiveNum }}</span>
             </div>
@@ -270,6 +201,7 @@ import dayjs from "dayjs";
 import center from "../../components/center.vue";
 import img9 from "../../../public/img/叉号.png";
 import { Search } from "@element-plus/icons-vue";
+import { useIntervalFn } from "@vueuse/core";
 
 //报警信息
 const alarmInformationData = ref({
@@ -314,6 +246,13 @@ const alarmInformationlistFun = async () => {
     };
   });
 };
+
+const alarmInfomationTimer = useIntervalFn(() => {
+  alarmInfomationTimer.pause();
+  alarmInformationlistFun().finally(() => {
+    alarmInfomationTimer.resume();
+  })
+}, 10000)
 
 //领用记录
 const receiveFormData = ref({
@@ -444,8 +383,8 @@ const materialsStatistics = async () => {
   bigscreenLCoption.series[0].data = data.data.seriesData;
   if (bigscreenLCRef.value) {
     bigscreenLCChart = echarts.init(bigscreenLCRef.value);
-    bigscreenLCChart.setOption(bigscreenLCoption);
   }
+  bigscreenLCChart.setOption(bigscreenLCoption);
 };
 const materiaChange = async (val) => {
   materiaStatus.value = val;
@@ -806,10 +745,12 @@ $design-height: 1080;
   width: adaptiveWidth(443);
   height: adaptiveHeight(292);
 }
+
 .bigscreen_lt {
   position: absolute;
   top: adaptiveHeight(91);
   left: adaptiveWidth(26);
+
   .bigscreen_lt_top {
     width: 100%;
     height: adaptiveHeight(40);
@@ -817,29 +758,34 @@ $design-height: 1080;
     background-size: 110% 110%;
     display: flex;
     align-items: center;
+
     .bigscreen_lt_top_l {
       display: flex;
       align-items: center;
+
       img {
         margin-left: adaptiveWidth(11);
       }
+
       span {
         font-weight: 600;
         font-size: adaptiveFontSize(16);
         text-align: center;
         font-style: normal;
         text-transform: none;
-        background: linear-gradient(
-          to bottom,
-          #c7e5fd 42%,
-          #3582c7 100%
-        ); /* 渐变背景 */
-        background-clip: text; /* 让背景应用到文本 */
-        -webkit-text-fill-color: transparent; /* 使文本颜色透明 */
+        background: linear-gradient(to bottom,
+            #c7e5fd 42%,
+            #3582c7 100%);
+        /* 渐变背景 */
+        background-clip: text;
+        /* 让背景应用到文本 */
+        -webkit-text-fill-color: transparent;
+        /* 使文本颜色透明 */
         padding-left: adaptiveWidth(10);
       }
     }
   }
+
   .bigscreen_lt_bottom {
     width: 100%;
     height: adaptiveHeight(251);
@@ -849,14 +795,17 @@ $design-height: 1080;
     display: flex;
     flex-direction: column;
     justify-content: center;
+
     .bigscreen_lt_bottom_neis {
       overflow: hidden;
       height: adaptiveHeight(251);
+
       .bigscreen_lt_bottom_nei {
         width: 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
+
         img {
           width: adaptiveWidth(52);
           height: adaptiveHeight(59);
@@ -866,6 +815,7 @@ $design-height: 1080;
         &:nth-child(2) {
           margin: adaptiveHeight(15) 0;
         }
+
         .bigscreen_lt_bottom_nei_r {
           width: calc(100% - adaptiveWidth(132));
           margin-left: adaptiveWidth(20);
@@ -876,24 +826,27 @@ $design-height: 1080;
           display: flex;
           justify-content: space-between;
           align-items: center;
+
           span {
             width: 33%;
             color: #ffffff;
             font-size: adaptiveFontSize(14);
             text-align: center;
+
             &:nth-child(3) {
               font-size: adaptiveFontSize(20);
               font-family: youshe;
               text-align: end;
               font-style: normal;
               text-transform: none;
-              background: linear-gradient(
-                to bottom,
-                #ffffff 30%,
-                #3582c7 100%
-              ); /* 渐变背景 */
-              background-clip: text; /* 让背景应用到文本 */
-              -webkit-text-fill-color: transparent; /* 使文本颜色透明 */
+              background: linear-gradient(to bottom,
+                  #ffffff 30%,
+                  #3582c7 100%);
+              /* 渐变背景 */
+              background-clip: text;
+              /* 让背景应用到文本 */
+              -webkit-text-fill-color: transparent;
+              /* 使文本颜色透明 */
             }
           }
         }
@@ -909,6 +862,7 @@ $design-height: 1080;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
   .bigscreen_lc_top {
     width: 100%;
     height: adaptiveHeight(40);
@@ -917,29 +871,34 @@ $design-height: 1080;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     .bigscreen_lc_top_l {
       display: flex;
       align-items: center;
+
       img {
         margin-left: adaptiveWidth(11);
       }
+
       span {
         font-weight: 600;
         font-size: adaptiveFontSize(16);
         text-align: center;
         font-style: normal;
         text-transform: none;
-        background: linear-gradient(
-          to bottom,
-          #c7e5fd 42%,
-          #3582c7 100%
-        ); /* 渐变背景 */
-        background-clip: text; /* 让背景应用到文本 */
-        -webkit-text-fill-color: transparent; /* 使文本颜色透明 */
+        background: linear-gradient(to bottom,
+            #c7e5fd 42%,
+            #3582c7 100%);
+        /* 渐变背景 */
+        background-clip: text;
+        /* 让背景应用到文本 */
+        -webkit-text-fill-color: transparent;
+        /* 使文本颜色透明 */
         padding-left: adaptiveWidth(10);
       }
     }
   }
+
   .bigscreen_lc_bottom {
     width: 100%;
     height: adaptiveHeight(251);
@@ -947,6 +906,7 @@ $design-height: 1080;
     background: url("/public/img/背景下层.png") no-repeat;
     background-size: 100% 100%;
     position: relative;
+
     .bigscreen_lc_bottom_nei {
       width: 100%;
       height: 100%;
@@ -958,6 +918,7 @@ $design-height: 1080;
   position: absolute;
   bottom: adaptiveHeight(85);
   left: adaptiveWidth(26);
+
   .bigscreen_lb_top {
     width: 100%;
     height: adaptiveHeight(40);
@@ -966,12 +927,15 @@ $design-height: 1080;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     .bigscreen_lb_top_l {
       display: flex;
       align-items: center;
+
       img {
         margin-left: adaptiveWidth(11);
       }
+
       span {
         font-weight: 600;
         font-size: adaptiveFontSize(16);
@@ -979,23 +943,26 @@ $design-height: 1080;
         text-align: center;
         font-style: normal;
         text-transform: none;
-        background: linear-gradient(
-          to bottom,
-          #c7e5fd 42%,
-          #3582c7 100%
-        ); /* 渐变背景 */
-        background-clip: text; /* 让背景应用到文本 */
-        -webkit-text-fill-color: transparent; /* 使文本颜色透明 */
+        background: linear-gradient(to bottom,
+            #c7e5fd 42%,
+            #3582c7 100%);
+        /* 渐变背景 */
+        background-clip: text;
+        /* 让背景应用到文本 */
+        -webkit-text-fill-color: transparent;
+        /* 使文本颜色透明 */
         padding-left: adaptiveWidth(10);
       }
     }
   }
+
   .bigscreen_lb_bottom {
     width: 100%;
     height: adaptiveHeight(251);
     margin-top: adaptiveHeight(5);
     background: url("/public/img/背景下层.png") no-repeat;
     background-size: 100% 100%;
+
     .bigscreen_lb_bottom_nei {
       width: 100%;
       height: 100%;
@@ -1007,6 +974,7 @@ $design-height: 1080;
   position: absolute;
   top: adaptiveHeight(91);
   right: adaptiveWidth(26);
+
   .bigscreen_rt_top {
     width: 100%;
     height: adaptiveHeight(40);
@@ -1015,35 +983,41 @@ $design-height: 1080;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     .bigscreen_rt_top_l {
       display: flex;
       align-items: center;
+
       img {
         margin-left: adaptiveWidth(11);
       }
+
       span {
         font-weight: 600;
         font-size: adaptiveFontSize(16);
         text-align: center;
         font-style: normal;
         text-transform: none;
-        background: linear-gradient(
-          to bottom,
-          #c7e5fd 42%,
-          #3582c7 100%
-        ); /* 渐变背景 */
-        background-clip: text; /* 让背景应用到文本 */
-        -webkit-text-fill-color: transparent; /* 使文本颜色透明 */
+        background: linear-gradient(to bottom,
+            #c7e5fd 42%,
+            #3582c7 100%);
+        /* 渐变背景 */
+        background-clip: text;
+        /* 让背景应用到文本 */
+        -webkit-text-fill-color: transparent;
+        /* 使文本颜色透明 */
         padding-left: adaptiveWidth(10);
       }
     }
   }
+
   .bigscreen_rt_bottom {
     width: 100%;
     height: adaptiveHeight(251);
     margin-top: adaptiveHeight(5);
     background: url("/public/img/背景下层.png") no-repeat;
     background-size: 100% 100%;
+
     .bigscreen_rt_bottom_nei {
       width: 100%;
       height: 100%;
@@ -1055,6 +1029,7 @@ $design-height: 1080;
   position: absolute;
   top: adaptiveHeight(395);
   right: adaptiveWidth(26);
+
   .bigscreen_rc_top {
     width: 100%;
     height: adaptiveHeight(40);
@@ -1063,29 +1038,34 @@ $design-height: 1080;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     .bigscreen_rc_top_l {
       display: flex;
       align-items: center;
+
       img {
         margin-left: adaptiveWidth(11);
       }
+
       span {
         font-weight: 600;
         font-size: adaptiveFontSize(16);
         text-align: center;
         font-style: normal;
         text-transform: none;
-        background: linear-gradient(
-          to bottom,
-          #c7e5fd 42%,
-          #3582c7 100%
-        ); /* 渐变背景 */
-        background-clip: text; /* 让背景应用到文本 */
-        -webkit-text-fill-color: transparent; /* 使文本颜色透明 */
+        background: linear-gradient(to bottom,
+            #c7e5fd 42%,
+            #3582c7 100%);
+        /* 渐变背景 */
+        background-clip: text;
+        /* 让背景应用到文本 */
+        -webkit-text-fill-color: transparent;
+        /* 使文本颜色透明 */
         padding-left: adaptiveWidth(10);
       }
     }
   }
+
   .bigscreen_rc_bottom {
     width: 100%;
     height: adaptiveHeight(251);
@@ -1093,6 +1073,7 @@ $design-height: 1080;
     background: url("/public/img/背景下层.png") no-repeat;
     background-size: 100% 100%;
     position: relative;
+
     .bigscreen_rc_bottom_nei {
       width: 100%;
       height: 100%;
@@ -1107,6 +1088,7 @@ $design-height: 1080;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
   .bigscreen_rb_top {
     width: 100%;
     height: adaptiveHeight(40);
@@ -1115,28 +1097,33 @@ $design-height: 1080;
     justify-content: space-between;
     align-items: center;
     background-size: 110% 110%;
+
     .bigscreen_rb_top_l {
       display: flex;
       align-items: center;
+
       img {
         margin-left: adaptiveWidth(11);
       }
+
       span {
         font-weight: 600;
         font-size: adaptiveFontSize(16);
         text-align: center;
         font-style: normal;
         text-transform: none;
-        background: linear-gradient(
-          to bottom,
-          #c7e5fd 42%,
-          #3582c7 100%
-        ); /* 渐变背景 */
-        background-clip: text; /* 让背景应用到文本 */
-        -webkit-text-fill-color: transparent; /* 使文本颜色透明 */
+        background: linear-gradient(to bottom,
+            #c7e5fd 42%,
+            #3582c7 100%);
+        /* 渐变背景 */
+        background-clip: text;
+        /* 让背景应用到文本 */
+        -webkit-text-fill-color: transparent;
+        /* 使文本颜色透明 */
         padding-left: adaptiveWidth(10);
       }
     }
+
     .bigscreen_rb_top_r {
       display: flex;
       align-items: center;
@@ -1146,15 +1133,18 @@ $design-height: 1080;
       margin-right: adaptiveWidth(11);
     }
   }
+
   .bigscreen_rb_bottom {
     width: 100%;
     height: adaptiveHeight(251);
     margin-top: adaptiveHeight(5);
     background: url("/public/img/背景下层.png") no-repeat;
     background-size: 100% 100%;
+
     .bigscreen_rb_bottom_nei {
       width: adaptiveWidth(407);
       margin: 0 auto;
+
       .bigscreen_rb_bottom_nei_t {
         width: 100%;
         height: adaptiveHeight(30);
@@ -1164,6 +1154,7 @@ $design-height: 1080;
         display: flex;
         justify-content: space-between;
         align-items: center;
+
         span {
           width: 25%;
           font-size: adaptiveFontSize(14);
@@ -1171,10 +1162,12 @@ $design-height: 1080;
           text-align: center;
         }
       }
+
       .bigscreen_rb_bottom_neib {
         width: 100%;
         height: adaptiveHeight(200);
         overflow: hidden;
+
         .bigscreen_rb_bottom_nei_b {
           width: 100%;
           height: adaptiveHeight(33);
@@ -1182,6 +1175,7 @@ $design-height: 1080;
           justify-content: space-between;
           align-items: center;
           margin-top: adaptiveHeight(5);
+
           span {
             width: 25%;
             color: #ffffff;
@@ -1203,18 +1197,21 @@ $design-height: 1080;
   bottom: adaptiveHeight(90);
   right: adaptiveWidth(480);
   z-index: 10;
+
   .rbDialog_top {
     width: 100%;
     height: adaptiveHeight(45);
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     span {
       font-family: youshe;
       font-size: adaptiveFontSize(20);
       color: #ffffff;
       padding-left: adaptiveWidth(15);
     }
+
     img {
       width: adaptiveWidth(8);
       height: adaptiveHeight(8);
@@ -1222,11 +1219,13 @@ $design-height: 1080;
       cursor: pointer;
     }
   }
+
   .rbDialog_bottom {
     width: adaptiveWidth(420);
     height: adaptiveHeight(200);
     margin: adaptiveHeight(10) auto;
     position: relative;
+
     :deep(.bigscreen_rc_bottom_nei) {
       .el-scrollbar__view {
         width: 100%;
@@ -1234,6 +1233,7 @@ $design-height: 1080;
         display: flex;
         justify-content: center;
         align-items: center;
+
         .bigscreen_rc_bottom_l {
           width: adaptiveWidth(20);
           height: adaptiveHeight(187);
@@ -1244,6 +1244,7 @@ $design-height: 1080;
           flex-direction: column;
           align-items: center;
         }
+
         .bigscreen_rc_bottom_r {
           width: adaptiveWidth(381);
           height: adaptiveHeight(187);
@@ -1252,6 +1253,7 @@ $design-height: 1080;
           flex-direction: column;
           justify-content: space-between;
           overflow: hidden;
+
           .bigscreen_rc_bottom_rnei {
             width: 100%;
             height: adaptiveHeight(57);
@@ -1259,17 +1261,21 @@ $design-height: 1080;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+
             div {
               width: 100%;
               height: adaptiveHeight(38);
               display: flex;
               align-items: center;
+
               span {
                 color: rgba(255, 255, 255, 1);
                 font-size: adaptiveFontSize(12);
+
                 &:nth-child(1) {
                   margin-left: adaptiveWidth(10);
                 }
+
                 &:nth-child(2) {
                   margin-left: adaptiveWidth(20);
                 }
@@ -1291,6 +1297,7 @@ $design-height: 1080;
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   span {
     color: #ffffff;
     font-size: 12px;
@@ -1302,6 +1309,7 @@ $design-height: 1080;
     background-color: transparent !important;
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2) !important;
   }
+
   .el-select__placeholder {
     color: rgba(255, 255, 255, 0.6) !important;
   }
@@ -1317,12 +1325,14 @@ $design-height: 1080;
   right: 0;
   z-index: 2;
 }
+
 .inputcss :deep(.el-input__wrapper) {
   background-color: rgba(255, 255, 255, 0);
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: none;
   font-size: adaptiveFontSize(12);
 }
+
 .scroll {
   height: adaptiveHeight(155);
   width: 100%;
@@ -1332,17 +1342,14 @@ $design-height: 1080;
 .group {
   margin-right: adaptiveWidth(11);
 }
-.group
-  :deep(
-    .el-radio-button.is-active
-      .el-radio-button__original-radio:not(:disabled)
-      + .el-radio-button__inner
-  ) {
+
+.group :deep(.el-radio-button.is-active .el-radio-button__original-radio:not(:disabled) + .el-radio-button__inner) {
   background: rgba(255, 255, 255, 0.8);
   color: rgba(7, 36, 57, 1);
   border-color: rgba(255, 255, 255, 0);
   font-size: 12px;
 }
+
 .group :deep(.el-radio-button .el-radio-button__inner) {
   padding: 2px 8px;
   background: rgba(255, 255, 255, 0);

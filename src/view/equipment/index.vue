@@ -7,35 +7,23 @@
       </div>
     </div>
     <div class="bigscreen_lt_bottom">
-      <div class="bigscreen_lt_bottomnei">
-        <Vue3SeamlessScroll
-          :list="ltequipmentlist"
-          :step="1"
-          :singleHeight="70"
-          hover
-          class="scrool"
-        >
-          <div
-            class="bigscreen_lt_bottom_nei"
-            v-for="(item, index) in ltequipmentlist"
-          >
+      <div @mouseenter="ltequipmentlistTimer.pause()" @mouseleave="ltequipmentlistTimer.resume()"
+        class="bigscreen_lt_bottomnei">
+        <Vue3SeamlessScroll :list="ltequipmentlist" :step="1" :singleHeight="70" hover class="scrool">
+          <div class="bigscreen_lt_bottom_nei" v-for="(item, index) in ltequipmentlist">
             <img :src="item.img" alt="" />
-            <div
-              :style="{
-                background: `url('${item.back}') no-repeat`,
-                backgroundSize: '100% 100%',
-              }"
-            >
+            <div :style="{
+              background: `url('${item.back}') no-repeat`,
+              backgroundSize: '100% 100%',
+            }">
               <span>{{ item?.equipment?.equipmentCode }}</span>
-              <span
-                :style="{
-                  color: item.back  !== '/img/红色背景.png' ? '#00FFF9' : '#FFBCC0',
-                }"
-              >
+              <span :style="{
+                color: item.back !== '/img/红色背景.png' ? '#00FFF9' : '#FFBCC0',
+              }">
                 {{ item?.equipment?.equipmentName }}
               </span>
-              <span style="color: white;" >
-                {{ item.equipmentData +""+item?.threshold?.unit }}
+              <span style="color: white;">
+                {{ item.equipmentData + "" + item?.threshold?.unit }}
                 <!-- {{ item?.threshold?.unitName }} -->
               </span>
             </div>
@@ -50,14 +38,8 @@
         <img src="/public/img/光标.png" alt="" />
         <span>设备台账</span>
       </div>
-      <el-input
-        class="inputcss"
-        placeholder="请输入设备名称"
-        clearable
-        :prefix-icon="Search"
-        v-model="equipmentFormData.equipmentName"
-        @change="searchEquipment"
-      />
+      <el-input class="inputcss" placeholder="请输入设备名称" clearable :prefix-icon="Search"
+        v-model="equipmentFormData.equipmentName" @change="searchEquipment" />
     </div>
     <div class="bigscreen_lc_bottom">
       <div class="bigscreen_lc_bottom_nei">
@@ -67,19 +49,12 @@
           <span>设备型号</span>
           <span>安装时间</span>
         </div>
-        <div class="bigscreen_lc_bottom_neib">
-          <Vue3SeamlessScroll
-            :list="equipmentlist"
-            :class-option="{
-              step: 5,
-            }"
-            hover
-            class="scrool"
-          >
-            <div
-              class="bigscreen_lc_bottom_nei_b"
-              v-for="item in equipmentlist"
-            >
+        <div @mouseenter="equipmentListTimer.pause()" @mouseleave="equipmentListTimer.resume()"
+          class="bigscreen_lc_bottom_neib">
+          <Vue3SeamlessScroll :list="equipmentlist" :class-option="{
+            step: 5,
+          }" hover class="scrool">
+            <div class="bigscreen_lc_bottom_nei_b" v-for="item in equipmentlist">
               <span>
                 {{ item.equipmentCode }}
               </span>
@@ -98,20 +73,15 @@
         <img src="/public/img/光标.png" alt="" />
         <span>设备运行状态</span>
       </div>
-      <el-cascader
-        :options="equipmentlist2"
-        v-model="equipmentIds"
-        @change="cascaderChange"
-        class="cascaderCss"
-        :props="{
-          value: 'id',
-          label: 'name',
-          children: 'thresholdList',
-        }"
-      />
+      <el-cascader :options="equipmentlist2" v-model="equipmentIds" @change="cascaderChange" class="cascaderCss" :props="{
+        value: 'id',
+        label: 'name',
+        children: 'thresholdList',
+      }" />
     </div>
     <div class="bigscreen_lb_bottom">
-      <div class="bigscreen_lb_bottom_nei" ref="bigscreenLBRef"></div>
+      <div @mouseenter="historicalStatisticsListTimer.pause()" @mouseleave="historicalStatisticsListTimer.resume()"
+        class="bigscreen_lb_bottom_nei" ref="bigscreenLBRef"></div>
     </div>
   </div>
   <center></center>
@@ -121,12 +91,7 @@
         <img src="/public/img/光标.png" alt="" />
         <span>监控视频</span>
       </div>
-      <el-input
-        class="inputcss"
-        placeholder="请输入监控点位"
-         v-model="channelQuery.name"
-        :prefix-icon="Search"
-      />
+      <el-input class="inputcss" placeholder="请输入监控点位" v-model="channelQuery.name" :prefix-icon="Search" />
     </div>
     <div class="bigscreen_rt_bottom">
       <div class="bigscreen_rt_bottom_nei">
@@ -149,17 +114,9 @@
         <span>维修记录</span>
       </div>
       <div class="bigscreen_rc_top_r">
-        <el-input
-          class="inputcss"
-          placeholder="请输入设备编号"
-          :prefix-icon="Search"
-          clearable
-          v-model="repairformData.equipmentCode"
-          @change="equipmentRepairListFun"
-        />
-        <el-button link @click="rctClick" style="color: #ffffff"
-          >维修统计分析</el-button
-        >
+        <el-input class="inputcss" placeholder="请输入设备编号" :prefix-icon="Search" clearable
+          v-model="repairformData.equipmentCode" @change="equipmentRepairListFun" />
+        <el-button link @click="rctClick" style="color: #ffffff">维修统计分析</el-button>
       </div>
     </div>
     <div class="bigscreen_rc_bottom">
@@ -169,24 +126,14 @@
           <span>维修日期</span>
           <span>维修人员</span>
         </div>
-        <div class="bigscreen_rc_bottom_b">
-          <Vue3SeamlessScroll
-            :list="repairList"
-            :class-option="{
-              step: 5,
-            }"
-            hover
-            class="scrool"
-          >
-            <div
-              :class="
-                item.status
-                  ? 'bigscreen_rc_bottom_nei_active'
-                  : 'bigscreen_rc_bottom_nei_b'
-              "
-              v-for="(item, index) in repairList"
-              @click="rcClick(item)"
-            >
+        <div class="bigscreen_rc_bottom_b" @mouseleave="repairListTimer.resume()" @mouseenter="repairListTimer.pause()">
+          <Vue3SeamlessScroll :list="repairList" :class-option="{
+            step: 5,
+          }" hover class="scrool">
+            <div :class="item.status
+              ? 'bigscreen_rc_bottom_nei_active'
+              : 'bigscreen_rc_bottom_nei_b'
+              " v-for="(item, index) in repairList" @click="rcClick(item)">
               <span>{{ item.equipment.equipmentCode }}</span>
               <span>{{ dayjs(item.createTime).format("YYYY-MM-DD") }}</span>
               <span>{{ item.repairPersonnel }}</span>
@@ -211,58 +158,39 @@
           <span>巡检日期</span>
           <span>巡检人员</span>
         </div>
-        <div class="bigscreen_rb_bottom_r_b">
-          <Vue3SeamlessScroll
-            :list="inspectionlist"
-            :class-option="{
-              step: 5,
-            }"
-            hover
-            class="scrool"
-          >
-            <div
-              class="bigscreen_rb_bottom_r_nei"
-              v-for="(item, index) in inspectionlist"
-              @click="rbClick(item)"
-            >
+        <div @mouseenter="inspectionListTimer.pause()" @mouseleave="inspectionListTimer.pause()"
+          class="bigscreen_rb_bottom_r_b">
+          <Vue3SeamlessScroll :list="inspectionlist" :class-option="{
+            step: 5,
+          }" hover class="scrool">
+            <div class="bigscreen_rb_bottom_r_nei" v-for="(item, index) in inspectionlist" @click="rbClick(item)">
               <div class="bigscreen_rb_bottom_r_neis">
-                <div
-                  :style="{
-                    width: '13px',
-                    height: '13px',
-                    border: `1px solid ${
-                      index % 2 === 0 ? '#01D1E7' : '#DF9819'
+                <div :style="{
+                  width: '13px',
+                  height: '13px',
+                  border: `1px solid ${index % 2 === 0 ? '#01D1E7' : '#DF9819'
                     }`,
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    margin: '0 15px',
-                  }"
-                >
-                  <div
-                    :style="{
-                      width: '5px',
-                      height: '5px',
-                      background: index % 2 === 0 ? '#01D1E7' : '#DF9819',
-                    }"
-                  ></div>
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  margin: '0 15px',
+                }">
+                  <div :style="{
+                    width: '5px',
+                    height: '5px',
+                    background: index % 2 === 0 ? '#01D1E7' : '#DF9819',
+                  }"></div>
                 </div>
                 {{ item.recordId }}
               </div>
-              <div
-                class="bigscreen_rb_bottom_r_neis"
-                style="color: #ffffff; font-size: 12px"
-              >
+              <div class="bigscreen_rb_bottom_r_neis" style="color: #ffffff; font-size: 12px">
                 {{ dayjs(item.inspectionDate).format("YYYY-MM-DD") }}
               </div>
-              <div
-                class="bigscreen_rb_bottom_r_neis"
-                :style="{
-                  color: index % 2 === 0 ? '#01D1E7' : '#DF9819',
-                  fontSize: '12px',
-                  marginRight: '15px',
-                }"
-              >
+              <div class="bigscreen_rb_bottom_r_neis" :style="{
+                color: index % 2 === 0 ? '#01D1E7' : '#DF9819',
+                fontSize: '12px',
+                marginRight: '15px',
+              }">
                 {{ item.inspector }}
               </div>
             </div>
@@ -354,8 +282,8 @@
   <div v-if="rcStatus" class="rctDialog">
     <div class="rctDialog_top">
       <span>维修统计分析</span>
-      <ElInput placeholder="请输入设备编号" v-model="yzInput"  @keydown.enter="yzRadioChange" class="inputcss yzInput"  />
-      <el-radio-group v-model="yzRadio"  class="group yzRadio" @change="yzRadioChange">
+      <ElInput placeholder="请输入设备编号" v-model="yzInput" @keydown.enter="yzRadioChange" class="inputcss yzInput" />
+      <el-radio-group v-model="yzRadio" class="group yzRadio" @change="yzRadioChange">
         <el-radio-button label="周" value="week" />
         <el-radio-button label="年" value="year" />
       </el-radio-group>
@@ -399,21 +327,21 @@ import { useIntervalFn } from '@vueuse/core'
 
 
 const rtStatus = ref(false);
-const videoRef =ref();
+const videoRef = ref();
 const rtClick = (item) => {
   rtStatus.value = !rtStatus.value;
   getStreamUrlApi(item.channelid).then((res) => {
-        console.log("res.data.data.wsflv", res.data.data.wsflv);
-        videoRef.value.play(res.data.data.wsflv);
-        videoRef.value.setChannelId(res.data.data.channelId);
-      });
-    // nextTick(() => {
-    //   getStreamUrlApi(item.channelid).then((res) => {
-    //     console.log("res.data.data.wsflv", res.data.data.wsflv);
-    //     videoRef.value.play(res.data.data.wsflv);
-    //     videoRef.value.setChannelId(res.data.data.channelId);
-    //   });
-    // });
+    console.log("res.data.data.wsflv", res.data.data.wsflv);
+    videoRef.value.play(res.data.data.wsflv);
+    videoRef.value.setChannelId(res.data.data.channelId);
+  });
+  // nextTick(() => {
+  //   getStreamUrlApi(item.channelid).then((res) => {
+  //     console.log("res.data.data.wsflv", res.data.data.wsflv);
+  //     videoRef.value.play(res.data.data.wsflv);
+  //     videoRef.value.setChannelId(res.data.data.channelId);
+  //   });
+  // });
 };
 const rtcanleClick = () => {
   rtStatus.value = false;
@@ -440,10 +368,10 @@ const ltequipmentListFun = async () => {
   //     back: back[index % back.length],
   //   };
   // });
-  const {data} = await thresholdDataList(ltequipmentFormData.value);
+  const { data } = await thresholdDataList(ltequipmentFormData.value);
   let list = data.data.rows;
-  ltequipmentlist.value  = list.map((item,index)=>{
-    if (!item.threshold?.values?.length){
+  ltequipmentlist.value = list.map((item, index) => {
+    if (!item.threshold?.values?.length) {
       return {
         ...item,
         img: "/img/正常状态.png",
@@ -451,38 +379,38 @@ const ltequipmentListFun = async () => {
       }
     }
 
-  const value = Number(item.equipmentData);
-  const thresholds = item.threshold.values;
+    const value = Number(item.equipmentData);
+    const thresholds = item.threshold.values;
 
-  // 按照level等级排序
-  const sortedThresholds = [...thresholds].sort((a, b) => {
-    const levelA = Number(a.level.replace(/[^0-9]/g, ""));
-    const levelB = Number(b.level.replace(/[^0-9]/g, ""));
-    return levelB - levelA;
-  });
-  for (const threshold of sortedThresholds) {
-    if (value >= threshold.min && value <= threshold.max) {
-      // 根据不同等级返回不同颜色
-      return {
-        ...item,
-        img: `/img/异常状态.png`,
-        back: `/img/红色背景.png`,
+    // 按照level等级排序
+    const sortedThresholds = [...thresholds].sort((a, b) => {
+      const levelA = Number(a.level.replace(/[^0-9]/g, ""));
+      const levelB = Number(b.level.replace(/[^0-9]/g, ""));
+      return levelB - levelA;
+    });
+    for (const threshold of sortedThresholds) {
+      if (value >= threshold.min && value <= threshold.max) {
+        // 根据不同等级返回不同颜色
+        return {
+          ...item,
+          img: `/img/异常状态.png`,
+          back: `/img/红色背景.png`,
+        }
       }
     }
-  }
-  return {
-    ...item,
-    img: `/img/正常状态.png`,
-    back: `/img/绿色背景.png`,
-  }
+    return {
+      ...item,
+      img: `/img/正常状态.png`,
+      back: `/img/绿色背景.png`,
+    }
   })
 };
-const ltequipmentlistTimer = useIntervalFn(()=>{
+const ltequipmentlistTimer = useIntervalFn(() => {
   ltequipmentlistTimer.pause();
-  ltequipmentListFun().finally(()=>{
+  ltequipmentListFun().finally(() => {
     ltequipmentlistTimer.resume();
   })
-},5000)
+}, 10000)
 
 //设备台账
 const equipmentFormData = ref({
@@ -526,6 +454,12 @@ const equipmentListFun = async () => {
 const searchEquipment = (val) => {
   equipmentListFun();
 };
+const equipmentListTimer = useIntervalFn(() => {
+  equipmentListTimer.pause();
+  equipmentListFun().finally(() => {
+    equipmentListTimer.resume();
+  })
+}, 10000)
 
 //设备运行状态
 let bigscreenLBChart: any = null;
@@ -561,10 +495,10 @@ const bigscreenLBoption = {
     },
   },
   tooltip: {
-					trigger: 'axis', //坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用
-					axisPointer: {// 坐标轴指示器，坐标轴触发有效
-						type: 'line' // 默认为直线，可选为：'line' | 'shadow'
-					}
+    trigger: 'axis', //坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用
+    axisPointer: {// 坐标轴指示器，坐标轴触发有效
+      type: 'line' // 默认为直线，可选为：'line' | 'shadow'
+    }
   },
   series: [
     {
@@ -602,11 +536,18 @@ const historicalStatisticsListFun = async () => {
   });
   bigscreenLBoption.xAxis.data = data.time;
   bigscreenLBoption.series[0].data = data.data;
-  if (bigscreenLBRef.value) {
+  if (bigscreenLBRef.value && bigscreenLBChart == null) {
     bigscreenLBChart = echarts.init(bigscreenLBRef.value);
-    bigscreenLBChart.setOption(bigscreenLBoption);
   }
+  bigscreenLBChart.setOption(bigscreenLBoption);
+
 };
+const historicalStatisticsListTimer = useIntervalFn(() => {
+  historicalStatisticsListTimer.pause();
+  historicalStatisticsListFun().finally(() => {
+    historicalStatisticsListTimer.resume();
+  })
+}, 10000)
 
 const cascaderChange = (val) => {
   thresholdId.value = val[1];
@@ -634,6 +575,12 @@ const equipmentRepairListFun = async () => {
     }
   });
 };
+const repairListTimer = useIntervalFn(() => {
+  repairListTimer.pause();
+  equipmentRepairListFun().finally(() => {
+    repairListTimer.resume();
+  })
+}, 10000)
 const rcClick = async (item: any) => {
   repairList.value.forEach((v) => {
     if (item.recordId == v.recordId) {
@@ -695,10 +642,10 @@ const repairStatisticsData = ref({
   dayType: "week",
 });
 
-async function getYzData(){
+async function getYzData() {
   const { data } = await repairStatistics({
-    dayType:yzRadio.value,
-    code:yzInput.value
+    dayType: yzRadio.value,
+    code: yzInput.value
   });
   bigscreenRCoption.xAxis.data = data.data.times;
   bigscreenRCoption.series[0].data = data.data.data;
@@ -735,6 +682,12 @@ const inspectionListFun = async () => {
     }
   });
 };
+const inspectionListTimer = useIntervalFn(() => {
+  inspectionListTimer.pause();
+  inspectionListFun().finally(() => {
+    inspectionListTimer.resume();
+  })
+}, 10000)
 const rbClick = (item: any) => {
   inspectionlist.value.forEach((v) => {
     if (item.recordId == v.recordId) {
@@ -750,7 +703,7 @@ const rbcanleClick = (item: any) => {
 
 const yzRadio = ref("week");
 const yzInput = ref("");
-function yzRadioChange(){
+function yzRadioChange() {
   getYzData();
 }
 
@@ -759,7 +712,7 @@ const channelQuery = ref({
   pageNum: 1,
   pageSize: 3,
 });
-const videoList =ref([]);
+const videoList = ref([]);
 
 const getVideoList = () => {
   getChannelListApi(channelQuery.value).then((res) => {
@@ -767,12 +720,12 @@ const getVideoList = () => {
   });
 };
 
-const jianceTimer = useIntervalFn(()=>{
+const jianceTimer = useIntervalFn(() => {
   jianceTimer.pause();
-  ltequipmentListFun().finally(()=>{
+  ltequipmentListFun().finally(() => {
     jianceTimer.resume();
   })
-},10000)
+}, 10000)
 
 window.onresize = function () {
   bigscreenLBChart.resize();
@@ -803,10 +756,10 @@ $design-height: 1080;
   @return #{$px / $design-width * 100}vw;
 }
 
-.yzInput{
-    position: relative;
-    left: adaptiveWidth(20);
-    top: adaptiveHeight(5);
+.yzInput {
+  position: relative;
+  left: adaptiveWidth(20);
+  top: adaptiveHeight(5);
 }
 
 .bigscreen_lt,
@@ -818,10 +771,12 @@ $design-height: 1080;
   width: adaptiveWidth(443);
   height: adaptiveHeight(292);
 }
+
 .bigscreen_lt {
   position: absolute;
   top: adaptiveHeight(91);
   left: adaptiveWidth(26);
+
   .bigscreen_lt_top {
     width: 100%;
     height: adaptiveHeight(40);
@@ -829,29 +784,34 @@ $design-height: 1080;
     background-size: 110% 110%;
     display: flex;
     align-items: center;
+
     .bigscreen_lt_top_l {
       display: flex;
       align-items: center;
+
       img {
         margin-left: adaptiveWidth(11);
       }
+
       span {
         font-weight: 600;
         font-size: adaptiveFontSize(16);
         text-align: center;
         font-style: normal;
         text-transform: none;
-        background: linear-gradient(
-          to bottom,
-          #c7e5fd 42%,
-          #3582c7 100%
-        ); /* 渐变背景 */
-        background-clip: text; /* 让背景应用到文本 */
-        -webkit-text-fill-color: transparent; /* 使文本颜色透明 */
+        background: linear-gradient(to bottom,
+            #c7e5fd 42%,
+            #3582c7 100%);
+        /* 渐变背景 */
+        background-clip: text;
+        /* 让背景应用到文本 */
+        -webkit-text-fill-color: transparent;
+        /* 使文本颜色透明 */
         padding-left: adaptiveWidth(10);
       }
     }
   }
+
   .bigscreen_lt_bottom {
     width: 100%;
     height: adaptiveHeight(251);
@@ -862,35 +822,43 @@ $design-height: 1080;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     .bigscreen_lt_bottomnei {
       overflow: hidden;
       height: adaptiveHeight(251);
+
       .bigscreen_lt_bottom_nei {
         display: flex;
         justify-content: center;
         align-items: center;
+
         img {
           width: adaptiveWidth(66);
           height: adaptiveHeight(60);
         }
+
         div {
           width: adaptiveWidth(324);
           height: adaptiveHeight(39);
           display: flex;
           align-items: center;
+
           &:nth-child(2) {
             margin: adaptiveHeight(18) 0;
           }
+
           span {
             &:nth-child(1) {
               font-size: adaptiveFontSize(12);
               color: #ffffff;
               padding: 0 adaptiveWidth(32);
             }
+
             &:nth-child(2) {
               font-family: youshe;
               font-size: adaptiveFontSize(20);
             }
+
             &:nth-child(3) {
               // font-family: youshe;
               font-size: adaptiveFontSize(12);
@@ -910,6 +878,7 @@ $design-height: 1080;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
   .bigscreen_lc_top {
     width: 100%;
     height: adaptiveHeight(40);
@@ -918,38 +887,45 @@ $design-height: 1080;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     .bigscreen_lc_top_l {
       display: flex;
       align-items: center;
+
       img {
         margin-left: adaptiveWidth(11);
       }
+
       span {
         font-weight: 600;
         font-size: adaptiveFontSize(16);
         text-align: center;
         font-style: normal;
         text-transform: none;
-        background: linear-gradient(
-          to bottom,
-          #c7e5fd 42%,
-          #3582c7 100%
-        ); /* 渐变背景 */
-        background-clip: text; /* 让背景应用到文本 */
-        -webkit-text-fill-color: transparent; /* 使文本颜色透明 */
+        background: linear-gradient(to bottom,
+            #c7e5fd 42%,
+            #3582c7 100%);
+        /* 渐变背景 */
+        background-clip: text;
+        /* 让背景应用到文本 */
+        -webkit-text-fill-color: transparent;
+        /* 使文本颜色透明 */
         padding-left: adaptiveWidth(10);
       }
     }
   }
+
   .bigscreen_lc_bottom {
     width: 100%;
     height: adaptiveHeight(251);
     margin-top: adaptiveHeight(5);
     background: url("/public/img/背景下层.png") no-repeat;
     background-size: 100% 100%;
+
     .bigscreen_lc_bottom_nei {
       width: adaptiveWidth(407);
       margin: 0 auto;
+
       .bigscreen_lc_bottom_nei_t {
         width: 100%;
         height: adaptiveHeight(30);
@@ -959,6 +935,7 @@ $design-height: 1080;
         display: flex;
         justify-content: space-between;
         align-items: center;
+
         span {
           width: 25%;
           color: #9eabb7;
@@ -966,10 +943,12 @@ $design-height: 1080;
           text-align: center;
         }
       }
+
       .bigscreen_lc_bottom_neib {
         width: 100%;
         height: adaptiveHeight(200);
         overflow: hidden;
+
         .bigscreen_lc_bottom_nei_b {
           width: 100%;
           height: adaptiveHeight(33);
@@ -977,10 +956,12 @@ $design-height: 1080;
           justify-content: space-between;
           align-items: center;
           margin-top: adaptiveHeight(5);
+
           span {
             width: 25%;
             color: #ffffff;
             font-size: adaptiveFontSize(12);
+
             &:nth-child(2),
             &:nth-child(3),
             &:nth-child(4) {
@@ -997,6 +978,7 @@ $design-height: 1080;
   position: absolute;
   bottom: adaptiveHeight(85);
   left: adaptiveWidth(26);
+
   .bigscreen_lb_top {
     width: 100%;
     height: adaptiveHeight(40);
@@ -1005,35 +987,41 @@ $design-height: 1080;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     .bigscreen_lb_top_l {
       display: flex;
       align-items: center;
+
       img {
         margin-left: adaptiveWidth(11);
       }
+
       span {
         font-weight: 600;
         font-size: adaptiveFontSize(16);
         text-align: center;
         font-style: normal;
         text-transform: none;
-        background: linear-gradient(
-          to bottom,
-          #c7e5fd 42%,
-          #3582c7 100%
-        ); /* 渐变背景 */
-        background-clip: text; /* 让背景应用到文本 */
-        -webkit-text-fill-color: transparent; /* 使文本颜色透明 */
+        background: linear-gradient(to bottom,
+            #c7e5fd 42%,
+            #3582c7 100%);
+        /* 渐变背景 */
+        background-clip: text;
+        /* 让背景应用到文本 */
+        -webkit-text-fill-color: transparent;
+        /* 使文本颜色透明 */
         padding-left: adaptiveWidth(10);
       }
     }
   }
+
   .bigscreen_lb_bottom {
     width: 100%;
     height: adaptiveHeight(251);
     margin-top: adaptiveHeight(5);
     background: url("/public/img/背景下层.png") no-repeat;
     background-size: 100% 100%;
+
     .bigscreen_lb_bottom_nei {
       width: 100%;
       height: 100%;
@@ -1045,6 +1033,7 @@ $design-height: 1080;
   position: absolute;
   top: adaptiveHeight(91);
   right: adaptiveWidth(26);
+
   .bigscreen_rt_top {
     width: 100%;
     height: adaptiveHeight(40);
@@ -1053,52 +1042,61 @@ $design-height: 1080;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     .bigscreen_rt_top_l {
       display: flex;
       align-items: center;
+
       img {
         margin-left: adaptiveWidth(11);
       }
+
       span {
         font-weight: 600;
         font-size: adaptiveFontSize(16);
         text-align: center;
         font-style: normal;
         text-transform: none;
-        background: linear-gradient(
-          to bottom,
-          #c7e5fd 42%,
-          #3582c7 100%
-        ); /* 渐变背景 */
-        background-clip: text; /* 让背景应用到文本 */
-        -webkit-text-fill-color: transparent; /* 使文本颜色透明 */
+        background: linear-gradient(to bottom,
+            #c7e5fd 42%,
+            #3582c7 100%);
+        /* 渐变背景 */
+        background-clip: text;
+        /* 让背景应用到文本 */
+        -webkit-text-fill-color: transparent;
+        /* 使文本颜色透明 */
         padding-left: adaptiveWidth(10);
       }
     }
   }
+
   .bigscreen_rt_bottom {
     width: 100%;
     height: adaptiveHeight(251);
     margin-top: adaptiveHeight(5);
     background: url("/public/img/背景下层.png") no-repeat;
     background-size: 100% 100%;
+
     .bigscreen_rt_bottom_nei {
       display: flex;
       justify-content: center;
       align-items: center;
       width: 100%;
       height: 100%;
+
       img {
         width: adaptiveWidth(126);
         height: adaptiveHeight(176);
         margin-right: adaptiveWidth(28);
       }
+
       .bigscreen_rt_bottom_r {
         width: adaptiveWidth(218);
         height: adaptiveHeight(167);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+
         div {
           width: 100%;
           height: adaptiveHeight(41);
@@ -1107,6 +1105,7 @@ $design-height: 1080;
           display: flex;
           align-items: center;
           justify-content: center;
+
           span {
             font-size: adaptiveFontSize(14);
             color: rgba(255, 255, 255, 1);
@@ -1125,6 +1124,7 @@ $design-height: 1080;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
   .bigscreen_rc_top {
     width: 100%;
     height: adaptiveHeight(40);
@@ -1133,41 +1133,49 @@ $design-height: 1080;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     .bigscreen_rc_top_l {
       display: flex;
       align-items: center;
+
       img {
         margin-left: adaptiveWidth(11);
       }
+
       span {
         font-weight: 600;
         font-size: adaptiveFontSize(16);
         text-align: center;
         font-style: normal;
         text-transform: none;
-        background: linear-gradient(
-          to bottom,
-          #c7e5fd 42%,
-          #3582c7 100%
-        ); /* 渐变背景 */
-        background-clip: text; /* 让背景应用到文本 */
-        -webkit-text-fill-color: transparent; /* 使文本颜色透明 */
+        background: linear-gradient(to bottom,
+            #c7e5fd 42%,
+            #3582c7 100%);
+        /* 渐变背景 */
+        background-clip: text;
+        /* 让背景应用到文本 */
+        -webkit-text-fill-color: transparent;
+        /* 使文本颜色透明 */
         padding-left: adaptiveWidth(10);
       }
     }
+
     .bigscreen_rc_top_r {
       margin-right: adaptiveWidth(11);
     }
   }
+
   .bigscreen_rc_bottom {
     width: 100%;
     height: adaptiveHeight(251);
     margin-top: adaptiveHeight(5);
     background: url("/public/img/背景下层.png") no-repeat;
     background-size: 100% 100%;
+
     .bigscreen_rc_bottom_nei {
       width: adaptiveWidth(407);
       margin: 0 auto;
+
       .bigscreen_rc_bottom_nei_t {
         width: 100%;
         height: adaptiveHeight(30);
@@ -1177,6 +1185,7 @@ $design-height: 1080;
         display: flex;
         justify-content: space-between;
         align-items: center;
+
         span {
           width: 33%;
           color: #9eabb7;
@@ -1184,10 +1193,12 @@ $design-height: 1080;
           text-align: center;
         }
       }
+
       .bigscreen_rc_bottom_b {
         width: 100%;
         height: adaptiveHeight(200);
         overflow: hidden;
+
         .bigscreen_rc_bottom_nei_b {
           width: 100%;
           height: adaptiveHeight(33);
@@ -1196,6 +1207,7 @@ $design-height: 1080;
           align-items: center;
           margin-top: adaptiveHeight(5);
           cursor: pointer;
+
           span {
             width: 33%;
             color: #ffffff;
@@ -1203,6 +1215,7 @@ $design-height: 1080;
             text-align: center;
           }
         }
+
         .bigscreen_rc_bottom_nei_active {
           width: 100%;
           height: adaptiveHeight(33);
@@ -1213,12 +1226,14 @@ $design-height: 1080;
           align-items: center;
           margin-top: adaptiveHeight(5);
           cursor: pointer;
+
           span {
             width: 33%;
             color: #58a4cb;
             font-size: adaptiveFontSize(12);
             text-align: center;
             position: relative;
+
             &:nth-child(1) {
               img {
                 position: absolute;
@@ -1238,6 +1253,7 @@ $design-height: 1080;
   position: absolute;
   bottom: adaptiveHeight(85);
   right: adaptiveWidth(26);
+
   .bigscreen_rb_top {
     width: 100%;
     height: adaptiveHeight(40);
@@ -1246,34 +1262,40 @@ $design-height: 1080;
     justify-content: space-between;
     align-items: center;
     background-size: 110% 110%;
+
     .bigscreen_rb_top_l {
       display: flex;
       align-items: center;
+
       img {
         margin-left: adaptiveWidth(11);
       }
+
       span {
         font-weight: 600;
         font-size: adaptiveFontSize(16);
         text-align: center;
         font-style: normal;
         text-transform: none;
-        background: linear-gradient(
-          to bottom,
-          #c7e5fd 42%,
-          #3582c7 100%
-        ); /* 渐变背景 */
-        background-clip: text; /* 让背景应用到文本 */
-        -webkit-text-fill-color: transparent; /* 使文本颜色透明 */
+        background: linear-gradient(to bottom,
+            #c7e5fd 42%,
+            #3582c7 100%);
+        /* 渐变背景 */
+        background-clip: text;
+        /* 让背景应用到文本 */
+        -webkit-text-fill-color: transparent;
+        /* 使文本颜色透明 */
         padding-left: adaptiveWidth(10);
       }
     }
+
     .bigscreen_rb_top_r {
       display: flex;
       align-items: center;
       margin-right: adaptiveWidth(11);
     }
   }
+
   .bigscreen_rb_bottom {
     width: 100%;
     height: adaptiveHeight(251);
@@ -1283,10 +1305,12 @@ $design-height: 1080;
     display: flex;
     align-items: center;
     justify-content: center;
+
     img {
       width: adaptiveWidth(99);
       height: adaptiveHeight(211);
     }
+
     .bigscreen_rb_bottom_r {
       width: adaptiveWidth(290);
       height: adaptiveHeight(211);
@@ -1295,6 +1319,7 @@ $design-height: 1080;
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
+
       .bigscreen_rb_bottom_r_t {
         width: 100%;
         height: adaptiveHeight(30);
@@ -1303,6 +1328,7 @@ $design-height: 1080;
         display: flex;
         justify-content: space-between;
         align-items: center;
+
         span {
           width: 33%;
           color: #9eabb7;
@@ -1310,11 +1336,13 @@ $design-height: 1080;
           text-align: center;
         }
       }
+
       .bigscreen_rb_bottom_r_b {
         width: 100%;
         height: adaptiveHeight(171);
         overflow: hidden;
       }
+
       .bigscreen_rb_bottom_r_nei {
         width: 100%;
         height: adaptiveHeight(35);
@@ -1324,14 +1352,17 @@ $design-height: 1080;
         align-items: center;
         margin-top: adaptiveHeight(10);
         cursor: pointer;
+
         .bigscreen_rb_bottom_r_neis {
           width: 33%;
+
           &:nth-child(1) {
             color: #ffffff;
             font-size: adaptiveFontSize(12);
             display: flex;
             align-items: center;
           }
+
           &:nth-child(2),
           &:nth-child(3) {
             text-align: center;
@@ -1351,18 +1382,21 @@ $design-height: 1080;
   top: adaptiveHeight(400);
   right: adaptiveWidth(480);
   z-index: 10;
+
   .rcDialog_top {
     width: 100%;
     height: adaptiveHeight(45);
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     span {
       font-family: youshe;
       font-size: adaptiveFontSize(20);
       color: #ffffff;
       padding-left: adaptiveWidth(15);
     }
+
     img {
       width: adaptiveWidth(8);
       height: adaptiveHeight(8);
@@ -1370,29 +1404,37 @@ $design-height: 1080;
       cursor: pointer;
     }
   }
+
   .rcDialog_bottom {
     width: adaptiveWidth(420);
     height: adaptiveHeight(200);
     margin: adaptiveHeight(10) auto;
+
     img {
       width: adaptiveWidth(99);
       height: adaptiveHeight(99);
     }
+
     .rcDialog_bottoml {
       height: adaptiveHeight(200);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+
       div {
         margin-left: adaptiveWidth(20);
+
         &:nth-child(1) {
           margin-top: 0;
         }
+
         span {
           font-size: adaptiveFontSize(14);
+
           &:nth-child(1) {
             color: #687f92;
           }
+
           &:nth-child(2) {
             color: #ffffff;
           }
@@ -1411,18 +1453,21 @@ $design-height: 1080;
   top: adaptiveHeight(100);
   right: adaptiveWidth(480);
   z-index: 10;
+
   .rtDialog_top {
     width: 100%;
     height: adaptiveHeight(45);
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     span {
       font-size: adaptiveFontSize(20);
       color: #ffffff;
       padding-left: adaptiveWidth(15);
       font-family: youshe;
     }
+
     img {
       width: adaptiveWidth(8);
       height: adaptiveHeight(8);
@@ -1430,6 +1475,7 @@ $design-height: 1080;
       cursor: pointer;
     }
   }
+
   .rtDialog_bottom {
     width: adaptiveWidth(420);
     height: adaptiveHeight(215);
@@ -1440,11 +1486,12 @@ $design-height: 1080;
     justify-content: center;
 
     .rtDialog_bottom_video {
-      :deep(#container){
+      :deep(#container) {
         width: adaptiveWidth(420);
         height: adaptiveHeight(215);
         object-fit: cover;
       }
+
       object-fit: cover;
     }
 
@@ -1460,6 +1507,7 @@ $design-height: 1080;
       width: 100%;
       height: adaptiveHeight(195);
     }
+
     div {
       font-size: adaptiveFontSize(14);
       color: #ffffff;
@@ -1476,18 +1524,21 @@ $design-height: 1080;
   bottom: adaptiveHeight(90);
   right: adaptiveWidth(480);
   z-index: 10;
+
   .rbDialog_top {
     width: 100%;
     height: adaptiveHeight(45);
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     span {
       font-family: youshe;
       font-size: adaptiveFontSize(20);
       color: #ffffff;
       padding-left: adaptiveWidth(15);
     }
+
     img {
       width: adaptiveWidth(8);
       height: adaptiveHeight(8);
@@ -1495,29 +1546,37 @@ $design-height: 1080;
       cursor: pointer;
     }
   }
+
   .rbDialog_bottom {
     width: adaptiveWidth(420);
     height: adaptiveHeight(200);
     margin: adaptiveHeight(10) auto;
+
     img {
       width: adaptiveWidth(99);
       height: adaptiveHeight(99);
     }
+
     .rbDialog_bottoml {
       height: adaptiveHeight(200);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+
       div {
         margin-left: adaptiveWidth(20);
+
         &:nth-child(1) {
           margin-top: 0;
         }
+
         span {
           font-size: adaptiveFontSize(14);
+
           &:nth-child(1) {
             color: #687f92;
           }
+
           &:nth-child(2) {
             color: #ffffff;
           }
@@ -1526,6 +1585,7 @@ $design-height: 1080;
     }
   }
 }
+
 .rctDialog {
   width: adaptiveWidth(440);
   height: adaptiveHeight(280);
@@ -1535,18 +1595,21 @@ $design-height: 1080;
   top: adaptiveHeight(400);
   right: adaptiveWidth(480);
   z-index: 10;
+
   .rctDialog_top {
     width: 100%;
     height: adaptiveHeight(45);
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     span {
       font-family: youshe;
       font-size: adaptiveFontSize(20);
       color: #ffffff;
       padding-left: adaptiveWidth(15);
     }
+
     img {
       width: adaptiveWidth(8);
       height: adaptiveHeight(8);
@@ -1554,16 +1617,19 @@ $design-height: 1080;
       cursor: pointer;
     }
   }
+
   .rctDialog_bottom {
     width: adaptiveWidth(420);
     height: adaptiveHeight(200);
     margin: adaptiveHeight(10) auto;
   }
 }
+
 :deep(.cascaderCss) {
   width: adaptiveWidth(200);
   height: adaptiveHeight(24);
   margin-right: adaptiveWidth(11);
+
   .el-input__wrapper {
     background: none;
     height: adaptiveHeight(24);
@@ -1576,6 +1642,7 @@ $design-height: 1080;
     background-color: transparent !important;
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2) !important;
   }
+
   .el-select__placeholder {
     color: rgba(255, 255, 255, 0.6) !important;
   }
@@ -1590,34 +1657,32 @@ $design-height: 1080;
   height: adaptiveHeight(24);
   margin-right: adaptiveWidth(11);
 }
+
 .inputcss :deep(.el-input__wrapper) {
   background-color: rgba(255, 255, 255, 0);
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: none;
   font-size: adaptiveFontSize(12);
 }
+
 .scroll {
   height: adaptiveHeight(195);
   width: 100%;
   overflow: hidden;
 }
 
-.yzRadio{
+.yzRadio {
   position: relative;
   top: adaptiveHeight(5);
 }
 
-.group
-  :deep(
-    .el-radio-button.is-active
-      .el-radio-button__original-radio:not(:disabled)
-      + .el-radio-button__inner
-  ) {
+.group :deep(.el-radio-button.is-active .el-radio-button__original-radio:not(:disabled) + .el-radio-button__inner) {
   background: rgba(255, 255, 255, 0.8);
   color: rgba(7, 36, 57, 1);
   border-color: rgba(255, 255, 255, 0);
   font-size: adaptiveFontSize(12);
 }
+
 .group :deep(.el-radio-button .el-radio-button__inner) {
   padding: 2px 8px;
   background: rgba(255, 255, 255, 0);

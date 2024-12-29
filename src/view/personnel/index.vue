@@ -8,27 +8,15 @@
     </div>
     <div class="bigscreen_lt_bottom">
       <div class="bigscreen_lt_bottom_neis">
-        <Vue3SeamlessScroll
-          :list="accesscontrollist"
-          :class-option="{
-            step: 5,
-          }"
-          hover
-          class="scrool"
-        >
-          <div
-            class="bigscreen_lt_bottom_nei"
-            v-for="item in accesscontrollist"
-            @click="ltClick(item)"
-          >
+        <Vue3SeamlessScroll :list="accesscontrollist" :class-option="{
+          step: 5,
+        }" hover class="scrool">
+          <div class="bigscreen_lt_bottom_nei" v-for="item in accesscontrollist" @click="ltClick(item)">
             <img src="/public/img/personnel/人物图标.png" alt="" />
-            <div
-              class="bigscreen_lt_bottom_nei_r"
-              :style="{
-                background: `url(${item.img}) no-repeat`,
-                'background-size': '100% 100%',
-              }"
-            >
+            <div class="bigscreen_lt_bottom_nei_r" :style="{
+              background: `url(${item.img}) no-repeat`,
+              'background-size': '100% 100%',
+            }">
               <div>
                 <span>{{ item.personnel?.name }}</span>
                 <span>进入</span>
@@ -52,44 +40,28 @@
         <img src="/public/img/光标.png" alt="" />
         <span>特征指标</span>
       </div>
-      <el-input
-        class="inputcss"
-        v-model="healthyFormData.name"
-        placeholder="请输入员工姓名"
-        :prefix-icon="Search"
-        @change="healthyChange"
-      />
+      <el-input class="inputcss" v-model="healthyFormData.name" placeholder="请输入员工姓名" :prefix-icon="Search"
+        @change="healthyChange" />
     </div>
     <div class="bigscreen_lb_bottom">
       <div class="bigscreen_lb_bottom_neis">
-        <Vue3SeamlessScroll
-          :list="healthylist"
-          :class-option="{
-            step: 5,
-          }"
-          hover
-          class="scrool"
-        >
-          <div
-            class="bigscreen_lb_bottom_nei"
-            v-for="(item, index) in healthylist"
-            @click="lbClick(item, index)"
-          >
+        <Vue3SeamlessScroll :list="healthylist" :class-option="{
+          step: 5,
+        }" hover class="scrool">
+          <div class="bigscreen_lb_bottom_nei" v-for="(item, index) in healthylist" @click="lbClick(item, index)">
             <div class="bigscreen_lb_bottom_nei_count">
               <div class="left">
-                <div
-                  :style="{
-                    width: '79px',
-                    height: '27px',
-                    background: `url(${item.img}) no-repeat`,
-                    backgroundSize: '100% 100%',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    fontSize: '13px',
-                    color: '#ffffff',
-                  }"
-                >
+                <div :style="{
+                  width: '79px',
+                  height: '27px',
+                  background: `url(${item.img}) no-repeat`,
+                  backgroundSize: '100% 100%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  fontSize: '13px',
+                  color: '#ffffff',
+                }">
                   {{ item.personnel.name }}
                 </div>
                 <div style="color: #ffffff; margin-top: 10px">
@@ -99,15 +71,11 @@
               <div class="right">
                 <span class="right_text">
                   <span>体温：{{ item.temperature }}℃</span>
-                  <span style="padding-left: 15px"
-                    >心率：{{ item.heartRate }}/分钟</span
-                  >
+                  <span style="padding-left: 15px">心率：{{ item.heartRate }}/分钟</span>
                 </span>
                 <span class="right_text">
                   <span>血压：{{ item.lowBloodPressure }}mmHg</span>
-                  <span style="padding-left: 15px"
-                    >{{ item.highBloodPressure }}mmHg</span
-                  >
+                  <span style="padding-left: 15px">{{ item.highBloodPressure }}mmHg</span>
                 </span>
                 <span class="right_text">
                   <span>监测时间：{{ item.createTime }}</span>
@@ -136,11 +104,11 @@
         style="width: 100%; height: 100%"
       > -->
       <div class="rtDialog_bottom">
-      <!-- <img src="/public/img/监控视频尺寸.png" alt="" /> -->
-      <Video style="width:100%" class="rtDialog_bottom_video" ref="videoRef" />
-      <!-- <div>倍速播放×1</div> -->
-    </div>
-        <!-- <swiper-slide v-for="(item, index) in slides" :key="index">
+        <!-- <img src="/public/img/监控视频尺寸.png" alt="" /> -->
+        <Video style="width:100%" class="rtDialog_bottom_video" ref="videoRef" />
+        <!-- <div>倍速播放×1</div> -->
+      </div>
+      <!-- <swiper-slide v-for="(item, index) in slides" :key="index">
           <img :src="item.image" alt="" />
         </swiper-slide> -->
       <!-- </swiper> -->
@@ -163,61 +131,51 @@
   </div>
 
   <!-- <template v-for="item in accesscontrollist"> -->
-    <div v-if="personnelShow" class="ltDialog">
-      <div class="ltDialog_top">
-        <span>查看人员信息</span>
-        <img :src="img9" alt="" srcset="" @click="ltcanleClick(item)" />
-      </div>
-      <div class="ltDialog_bottom">
-        <div class="ltDialog_bottom_nei">
-          <img src="/public/img/弹窗头像图标.png" alt="" />
-          <div class="ltDialog_bottomr">
-            <div>
-              <span>员工编号：</span>
-              <span>{{ personnelInfo?.personnel?.code }}</span>
-            </div>
-            <div>
-              <span>姓名：</span>
-              <span>{{ personnelInfo?.personnel?.name }}</span>
-            </div>
-            <div>
-              <span>性别：</span>
-              <span>{{ personnelInfo?.personnel?.sex }}</span>
-            </div>
-            <div>
-              <span>部门：</span>
-              <span>{{ personnelInfo?.personnel?.department }}</span>
-            </div>
-            <div>
-              <span>岗位：</span>
-              <span>{{ personnelInfo?.personnel?.post }}</span>
-            </div>
-            <div>
-              <span>联系方式：</span>
-              <span>{{ personnelInfo?.personnel?.contact }}</span>
-            </div>
+  <div v-if="personnelShow" class="ltDialog">
+    <div class="ltDialog_top">
+      <span>查看人员信息</span>
+      <img :src="img9" alt="" srcset="" @click="ltcanleClick(item)" />
+    </div>
+    <div class="ltDialog_bottom">
+      <div class="ltDialog_bottom_nei">
+        <img src="/public/img/弹窗头像图标.png" alt="" />
+        <div class="ltDialog_bottomr">
+          <div>
+            <span>员工编号：</span>
+            <span>{{ personnelInfo?.personnel?.code }}</span>
+          </div>
+          <div>
+            <span>姓名：</span>
+            <span>{{ personnelInfo?.personnel?.name }}</span>
+          </div>
+          <div>
+            <span>性别：</span>
+            <span>{{ personnelInfo?.personnel?.sex }}</span>
+          </div>
+          <div>
+            <span>部门：</span>
+            <span>{{ personnelInfo?.personnel?.department }}</span>
+          </div>
+          <div>
+            <span>岗位：</span>
+            <span>{{ personnelInfo?.personnel?.post }}</span>
+          </div>
+          <div>
+            <span>联系方式：</span>
+            <span>{{ personnelInfo?.personnel?.contact }}</span>
           </div>
         </div>
       </div>
     </div>
+  </div>
   <!-- </template> -->
 
   <div v-show="showPersonnelDialog" class="lbDialog">
     <div class="lbDialog_top">
       <span>趋势分析</span>
       <div class="lbDialog_select">
-        <ElSelect
-          v-model="healthyValue"
-          @change="changeHealthValue"
-          class="selectcss"
-          size="small"
-        >
-          <ElOption
-            v-for="item in healthySelect"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
+        <ElSelect v-model="healthyValue" @change="changeHealthValue" class="selectcss" size="small">
+          <ElOption v-for="item in healthySelect" :key="item.value" :label="item.label" :value="item.value" />
         </ElSelect>
       </div>
       <img :src="img9" alt="" srcset="" @click="lbcanleClick(item, index)" />
@@ -227,7 +185,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, nextTick, reactive,onUnmounted } from "vue";
+import { ref, onMounted, nextTick, reactive, onUnmounted } from "vue";
 import * as echarts from "echarts";
 import { Search } from "@element-plus/icons-vue";
 import center from "../../components/center.vue";
@@ -379,10 +337,10 @@ const bigscreenRBoption = {
     axisLine: { lineStyle: { color: "#ffffff" } },
   },
   tooltip: {
-					trigger: 'axis', //坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用
-					axisPointer: {// 坐标轴指示器，坐标轴触发有效
-						type: 'line' // 默认为直线，可选为：'line' | 'shadow'
-					}
+    trigger: 'axis', //坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用
+    axisPointer: {// 坐标轴指示器，坐标轴触发有效
+      type: 'line' // 默认为直线，可选为：'line' | 'shadow'
+    }
   },
   series: [
     {
@@ -458,7 +416,7 @@ const bigscreenRBoption = {
     },
   ],
 };
-const indicatorStatisticsList = () => {
+const indicatorStatisticsList = async () => {
   indicatorStatistics({
     dayType: radio1.value,
   }).then((res) => {
@@ -473,6 +431,15 @@ const indicatorStatisticsList = () => {
     bigscreenRBChart?.setOption(bigscreenRBoption);
   });
 };
+
+const indicatorStatisticsListTimer = useIntervalFn(() => {
+  indicatorStatisticsListTimer.pause();
+  indicatorStatisticsList().finally(() => {
+    indicatorStatisticsListTimer.resume();
+  });
+}, 5000);
+
+
 
 const initChart = () => {
   if (!bigscreenRBRef.value) return;
@@ -504,8 +471,14 @@ const accesscontrolFun = async () => {
     return { ...item, img: img[index % img.length], status: false };
   });
 };
+const accessontrolTimer = useIntervalFn(() => {
+  accessontrolTimer.pause();
+  accesscontrolFun().finally(() => {
+    accessontrolTimer.resume();
+  });
+}, 5000);
 const personnelInfo = ref()
-const personnelShow =ref(false)
+const personnelShow = ref(false)
 const ltClick = (item: any) => {
   personnelInfo.value = item;
   personnelShow.value = true;
@@ -544,6 +517,12 @@ const healthylistFun = async () => {
     return { ...item, img: imgList[index % imgList.length], status: false };
   });
 };
+const healthylistTimer = useIntervalFn(() => {
+  healthylistTimer.pause();
+  healthylistFun().finally(() => {
+    healthylistTimer.resume();
+  });
+}, 5000);
 const changeHealthValue = async (val) => {
   healthyStatisticsData.value.type = healthyValue.value;
   await healthyStatisticsFun();
@@ -645,9 +624,9 @@ const channelQuery = ref({
 const getVideoList = () => {
   nextTick(() => {
     getChannelListApi(channelQuery.value).then((res) => {
-    
-    videoInfo.value = res.data.data.List[0];
-    getStreamUrlApi(videoInfo.value.channelid).then((ress) => {
+
+      videoInfo.value = res.data.data.List[0];
+      getStreamUrlApi(videoInfo.value.channelid).then((ress) => {
         console.log("res.data.data.wsflv", ress.data.data.wsflv);
         videoRef.value.play(ress.data.data.wsflv);
         videoRef.value.setChannelId(ress.data.data.channelId);
@@ -658,9 +637,9 @@ const getVideoList = () => {
       }).catch((err) => {
         channelQuery.value.pageNum = 1
       });
+    });
   });
-  });
-  
+
 };
 
 
@@ -727,23 +706,24 @@ $design-height: 1080;
 }
 
 .rtDialog_bottom {
-    width: adaptiveWidth(420);
-    height: adaptiveHeight(415);
-    margin-left: adaptiveWidth(10);
-    display: flex;
-    flex-direction: column;
-    // align-items: center;
-    justify-content: center;
-    overflow: hidden;
+  width: adaptiveWidth(420);
+  height: adaptiveHeight(415);
+  margin-left: adaptiveWidth(10);
+  display: flex;
+  flex-direction: column;
+  // align-items: center;
+  justify-content: center;
+  overflow: hidden;
 
-    .rtDialog_bottom_video {
-      :deep(#container){
-        width: adaptiveWidth(420);
-        height: adaptiveHeight(215);
-        object-fit: cover;
-      }
+  .rtDialog_bottom_video {
+    :deep(#container) {
+      width: adaptiveWidth(420);
+      height: adaptiveHeight(215);
       object-fit: cover;
     }
+
+    object-fit: cover;
+  }
 }
 
 .bigscreen_lt,
@@ -753,10 +733,12 @@ $design-height: 1080;
   width: adaptiveWidth(443);
   height: adaptiveHeight(445);
 }
+
 .bigscreen_lt {
   position: absolute;
   top: adaptiveHeight(91);
   left: adaptiveWidth(26);
+
   .bigscreen_lt_top {
     width: 100%;
     height: adaptiveHeight(40);
@@ -764,29 +746,34 @@ $design-height: 1080;
     background-size: 110% 110%;
     display: flex;
     align-items: center;
+
     .bigscreen_lt_top_l {
       display: flex;
       align-items: center;
+
       img {
         margin-left: adaptiveWidth(11);
       }
+
       span {
         font-weight: 600;
         font-size: adaptiveFontSize(16);
         text-align: center;
         font-style: normal;
         text-transform: none;
-        background: linear-gradient(
-          to bottom,
-          #c7e5fd 42%,
-          #3582c7 100%
-        ); /* 渐变背景 */
-        background-clip: text; /* 让背景应用到文本 */
-        -webkit-text-fill-color: transparent; /* 使文本颜色透明 */
+        background: linear-gradient(to bottom,
+            #c7e5fd 42%,
+            #3582c7 100%);
+        /* 渐变背景 */
+        background-clip: text;
+        /* 让背景应用到文本 */
+        -webkit-text-fill-color: transparent;
+        /* 使文本颜色透明 */
         padding-left: adaptiveWidth(10);
       }
     }
   }
+
   .bigscreen_lt_bottom {
     width: 100%;
     height: adaptiveHeight(406);
@@ -797,32 +784,39 @@ $design-height: 1080;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+
     .bigscreen_lt_bottom_neis {
       margin-top: adaptiveHeight(20);
       height: adaptiveHeight(366);
       overflow: hidden;
+
       .bigscreen_lt_bottom_nei {
         margin-top: adaptiveHeight(30);
         height: adaptiveHeight(92);
         display: flex;
         align-items: center;
         cursor: pointer;
+
         .bigscreen_lt_bottom_nei_r {
           width: adaptiveWidth(276);
           height: adaptiveHeight(82);
           margin-left: adaptiveWidth(15);
           position: relative;
+
           div {
             display: flex;
+
             &:nth-child(1) {
               position: absolute;
               top: adaptiveHeight(-5);
               left: adaptiveWidth(15);
+
               span {
                 &:nth-child(1) {
                   color: #ffffff;
                   font-size: adaptiveFontSize(13);
                 }
+
                 &:nth-child(2) {
                   font-size: adaptiveFontSize(10);
                   color: #00fff9;
@@ -832,6 +826,7 @@ $design-height: 1080;
                 }
               }
             }
+
             &:nth-child(2),
             &:nth-child(3) {
               color: #ffffff;
@@ -839,16 +834,20 @@ $design-height: 1080;
               display: flex;
               justify-content: space-between;
             }
+
             &:nth-child(2) {
               margin-top: adaptiveHeight(25);
+
               span {
                 &:nth-child(1) {
                   margin-left: adaptiveWidth(15);
                 }
               }
             }
+
             &:nth-child(3) {
               margin-top: adaptiveHeight(5);
+
               span {
                 margin-left: adaptiveWidth(15);
               }
@@ -864,6 +863,7 @@ $design-height: 1080;
   position: absolute;
   bottom: adaptiveHeight(85);
   left: adaptiveWidth(26);
+
   .bigscreen_lb_top {
     width: 100%;
     height: adaptiveHeight(40);
@@ -872,29 +872,34 @@ $design-height: 1080;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     .bigscreen_lb_top_l {
       display: flex;
       align-items: center;
+
       img {
         margin-left: adaptiveWidth(11);
       }
+
       span {
         font-weight: 600;
         font-size: adaptiveFontSize(16);
         text-align: center;
         font-style: normal;
         text-transform: none;
-        background: linear-gradient(
-          to bottom,
-          #c7e5fd 42%,
-          #3582c7 100%
-        ); /* 渐变背景 */
-        background-clip: text; /* 让背景应用到文本 */
-        -webkit-text-fill-color: transparent; /* 使文本颜色透明 */
+        background: linear-gradient(to bottom,
+            #c7e5fd 42%,
+            #3582c7 100%);
+        /* 渐变背景 */
+        background-clip: text;
+        /* 让背景应用到文本 */
+        -webkit-text-fill-color: transparent;
+        /* 使文本颜色透明 */
         padding-left: adaptiveHeight(10);
       }
     }
   }
+
   .bigscreen_lb_bottom {
     width: 100%;
     height: adaptiveHeight(406);
@@ -905,21 +910,25 @@ $design-height: 1080;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+
     .bigscreen_lb_bottom_neis {
       margin-top: adaptiveHeight(40);
       height: adaptiveHeight(326);
       overflow: hidden;
+
       .bigscreen_lb_bottom_nei {
         width: adaptiveWidth(394);
         height: adaptiveHeight(85);
         margin-top: adaptiveHeight(30);
         position: relative;
         cursor: pointer;
+
         .bigscreen_lb_bottom_nei_count {
           height: 100%;
           display: flex;
           position: absolute;
           z-index: 100;
+
           .left {
             width: adaptiveWidth(79);
             height: 100%;
@@ -928,11 +937,13 @@ $design-height: 1080;
             flex-direction: column;
             align-items: center;
           }
+
           .right {
             margin-left: adaptiveWidth(30);
             height: adaptiveHeight(50);
             display: flex;
             flex-direction: column;
+
             .right_text {
               span {
                 color: #ffffff;
@@ -941,6 +952,7 @@ $design-height: 1080;
             }
           }
         }
+
         .bigscreen_lb_bottom_nei_dizuo {
           position: absolute;
           bottom: 0;
@@ -958,6 +970,7 @@ $design-height: 1080;
   position: absolute;
   top: adaptiveHeight(91);
   right: adaptiveWidth(26);
+
   .bigscreen_rt_top {
     width: 100%;
     height: adaptiveHeight(40);
@@ -966,52 +979,61 @@ $design-height: 1080;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     .bigscreen_rt_top_l {
       display: flex;
       align-items: center;
+
       img {
         margin-left: adaptiveWidth(11);
       }
+
       span {
         font-weight: 600;
         font-size: adaptiveFontSize(16);
         text-align: center;
         font-style: normal;
         text-transform: none;
-        background: linear-gradient(
-          to bottom,
-          #c7e5fd 42%,
-          #3582c7 100%
-        ); /* 渐变背景 */
-        background-clip: text; /* 让背景应用到文本 */
-        -webkit-text-fill-color: transparent; /* 使文本颜色透明 */
+        background: linear-gradient(to bottom,
+            #c7e5fd 42%,
+            #3582c7 100%);
+        /* 渐变背景 */
+        background-clip: text;
+        /* 让背景应用到文本 */
+        -webkit-text-fill-color: transparent;
+        /* 使文本颜色透明 */
         padding-left: adaptiveHeight(10);
       }
     }
   }
+
   .bigscreen_rt_bottom {
     width: 100%;
     height: adaptiveHeight(406);
     margin-top: adaptiveHeight(5);
     background: url("/public/img/bigback.png") no-repeat;
     background-size: 100% 100%;
+
     .bigscreen_rt_bottom_nei {
       display: flex;
       justify-content: center;
       align-items: center;
       width: 100%;
       height: 100%;
+
       img {
         width: adaptiveWidth(126);
         height: adaptiveHeight(176);
         margin-right: adaptiveWidth(28);
       }
+
       .bigscreen_rt_bottom_r {
         width: adaptiveWidth(218);
         height: adaptiveHeight(167);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+
         div {
           width: 100%;
           height: adaptiveHeight(41);
@@ -1020,6 +1042,7 @@ $design-height: 1080;
           display: flex;
           align-items: center;
           justify-content: center;
+
           span {
             font-size: adaptiveFontSize(14);
             color: rgba(255, 255, 255, 1);
@@ -1035,6 +1058,7 @@ $design-height: 1080;
   position: absolute;
   bottom: adaptiveHeight(85);
   right: adaptiveWidth(26);
+
   .bigscreen_rb_top {
     width: 100%;
     height: adaptiveHeight(40);
@@ -1043,34 +1067,40 @@ $design-height: 1080;
     justify-content: space-between;
     align-items: center;
     background-size: 110% 110%;
+
     .bigscreen_rb_top_l {
       display: flex;
       align-items: center;
+
       img {
         margin-left: adaptiveWidth(11);
       }
+
       span {
         font-weight: 600;
         font-size: adaptiveFontSize(16);
         text-align: center;
         font-style: normal;
         text-transform: none;
-        background: linear-gradient(
-          to bottom,
-          #c7e5fd 42%,
-          #3582c7 100%
-        ); /* 渐变背景 */
-        background-clip: text; /* 让背景应用到文本 */
-        -webkit-text-fill-color: transparent; /* 使文本颜色透明 */
+        background: linear-gradient(to bottom,
+            #c7e5fd 42%,
+            #3582c7 100%);
+        /* 渐变背景 */
+        background-clip: text;
+        /* 让背景应用到文本 */
+        -webkit-text-fill-color: transparent;
+        /* 使文本颜色透明 */
         padding-left: adaptiveWidth(10);
       }
     }
+
     .bigscreen_rb_top_r {
       display: flex;
       align-items: center;
       margin-right: 11px;
     }
   }
+
   .bigscreen_rb_bottom {
     width: 100%;
     height: adaptiveHeight(406);
@@ -1080,6 +1110,7 @@ $design-height: 1080;
     display: flex;
     justify-content: center;
     align-items: center;
+
     .bigscreen_rb_bottom_nei {
       width: adaptiveWidth(403);
       height: adaptiveHeight(366);
@@ -1096,18 +1127,21 @@ $design-height: 1080;
   top: adaptiveHeight(100);
   left: adaptiveWidth(480);
   z-index: 10;
+
   .ltDialog_top {
     width: 100%;
     height: adaptiveHeight(45);
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     span {
       font-size: adaptiveFontSize(20);
       color: #ffffff;
       padding-left: adaptiveWidth(15);
       font-family: youshe;
     }
+
     img {
       width: adaptiveWidth(8);
       height: adaptiveHeight(8);
@@ -1115,33 +1149,42 @@ $design-height: 1080;
       cursor: pointer;
     }
   }
+
   .ltDialog_bottom {
     width: 100%;
     height: adaptiveHeight(230);
+
     .ltDialog_bottom_nei {
       width: 100%;
       height: 100%;
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       img {
         width: adaptiveWidth(98);
         height: adaptiveHeight(98);
         margin-left: adaptiveWidth(50);
       }
+
       .ltDialog_bottomr {
         width: adaptiveWidth(202);
         margin-right: adaptiveWidth(50);
+
         div {
           margin-top: adaptiveHeight(10);
+
           &:nth-child(1) {
             margin-top: 0;
           }
+
           span {
             font-size: adaptiveFontSize(14);
+
             &:nth-child(1) {
               color: #687f92;
             }
+
             &:nth-child(2) {
               color: #ffffff;
             }
@@ -1161,18 +1204,21 @@ $design-height: 1080;
   bottom: adaptiveHeight(150);
   left: adaptiveWidth(480);
   z-index: 10;
+
   .lbDialog_top {
     width: 100%;
     height: adaptiveHeight(45);
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     span {
       font-size: adaptiveFontSize(20);
       color: #ffffff;
       padding-left: adaptiveWidth(15);
       font-family: youshe;
     }
+
     img {
       width: adaptiveWidth(8);
       height: adaptiveHeight(8);
@@ -1180,6 +1226,7 @@ $design-height: 1080;
       cursor: pointer;
     }
   }
+
   .lbDialog_bottom {
     width: adaptiveWidth(440);
     height: adaptiveHeight(230);
@@ -1192,10 +1239,12 @@ $design-height: 1080;
   width: 100px;
   top: adaptiveHeight(55);
   right: adaptiveWidth(25);
+
   .el-select__wrapper {
     background-color: transparent !important;
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2) !important;
   }
+
   .el-select__placeholder {
     color: rgba(255, 255, 255, 0.6) !important;
   }
@@ -1210,12 +1259,14 @@ $design-height: 1080;
   height: adaptiveHeight(24);
   margin-right: adaptiveWidth(11);
 }
+
 .inputcss :deep(.el-input__wrapper) {
   background-color: rgba(255, 255, 255, 0);
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: none;
   font-size: adaptiveFontSize(12);
 }
+
 .scroll {
   height: 195px;
   width: 100%;
@@ -1225,17 +1276,14 @@ $design-height: 1080;
 .group {
   margin-right: adaptiveWidth(11);
 }
-.group
-  :deep(
-    .el-radio-button.is-active
-      .el-radio-button__original-radio:not(:disabled)
-      + .el-radio-button__inner
-  ) {
+
+.group :deep(.el-radio-button.is-active .el-radio-button__original-radio:not(:disabled) + .el-radio-button__inner) {
   background: rgba(255, 255, 255, 0.8);
   color: rgba(7, 36, 57, 1);
   border-color: rgba(255, 255, 255, 0);
   font-size: 12px;
 }
+
 .group :deep(.el-radio-button .el-radio-button__inner) {
   padding: adaptiveWidth(2) adaptiveHeight(6);
   background: rgba(255, 255, 255, 0);

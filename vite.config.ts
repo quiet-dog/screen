@@ -42,7 +42,7 @@ export default defineConfig({
     hmr: true,
     proxy: {
       "/api": {
-        target: "http://localhost:9020",
+        target: "http://fit-office.singzer.cn:17772/api",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },

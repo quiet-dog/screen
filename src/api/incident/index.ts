@@ -49,6 +49,10 @@ export function alarmInformationList(params: alarmInformationListRes) {
   return http.get("/manage/emergencyAlarm", { params });
 }
 
+export function emergencyEventList(params: alarmInformationListRes) {
+  return http.get("/manage/emergencyEvent", { params });
+}
+
 //区域统计
 export function areaStatistics(params: { startTime: string; endTime: string }) {
   return http.get("/manage/event/getAreaStatistics", { params });
@@ -58,6 +62,8 @@ export function areaStatistics(params: { startTime: string; endTime: string }) {
 export function getstatistics(params: { dayType: string }) {
   return http.get("/manage/event/getWeekStatistics", { params });
 }
+
+
 
 //报警数量全部统计
 export function geteventTotal(params: { dayType: string }) {

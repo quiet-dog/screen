@@ -636,6 +636,12 @@ const bigscreenRCoption = {
       },
     },
   ],
+  tooltip: {
+    trigger: "axis",
+    axisPointer: {
+      type: "shadow",
+    },
+  },
 };
 const rcStatus = ref(false);
 const repairStatisticsData = ref({

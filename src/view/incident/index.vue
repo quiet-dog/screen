@@ -18,17 +18,20 @@
         </div>
       </div>
       <div class="bigscreen_lt_bottom_r">
-        <div class="bigscreen_lt_bottom_r_nei" v-for="(item, index) in alarmInformationlist">
-          <div>
-            {{ item.emergencyAlarmId }}
+        <Vue3SeamlessScroll style="width: 100%;overflow: hidden;" :list="alarmInformationlistValue" hover
+          class="scrool scroolMy">
+          <div class="bigscreen_lt_bottom_r_nei" v-for="(item, index) in alarmInformationlistValue">
+            <div>
+              {{ item?.eventName }}
+            </div>
+            <!-- <div>{{ dayjs(item?.createTime).format("YYYY-MM-DD") }}</div> -->
+             <div>
+              {{ getHandlePerson(item) }}
+             </div>
+            
           </div>
-          <div>{{ dayjs(item.createTime).format("YYYY-MM-DD") }}</div>
-          <div :style="{
-            color: index % 2 === 0 ? '#01D1E7' : '#DF9819',
-          }">
-            {{ item.type }}
-          </div>
-        </div>
+        </Vue3SeamlessScroll>
+
       </div>
     </div>
   </div>
@@ -42,11 +45,11 @@
         <img src="/public/img/zuo.svg" alt="" @click="timeLeftClick" style="margin-left: 5px" />
         <span>{{
           dayjs(areaStatisticsFormData.startTime).format("MM月DD日")
-          }}</span>
+        }}</span>
         <span>-</span>
         <span>{{
           dayjs(areaStatisticsFormData.endTime).format("MM月DD日")
-          }}</span>
+        }}</span>
         <img src="/public/img/you.svg" alt="" @click="timeRightClick" style="margin-right: 5px" />
       </div>
     </div>
@@ -61,10 +64,9 @@
         <span>报警历史</span>
       </div>
       <ElSelect @change="zxChangeSelect" v-model="zxSelect" size="small" class="selectcss">
-        <ElOption label="环境报警" value="环境报警" />
-        <ElOption label="工艺节点报警" value="工艺节点报警" />
-        <ElOption label="设备报警" value="设备报警" />
-        <ElOption label="物料报警" value="物料报警" />
+        <ElOption label="政策法规类" value="政策法规类" />
+        <ElOption label="设备报警类" value="设备报警类" />
+        <ElOption label="环境报警类" value="环境报警类" />
       </ElSelect>
     </div>
     <div class="bigscreen_lb_bottom">
@@ -90,18 +92,55 @@
           <Vue3SeamlessScroll :list="alarmEventslist" :class-option="{
             step: 5,
           }" hover class="scrool">
-            <div v-for="(item, index) in alarmEventslist" :key="index" class="bigscreen_rt_bottom_rnei">
-              <span>{{ item.description }}</span>
+            <div @click="openEventInfoShow(item)" v-for="(item, index) in alarmEventslist" :key="index" class="bigscreen_rt_bottom_rnei">
+              <span>{{ item.eventName }}</span>
               <div :style="{
-                background: ` url(${item.img}) no-repeat`,
+                background: ` url(${getBg(item)}) no-repeat`,
                 'background-size': '100% 100%',
               }">
-                <span v-if="item.type == '工艺节点报警'">工艺节点</span>
-                <span v-else>{{ item.type }}</span>
+                <span >{{ item.type }}</span>
               </div>
             </div>
           </Vue3SeamlessScroll>
         </div>
+      </div>
+    </div>
+    <div v-show="eventInfoDetailShow" class="bigscreen_rc_info">
+      <div class="bigscreen_rc_info_top">
+        <span>事件报告详情</span>
+        <img @click="closeEventInfoShow" :src="img9" alt="" srcset="" />
+      </div>
+      <div class="bigscreen_rc_info_bottom">
+       <div class="formMy">
+        <el-scrollbar height="100%">
+          <el-form id="formStyle" :model="eventInfoDetail" >
+          <el-form-item  label="事件编号">
+           <span> {{ eventInfoDetail.emergencyEventId }}</span>
+          </el-form-item>
+          <el-form-item label="事件名称">
+            {{ eventInfoDetail.eventName }}
+          </el-form-item>
+          <el-form-item label="处理人员">
+            <span>{{ handlePerson }}</span>
+          </el-form-item>
+          <el-form-item label="处理内容">
+            {{ eventInfoDetail.content }}
+          </el-form-item>
+          <el-form-item label="处理流程">
+            {{ eventInfoDetail.processingFlow }}
+          </el-form-item>
+          <!-- <el-form-item label="报警信息">
+            <el-input v-model="eventInfoDetail.processingFlow" readonly />
+          </el-form-item> -->
+          <el-form-item label="应对措施">
+            <el-tag @click="downloadFile(item.path)" v-for="item in files">
+              {{ item.fileName }}
+            </el-tag>
+          </el-form-item>
+        </el-form>
+        </el-scrollbar>
+     
+       </div>
       </div>
     </div>
   </div>
@@ -121,15 +160,25 @@
           <span>SOP名称</span>
           <span>适用范围</span>
         </div>
-        <div class="bigscreen_rc_bottom_nei_b" v-for="(item, index) in soplist" @click="rcClcik(item)">
+
+        <div class="sop_con" style="overflow-y: hidden;">
+          <Vue3SeamlessScroll :list="soplist" :class-option="{
+            step: 5,
+          }" hover  class="scrool">
+           <div class="bigscreen_rc_bottom_nei_b" v-for="(item, index) in soplist" @click="rcClcik(item)">
           <span>
             {{ item.sopId }}
           </span>
           <span>{{ item.name }}</span>
           <span>{{ item.scope }}</span>
         </div>
+          </Vue3SeamlessScroll>
+        </div>
+  
+       
       </div>
     </div>
+
   </div>
   <div class="bigscreen_rb">
     <div class="bigscreen_rb_top">
@@ -210,6 +259,7 @@ import {
   alarmInformationList,
   areaStatistics,
   getstatistics,
+  emergencyEventList,
 } from "../../api/incident";
 import OfficePreview from "../../components/officereview.vue";
 import dayjs from "dayjs";
@@ -217,6 +267,19 @@ import img5 from "../../../public/img/红色背景框.png";
 import img6 from "../../../public/img/绿色背景框.png";
 import img7 from "../../../public/img/黄色背景框.png";
 import img9 from "../../../public/img/叉号.png";
+import { getEventAtatistics } from "../../api/home";
+import { download } from "../../api/login";
+
+const getHandlePerson = (item) => {
+  // console.log("item",item)
+  if(item.handlers && item.handlers.length > 0){
+    let handlePerson = ""
+    item.handlers.forEach((v)=>{
+      handlePerson += v.name + " "
+    })
+    return handlePerson
+  }
+};
 
 let bigscreenLBChart: any = null;
 const bigscreenLBRef = ref();
@@ -381,6 +444,10 @@ const previewcanleClick = (item: any) => {
   item.status = false;
 };
 
+const downloadFile= (item)=>{
+  download(item)
+}
+
 //事件报告
 const alarmEventsFormData = ref({
   type: "",
@@ -390,8 +457,7 @@ const alarmEventsFormData = ref({
   orderDirection: "descending",
 });
 const alarmEventslist = ref<any[]>([]);
-const alarmEventslistFun = async () => {
-  const { data } = await alarmEventsList(alarmEventsFormData.value);
+const getBg = (item)=>{
   let imgList = [
     {
       level: "轻微",
@@ -414,14 +480,22 @@ const alarmEventslistFun = async () => {
       img: "/img/yiji_back.png",
     },
   ];
-  alarmEventslist.value = data.data.rows.map((item, index) => {
-    const matchedLevel = imgList.find((v) => v.level === item.level);
-    return {
-      ...item,
-      img: matchedLevel ? matchedLevel.img : "",
-      status: false,
-    };
-  });
+  let bg =""
+  if(item.emergencyAlarmDTOs && item.emergencyAlarmDTOs.length > 0){
+    imgList.forEach(result=>{
+      if(result.level == item.emergencyAlarmDTOs[0].level){
+        bg = result.img
+      }
+    })
+  }
+  if (bg == "") {
+    bg = imgList[0].img;
+  }
+  return bg;
+}
+const alarmEventslistFun = async () => {
+  const { data } = await emergencyEventList(alarmEventsFormData.value);
+  alarmEventslist.value = data.data.rows;
 };
 
 //报警信息
@@ -433,20 +507,20 @@ const alarmInformationFormData = ref({
   orderDirection: "descending",
   type: "政策法规类"
 });
-const alarmInformationlist = ref<any[]>([]);
+const alarmInformationlistValue = ref<any[]>([]);
 const alarmInformationlistFun = async () => {
-  const { data } = await alarmInformationList(alarmInformationFormData.value);
-  alarmInformationlist.value = data.data.rows.slice(0, 5);
+  const { data } = await emergencyEventList(alarmInformationFormData.value);
+  alarmInformationlistValue.value = data.data.rows;
 };
 
-const zxSelect = ref("环境报警");
+const zxSelect = ref("环境报警类");
 const zxChangeSelect = () => {
   historyStatistics();
 };
 
 const areaStatisticsFormData = ref({
-  startTime: dayjs().subtract(6, "day").startOf('day').format("YYYY-MM-DD HH:mm:ss"),
-  endTime: dayjs().endOf("day").format("YYYY-MM-DD HH:mm:ss"),
+  startTime: dayjs().subtract(6, "day").startOf('day').format("YYYY-MM-DD"),
+  endTime: dayjs().endOf("day").format("YYYY-MM-DD"),
 });
 const areaStatisticsFun = async () => {
   const { data } = await areaStatistics(areaStatisticsFormData.value);
@@ -464,50 +538,37 @@ const areaStatisticsFun = async () => {
 const timeLeftClick = () => {
   const currentStart = dayjs(
     areaStatisticsFormData.value.startTime,
-    "YYYY-MM-DD HH:mm:ss"
+    "YYYY-MM-DD"
   );
   areaStatisticsFormData.value.startTime = currentStart
     .subtract(6, "day").startOf("day")
-    .format("YYYY-MM-DD HH:mm:ss");
+    .format("YYYY-MM-DD");
   areaStatisticsFormData.value.endTime = currentStart
     .endOf("day")
-    .format("YYYY-MM-DD HH:mm:ss");
+    .format("YYYY-MM-DD");
   areaStatisticsFun(); // 更新数据
 };
 const timeRightClick = () => {
   const currentStart = dayjs(
     areaStatisticsFormData.value.startTime,
-    "YYYY-MM-DD HH:mm:ss"
+    "YYYY-MM-DD"
   );
   areaStatisticsFormData.value.startTime = currentStart
     .add(6, "day")
     .startOf("day")
-    .format("YYYY-MM-DD HH:mm:ss");
+    .format("YYYY-MM-DD");
   areaStatisticsFormData.value.endTime = currentStart
     .add(12, "day")
     .endOf("day")
-    .format("YYYY-MM-DD HH:mm:ss");
+    .format("YYYY-MM-DD");
   areaStatisticsFun(); // 更新数据
 };
 
 const historyStatistics = async () => {
-  const { data } = await getstatistics({
-    dayType: "year",
+  const { data } = await getEventAtatistics({
+    type: zxSelect.value
   });
-  let sum = new Array(12).fill(0);
-  data.data.forEach((item) => {
-    if (item.type == zxSelect.value) {
-      item.data.forEach((value, index) => {
-        sum[index] = value;
-      });
-    } else {
-      item.data.forEach((value, index) => {
-        sum[index] += value;
-      });
-    }
-    // 遍历每个数据集的 `data` 数组并进行累加
-  });
-  bigscreenLBoption.series[0].data = sum;
+  bigscreenLBoption.series[0].data = data.data.data;
   if (bigscreenLBRef.value) {
     bigscreenLBChart = echarts.init(bigscreenLBRef.value);
     bigscreenLBChart.setOption(bigscreenLBoption);
@@ -517,6 +578,45 @@ const historyStatistics = async () => {
 window.onresize = function () {
   bigscreenLCChart.resize();
   bigscreenLBChart.resize();
+};
+const eventInfoDetail = ref({});
+const handlePerson = ref("");
+const files = ref([]);
+const eventInfoDetailShow = ref(false)
+const openEventInfoShow=(item)=>{
+  eventInfoDetailShow.value = true;
+  handlePerson.value = "";
+  eventInfoDetail.value = item;
+  handlePerson.value = "";
+  files.value =[]
+  item.handlers.forEach((v)=>{
+    handlePerson.value += v.name + " ";
+  })
+  item.emergencyAlarmDTOs.forEach((v)=>{
+    v.paths.forEach((path)=>{
+    
+    let fileName = ""
+    let sub =""
+    const r =  path.split("_")
+    if (r.length > 0){
+      const s = r[r.length-1].split(".")
+      sub = "." + s[s.length-1]
+    }
+    for (let i = 1; i < r.length-1; i++) {
+      fileName += r[i]
+    }
+    let result = {
+      emergencyAlarmId: v.emergencyAlarmId,
+      level: v.level,
+      path:path,
+      fileName:fileName+sub,
+    };
+    files.value.push(result);
+    })
+  })
+}
+const closeEventInfoShow = () => {
+  eventInfoDetailShow.value = false;
 };
 
 onMounted(() => {
@@ -562,6 +662,69 @@ $design-height: 1080;
 .bigscreen_rb {
   width: adaptiveWidth(443);
   height: adaptiveHeight(292);
+}
+
+#formStyle{
+  :deep(.el-form-item__label){
+    color: #ffffff;
+  }
+  :deep(.el-form-item__content){
+    color: #ffffff;
+  }
+}
+
+.bigscreen_rc_info {
+  position: absolute;
+  width: adaptiveWidth(400);
+  height: adaptiveHeight(400);
+  background-color: red;
+  top: adaptiveHeight(45);
+  left: adaptiveWidth(-400);
+  background: url("/public/img/弹窗背景.png") no-repeat;
+  background-size: 100% 100%;
+
+  .bigscreen_rc_info_top {
+    width: 100%;
+    height: adaptiveHeight(90);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    span {
+      font-size: adaptiveFontSize(20);
+      color: #ffffff;
+      padding-left: adaptiveWidth(15);
+      font-family: youshe;
+    }
+
+    img {
+      width: adaptiveWidth(12);
+      height: adaptiveHeight(12);
+      padding-right: adaptiveWidth(5);
+      margin-top: adaptiveHeight(-20);
+      cursor: pointer;
+    }
+  }
+
+  .bigscreen_rc_info_bottom {
+    width: 100%;
+    height: adaptiveHeight(280);
+    background-size: 100% 100%;
+  
+  }
+  
+
+}
+.formMy{
+    width: calc(100% - daptiveHeight(20));
+    height: 100%;
+    padding: 0 adaptiveHeight(20);
+}
+
+.scroolMy {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 .bigscreen_lt {
@@ -662,34 +825,36 @@ $design-height: 1080;
       justify-content: space-between;
       align-items: center;
 
-      .bigscreen_lt_bottom_r_nei {
-        width: 100%;
-        height: adaptiveHeight(35);
-        background: rgba(4, 30, 62);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
 
-        div {
-          &:nth-child(1) {
-            color: #ffffff;
-            font-size: adaptiveFontSize(12);
-            display: flex;
-            align-items: center;
-            margin-left: adaptiveWidth(20);
-          }
+    }
+  }
+}
 
-          &:nth-child(2) {
-            color: #ffffff;
-            font-size: adaptiveFontSize(12);
-          }
+.bigscreen_lt_bottom_r_nei {
+  width: 100%;
+  height: adaptiveHeight(35);
+  background: rgba(4, 30, 62);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-          &:nth-child(3) {
-            font-size: adaptiveFontSize(12);
-            margin-right: adaptiveWidth(15);
-          }
-        }
-      }
+  div {
+    &:nth-child(1) {
+      color: #ffffff;
+      font-size: adaptiveFontSize(12);
+      display: flex;
+      align-items: center;
+      margin-left: adaptiveWidth(20);
+    }
+
+    &:nth-child(2) {
+      color: #ffffff;
+      font-size: adaptiveFontSize(12);
+    }
+
+    &:nth-child(3) {
+      font-size: adaptiveFontSize(12);
+      margin-right: adaptiveWidth(15);
     }
   }
 }
@@ -906,7 +1071,7 @@ $design-height: 1080;
             width: adaptiveWidth(140);
             color: rgba(244, 249, 255, 1);
             font-size: adaptiveFontSize(11);
-            margin-left: adaptiveWidth(20);
+            margin-left: adaptiveWidth(10);
             white-space: nowrap;
             /* 禁止换行 */
             overflow: hidden;
@@ -932,6 +1097,11 @@ $design-height: 1080;
       }
     }
   }
+}
+
+.sop_con{
+  height: adaptiveHeight(191);
+  overflow: hidden;
 }
 
 .bigscreen_rc {

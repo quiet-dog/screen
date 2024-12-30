@@ -66,9 +66,55 @@
     <div class="bigscreen_lb_bottom">
       <div class="bigscreen_lb_bottom_nei" ref="bigscreenLBRef"></div>
     </div>
+    <div v-show="hisShow"  class="lb_table ltTrendDialog">
+      <div class="ltTrendDialog_top">
+      <span>报警列表</span>
+      <img @click="closeShow" :src="img9" alt="" srcset="" />
+    </div>
+      <div class="ltTrendDialog_bottom">
+        <ElTable id="tableMy" header-row-class-name="headerTr" style="width: 100%;" height="100%" :data="hisList">
+        <el-table-column width="150" fixed prop="createTime" label="报警时间">
+          <template #default="{ row }">
+            <span>{{ 
+              dayjs(row.createTime).format("YYYY-MM-DD hh:mm:ss")  }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column fixed width="80" prop="level" label="报警级别">
+          <template #default="{ row }">
+            <el-tag :style="getLevelStyle(row.level)" effect="plain" size="small">
+              {{ row.level ? row.level : "-" }}
+            </el-tag>
+          </template>
+        </el-table-column>
+        <!-- <el-table-column prop="type" label="类型">
+          <template #default="{ row }">
+            <span>{{ row.type }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column fixed width="80" prop="level" label="数值">
+          <template #default="{ row }">
+            {{ getValue(row) }}
+          </template>
+        </el-table-column>
+        <el-table-column width="100" prop="description" label="报警编号">
+          <template #default="{ row }">
+            <span>{{ row.eventId }}</span>
+          </template>
+        </el-table-column> -->
+        <el-table-column  prop="description" label="报警描述">
+          <template #default="{ row }">
+            <span>{{ row.description }}</span>
+          </template>
+        </el-table-column>
+
+
+      </ElTable>
+      </div>
+   
+    </div>
   </div>
   <center></center>
-  <div class="bigscreen_rt">
+  <div  class="bigscreen_rt">
     <div class="bigscreen_rt_top">
       <div class="bigscreen_rt_top_l">
         <img src="/public/img/光标.png" alt="" />
@@ -113,7 +159,7 @@
               class="bigscreen_rc_bottom_rnei">
               <span style="color: rgba(172, 223, 255, 1); font-size: 11px">{{
                 dayjs(item.createTime).format("YYYY-MM-DD")
-              }}</span>
+                }}</span>
               <div :style="{
                 background: `url(${item.img}) no-repeat`,
                 'background-size': '100% 100%',
@@ -236,6 +282,25 @@ import img9 from "../../../public/img/叉号.png";
 import { useIntervalFn } from "@vueuse/core";
 import { getChannelListApi, getStreamUrlApi } from "../../api/video/index.ts";
 import Video from "./components/Video.vue";
+
+const getValue = (item)=>{
+  if(item.type == "设备报警"){
+    let unit = "";
+    if(item.threshold){
+      return item.equipmentValue + item.threshold?.unit
+    }
+  }
+  if (item.type= "环境报警"){
+    return item.environmentValue + item.environment?.unitName
+  }
+  if(item.type == "物料报警"){
+    return item.materialsValue + item.materials?.unit
+  }
+  if(item.type == "工艺节点报警"){
+    return item.equipmentValue + item.threshold?.unit
+  }
+  return "未知"
+}
 
 const rtStatus = ref(false);
 const videoRef = ref(null);
@@ -453,15 +518,15 @@ const bigscreenRBoption = {
         itemStyle: { color: "RGBA(255, 169, 19, 1)" },
       },
       {
-        name: "环境数据",
+        name: "环境报警",
         itemStyle: { color: "RGBA(225, 110, 122, 1)" },
       },
       {
-        name: "物料数据",
+        name: "物料报警",
         itemStyle: { color: "RGBA(65, 195, 142, 1)" },
       },
       {
-        name: "工艺节点",
+        name: "工艺节点报警",
         itemStyle: { color: "RGBA(210, 114, 255, 1)" },
       },
     ],
@@ -506,7 +571,7 @@ const bigscreenRBoption = {
       ),
     },
     {
-      name: "环境数据",
+      name: "环境报警",
       data: [],
       type: "line",
       smooth: true,
@@ -520,7 +585,7 @@ const bigscreenRBoption = {
       ),
     },
     {
-      name: "物料数据",
+      name: "物料报警",
       data: [],
       type: "line",
       smooth: true,
@@ -534,7 +599,7 @@ const bigscreenRBoption = {
       ),
     },
     {
-      name: "工艺节点",
+      name: "工艺节点报警",
       data: [],
       type: "line",
       smooth: true,
@@ -610,6 +675,7 @@ const bigscreenLBoption = {
   xAxis: {
     type: "category",
     data: [],
+
     axisLabel: {
       color: "rgba(255, 255, 255, 0.65)",
     },
@@ -633,7 +699,7 @@ const bigscreenLBoption = {
       data: [],
       type: "line",
       smooth: true,
-      symbol: "none",
+      symbol: "circle",
       areaStyle: {
         color: {
           type: "linear",
@@ -657,7 +723,80 @@ const bigscreenLBoption = {
     },
   ],
 };
+
+let histData = ([])
+let hisStart = "";
+let hisEnd = "";
+let hisIndex = 0;
+let hisList = ref([])
+let hisDayType = ref("week");
+const hisShow = ref(false);
+// 修改报警级别样式映射函数
+const getLevelStyle = (level: string) => {
+  const colorMap = {
+    一级: {
+      color: "#F53F3F",
+      backgroundColor: "#FFECE8",
+      borderColor: "#F53F3F"
+    },
+    紧急: {
+      color: "#F53F3F",
+      backgroundColor: "#FFECE8",
+      borderColor: "#F53F3F"
+    },
+    二级: {
+      color: "#FF7D00",
+      backgroundColor: "#FFF3E8",
+      borderColor: "#FF7D00"
+    },
+    重要: {
+      color: "#FF7D00",
+      backgroundColor: "#FFF3E8",
+      borderColor: "#FF7D00"
+    },
+    三级: {
+      color: "#B99E00",
+      backgroundColor: "#FFF7CC",
+      borderColor: "#FADC19"
+    },
+    中度: {
+      color: "#B99E00",
+      backgroundColor: "#FFF7CC",
+      borderColor: "#FADC19"
+    },
+    四级: {
+      color: "#168CFF",
+      backgroundColor: "#E8F3FF",
+      borderColor: "#168CFF"
+    },
+    一般: {
+      color: "#168CFF",
+      backgroundColor: "#E8F3FF",
+      borderColor: "#168CFF"
+    },
+    五级: {
+      color: "#00B42A",
+      backgroundColor: "#E8FFEA",
+      borderColor: "#00B42A"
+    },
+
+    轻微: {
+      color: "#00B42A",
+      backgroundColor: "#E8FFEA",
+      borderColor: "#00B42A"
+    }
+  };
+  return (
+    colorMap[level] || {
+      color: "#000000",
+      backgroundColor: "transparent",
+      borderColor: "transparent"
+    }
+  );
+};
+
 const lbRadio = ref("week");
+const bigScreenInit = ref(false)
 const geteventTotalFun = async () => {
   const { data } = await geteventTotal({ dayType: lbRadio.value });
 
@@ -665,8 +804,42 @@ const geteventTotalFun = async () => {
   bigscreenLBoption.series[0].data = data.data.data;
 
   if (bigscreenLBRef.value) {
-    bigscreenLBChart = echarts.init(bigscreenLBRef.value);
+    if (!bigScreenInit.value) {
+      bigScreenInit.value = true;
+      bigscreenLBChart = echarts.init(bigscreenLBRef.value);
     bigscreenLBChart.setOption(bigscreenLBoption);
+      bigscreenLBChart.off().on("click", params => {
+        let cuData = "";
+        let enData = "";
+        hisShow.value = true;
+
+        if (hisIndex != params.dataIndex || hisDayType.value != lbRadio.value) {
+          hisIndex = params.dataIndex;
+          hisDayType.value = lbRadio.value;
+          if (lbRadio.value === "week") {
+            // 将年份换成今年的年份
+            cuData = dayjs(params.name).startOf("day").format("YYYY-MM-DD").replace("2001", dayjs().format("YYYY"));
+            enData = dayjs(cuData).endOf("day").format("YYYY-MM-DD")
+          } else {
+            cuData = dayjs(params.name).startOf("month").format("YYYY-MM-DD")
+            enData = dayjs(cuData).endOf("month").format("YYYY-MM-DD")
+          }
+
+          hisStart = cuData;
+          hisEnd = enData;
+          alarmEventsList({
+            beginTime: cuData,
+            endTime: enData,
+            pageNum: 1,
+            pageSize: 1000
+          }).then((res) => {
+            hisList.value = res.data.data.rows;
+          })
+        }
+      });
+    }
+    bigscreenLBChart.setOption(bigscreenLBoption);
+
   }
 };
 const lbRadioTimer = useIntervalFn(() => {
@@ -691,6 +864,10 @@ const getVideoList = () => {
     videoList.value = res.data.data.List;
   });
 };
+
+const closeShow =()=>{
+  hisShow.value =false
+}
 
 onMounted(() => {
   getVideoList();
@@ -720,6 +897,70 @@ $design-height: 1080;
 
 @function adaptiveFontSize($px) {
   @return #{$px / $design-width * 100}vw;
+}
+
+.lb_table {
+  width: adaptiveWidth(500);
+  height: adaptiveHeight(400);
+  left: adaptiveWidth(470);
+  top: adaptiveHeight(600);
+  background-color: red;
+}
+
+
+
+:deep(.headerTr){
+  --el-table-header-bg-color: rgba(255,255,255,0.2) !important;
+}
+
+.ltTrendDialog {
+  width: adaptiveWidth(500);
+  height: adaptiveHeight(400);
+  left: adaptiveWidth(470);
+  top: adaptiveHeight(600);
+  background: url("/public/img/弹窗背景.png") no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
+  z-index: 10;
+  position: fixed;
+
+  .ltTrendDialog_top {
+    
+
+    width: 100%;
+    height: adaptiveHeight(45);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    span {
+      font-size: adaptiveFontSize(20);
+      color: #ffffff;
+      padding-left: adaptiveWidth(15);
+      font-family: youshe;
+    }
+
+    .myInput{
+      width: adaptiveWidth(120);
+      position: relative;
+      right: adaptiveWidth(120);
+    }
+
+    img {
+      width: adaptiveWidth(8);
+      height: adaptiveHeight(8);
+      padding-right: adaptiveWidth(10);
+      padding-top: adaptiveHeight(20);
+      cursor: pointer;
+    }
+  }
+
+  .ltTrendDialog_bottom {
+    width: adaptiveWidth(450);
+    height: calc(90% - adaptiveHeight(60));
+    margin-left: adaptiveWidth(25);
+    margin-top: adaptiveHeight(35);
+  }
 }
 
 .bigscreen_lt,

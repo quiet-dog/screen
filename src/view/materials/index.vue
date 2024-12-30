@@ -136,7 +136,8 @@
           <Vue3SeamlessScroll :list="receivelist" :class-option="{
             step: 5,
           }" hover class="scrool">
-            <div class="bigscreen_rb_bottom_nei_b" v-for="(item, index) in receivelist">
+            <!-- @click="changeMaterials" -->
+            <div @click="changeMaterials(item)" class="bigscreen_rb_bottom_nei_b" v-for="(item, index) in receivelist">
               <span>
                 <img src="/public/img/equipment/tableicon.png" alt="" v-if="item.status" />
                 {{ item.materialsInfo.name }}
@@ -159,12 +160,12 @@
     <div class="rbDialog_bottom">
       <el-input class="inputcss" v-model="receiveFormData2.materialName" @change="receivelistFun2"
         style="width: 148px; height: 24px" placeholder="请输入物料名称" :prefix-icon="Search" />
-      <el-scrollbar class="bigscreen_rc_bottom_nei">
+      <el-scrollbar  class="bigscreen_rc_bottom_nei">
         <div class="bigscreen_rc_bottom_l">
           <img src="/public/img/圆形标记.png" alt="" />
         </div>
         <div class="bigscreen_rc_bottom_r">
-          <div v-for="(item, index) in receivelist2" :key="index" class="bigscreen_rc_bottom_rnei">
+            <div v-for="(item, index) in receivelist2" :key="index" class="bigscreen_rc_bottom_rnei">
             <span style="color: rgba(172, 223, 255, 1); font-size: 11px">{{
               dayjs(item.createTime).format("YYYY-MM-DD")
             }}</span>
@@ -267,6 +268,7 @@ const rbstatus = ref(false);
 const receivelistFun = async () => {
   const { data } = await receiveList(receiveFormData.value);
   receivelist.value = data.data.rows;
+  console.log("receivelist", receivelist.value);
 };
 const rbClick = async () => {
   rbstatus.value = !rbstatus.value;
@@ -398,6 +400,13 @@ const materialsChange = async (val) => {
     bigscreenLCChart.setOption(bigscreenLCoption);
   }
 };
+
+const changeMaterials = (item)=>{
+  rbstatus.value = true
+  receiveFormData2.value.materialName = item.materialsInfo.name;
+  receivelistFun2();
+  // receiveFormData2.value.materialName = item;
+}
 
 //物料类型统计
 let bigscreenLBChart: any = null;
@@ -1249,6 +1258,7 @@ $design-height: 1080;
           width: adaptiveWidth(381);
           height: adaptiveHeight(187);
           margin-left: adaptiveFontSize(15);
+          overflow-y: scroll !important;
           display: flex;
           flex-direction: column;
           justify-content: space-between;

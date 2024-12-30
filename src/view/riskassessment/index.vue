@@ -1,5 +1,5 @@
 <template>
-  <div @mouseenter="closeShow" class="bigscreen_lt" @click="closeShow">
+  <div class="bigscreen_lt" @click="closeShow">
     <div class="bigscreen_lt_top">
       <div class="bigscreen_lt_top_l">
         <img src="/public/img/光标.png" alt="" />
@@ -50,39 +50,61 @@
         <el-radio-button label="年" value="year" />
       </el-radio-group>
     </div>
-    <div v-show="hisShow" class="lb_table">
-      <ElTable style="width: 100%" height="100%" :data="hisList">
-        <el-table-column width="100" fixed prop="createTime" label="报警时间">
-          <template #default="{ row }">
-            <span>{{ historyStatisticsData.dayType === "week" ?
-              dayjs(row.createTime).format("hh:mm:ss") : dayjs(row.createTime).format("YYYY:MM:DD") }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column fixed width="80" prop="level" label="级别">
-          <template #default="{ row }">
-            <el-tag :style="getLevelStyle(row.level)" effect="plain" size="small">
-              {{ row.level ? row.level : "-" }}
-            </el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column prop="type" label="类型">
-          <template #default="{ row }">
-            <span>{{ row.type }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column width="100" prop="description" label="报警编号">
-          <template #default="{ row }">
-            <span>{{ row.eventId }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column width="200" prop="description" label="描述">
-          <template #default="{ row }">
-            <span>{{ row.description }}</span>
-          </template>
-        </el-table-column>
+    <div v-show="hisShow" class="lb_table ltTrendDialog">
+      <div class="ltTrendDialog_top">
+        <span>报警列表</span>
+        <div class="myInput">
+          <ElInput class="inputcss" placeholder="请输入设备名称" v-model="hisDeviceName" @change="changeHisList" />
+          <ElButton @click="downloadFile" type="primary" text="primary">
+            <el-icon class="downloadMy">
+              <Download />
+            </el-icon>
+          </ElButton>
+        </div>
+        <img @click="closeShow" :src="img9" alt="" srcset="" />
+      </div>
+      <div class="ltTrendDialog_bottom">
+        <ElTable style="width: 100%" height="100%" :data="hisList">
+          <el-table-column width="150" fixed prop="createTime" label="报警时间">
+            <template #default="{ row }">
+              <span>{{ row.createTime }}</span>
+            </template>
+          </el-table-column>
+          <!-- <el-table-column width="100" fixed prop="equipment.equipmentName" label="设备名称">
+
+          </el-table-column> -->
+          <el-table-column fixed width="80" prop="level" label="报警级别">
+            <template #default="{ row }">
+              <el-tag :style="getLevelStyle(row.level)" effect="plain" size="small">
+                {{ row.level ? row.level : "-" }}
+              </el-tag>
+            </template>
+          </el-table-column>
+          <!-- <el-table-column prop="type" label="类型">
+            <template #default="{ row }">
+              <span>{{ row.type }}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column fixed width="80" prop="level" label="数值">
+            <template #default="{ row }">
+              {{ getValue(row) }}
+            </template>
+          </el-table-column>
+          <el-table-column width="100" prop="description" label="报警编号">
+            <template #default="{ row }">
+              <span>{{ row.eventId }}</span>
+            </template>
+          </el-table-column> -->
+          <el-table-column  prop="description" label="描述">
+            <template #default="{ row }">
+              <span>{{ row.description }}</span>
+            </template>
+          </el-table-column>
 
 
-      </ElTable>
+        </ElTable>
+      </div>
     </div>
     <div class="bigscreen_lb_bottom">
       <div class="bigscreen_lb_bottom_nei" ref="bigscreenLBRef"></div>
@@ -90,7 +112,7 @@
   </div>
 
   <center></center>
-  <div @mouseenter="closeShow" class="bigscreen_rt">
+  <div class="bigscreen_rt">
     <div class="bigscreen_rt_top">
       <div class="bigscreen_rt_top_l">
         <img src="/public/img/光标.png" alt="" />
@@ -104,8 +126,38 @@
     <div class="bigscreen_rt_bottom">
       <div class="bigscreen_rt_bottom_nei" ref="bigscreenRTRef"></div>
     </div>
-  </div>
-  <div @mouseenter="closeShow" class="bigscreen_rb">
+    <div v-show="rtShow" class="rt_table rtTrendDialog">
+      <div class="ltTrendDialog_top">
+        <span>报警列表</span>
+        <img @click="closeRtShow" :src="img9" alt="" srcset="" />
+      </div>
+      <div  class="ltTrendDialog_bottom">
+        <ElTable style="width: 100%" height="100%" :data="powerInfoList">
+          <el-table-column width="150" fixed prop="createTime" label="报警时间">
+            <template #default="{ row }">
+              <span>{{ row.createTime }}</span>
+            </template>
+          </el-table-column>
+        
+          <el-table-column fixed width="80" prop="level" label="报警级别">
+            <template #default="{ row }">
+              <el-tag :style="getLevelStyle(row.level)" effect="plain" size="small">
+                {{ row.level ? row.level : "-" }}
+              </el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column  prop="description" label="描述">
+            <template #default="{ row }">
+              <span>{{ row.description }}</span>
+            </template>
+          </el-table-column>
+
+
+        </ElTable>
+      </div>
+      </div>
+    </div>
+  <div class="bigscreen_rb">
     <div class="bigscreen_rb_top">
       <div class="bigscreen_rb_top_l">
         <img src="/public/img/光标.png" alt="" />
@@ -142,19 +194,40 @@
 <script lang="ts" setup>
 import { ref, onMounted, nextTick, onUnmounted } from "vue";
 import * as echarts from "echarts";
+import { Download } from "@element-plus/icons-vue";
 import {
   environmentalDetectionList,
   environmentalFilesList,
   eventByAreaTotalStatic,
   powerByAreaTotalStatic,
 } from "../../api/environment";
-import { thresholdDataList, thresholdList } from "../../api/riskassessment";
+import { thresholdDataList, thresholdList, exportAlarmEvents } from "../../api/riskassessment";
 import { alarmEventsList, getstatistics } from "../../api/incident";
 import center from "../../components/center.vue";
 import { Vue3SeamlessScroll } from "vue3-seamless-scroll";
 import dayjs from "dayjs";
 import { useIntervalFn } from '@vueuse/core'
-
+import img9 from "../../../public/img/叉号.png";
+import { type } from '../../../auto-imports';
+const getValue = (item) => {
+  if (item.type == "设备报警") {
+    let unit = "";
+    if (item.threshold) {
+      return item.equipmentValue + item.threshold?.unit
+    }
+  }
+  if (item.type = "环境报警") {
+    return item.environmentValue + item.environment?.unitName
+  }
+  if (item.type == "物料报警") {
+    return item.materialsValue + item.materials?.unit
+  }
+  if (item.type == "工艺节点报警") {
+    return item.equipmentValue + item.threshold?.unit
+  }
+  return "未知"
+}
+const hisDeviceName = ref("")
 
 // 修改获取设备数据颜色的方法
 const getEquipmentDataColor = row => {
@@ -370,25 +443,25 @@ const bigscreenLBoption = {
     axisPointer: {// 坐标轴指示器，坐标轴触发有效
       type: 'line' // 默认为直线，可选为：'line' | 'shadow'
     },
-    formatter: function (params, index) {
-      // console.log("params", params, index)
-      // return `${params[0].name}<br/>${params[0].marker} ${params[0].seriesName} :${params[0].dataIndex}-- ${params[0].value}`;
-      // 获取原来的数据
-      // 获取数据的月份的开始和月的结束
+    // formatter: function (params, index) {
+    //   // console.log("params", params, index)
+    //   // return `${params[0].name}<br/>${params[0].marker} ${params[0].seriesName} :${params[0].dataIndex}-- ${params[0].value}`;
+    //   // 获取原来的数据
+    //   // 获取数据的月份的开始和月的结束
 
 
 
-      let html = "";
-      if (histData.length === 0) {
-        return html;
-      }
-      histData.forEach((item) => {
-        const value = item.data[params[0].dataIndex];
-        const type = item.type;
-        html += `<div>${type}:${value}</div>`
-      });
-      return html;
-    }
+    //   let html = "";
+    //   if (histData.length === 0) {
+    //     return html;
+    //   }
+    //   histData.forEach((item) => {
+    //     const value = item.data[params[0].dataIndex];
+    //     const type = item.type;
+    //     html += `<div>${type}:${value}</div>`
+    //   });
+    //   return html;
+    // }
   },
   series: [
     {
@@ -405,7 +478,18 @@ const historyStatisticsData = ref({
   dayType: "week",
 });
 const isInit = ref(false)
-
+const changeHisList = () => {
+  alarmEventsList({
+    beginTime: hisStart,
+    endTime: hisEnd,
+    pageNum: 1,
+    pageSize: 1000,
+    type: "设备报警",
+    deviceName: hisDeviceName.value
+  }).then((res) => {
+    hisList.value = res.data.data.rows;
+  })
+}
 const historyStatistics = async () => {
   const { data } = await getstatistics({
     dayType: historyStatisticsData.value.dayType,
@@ -413,8 +497,10 @@ const historyStatistics = async () => {
 
   let sum = new Array(data.data[0].times.length).fill(0);
   for (let i = 0; i < data.data.length; i++) {
-    for (let j = 0; j < data.data[i].data.length; j++) {
-      sum[j] += data.data[i].data[j];
+    if (data.data[i].type == "设备报警") {
+      for (let j = 0; j < data.data[i].data.length; j++) {
+        sum[j] += data.data[i].data[j];
+      }
     }
   }
   histData = data.data;
@@ -452,7 +538,9 @@ const historyStatistics = async () => {
             beginTime: cuData,
             endTime: enData,
             pageNum: 1,
-            pageSize: 1000
+            pageSize: 1000,
+            type: "设备报警",
+            deviceName: hisDeviceName.value
           }).then((res) => {
             hisList.value = res.data.data.rows;
           })
@@ -464,6 +552,32 @@ const historyStatistics = async () => {
   }
 
 };
+
+const downloadFile = () => {
+  exportAlarmEvents({
+    pageNum: 1,
+    pageSize: 1000,
+    beginTime: hisStart,
+    endTime: hisEnd,
+    type: "设备报警",
+    deviceName: hisDeviceName.value
+  }).then(res => {
+    const blob = res.data instanceof Blob ? res.data : new Blob([res.data]);
+    // 创建临时下载链接
+    const downloadLink = URL.createObjectURL(res.data);
+    // 创建一个链接元素（<a>标签）
+    const linkElement = document.createElement("a");
+    linkElement.href = downloadLink;
+    // 设置下载时的文件名为Excel文件
+    linkElement.download = "报警事件列表" + ".xlsx";
+
+    // 触发链接元素的点击事件，以模拟用户点击下载链接
+    linkElement.click();
+
+    // 在下载完成后，释放临时下载链接
+    URL.revokeObjectURL(downloadLink);
+  })
+}
 
 const historyStatisticsTimer = useIntervalFn(() => {
   historyStatisticsTimer.pause();
@@ -550,6 +664,12 @@ const powerByAreaTotalStaticData = ref({
   dayType: "week",
   type: "电",
 });
+let powerInit = false;
+const powerInfoList = ref([]);
+let powerIndex = 0;
+let powerArea = "";
+let powetDayType = "week";
+const rtShow = ref(false);
 const powerByAreaTotalStaticFun = async () => {
   const { data } = await eventByAreaTotalStatic(
     powerByAreaTotalStaticData.value
@@ -557,10 +677,35 @@ const powerByAreaTotalStaticFun = async () => {
   bigscreenRToption.xAxis.data = data.data.times;
   bigscreenRToption.series[0].data = data.data.data;
   if (bigscreenRTRef.value) {
-    bigscreenRTChart = echarts.init(bigscreenRTRef.value);
+    if (!powerInit){
+      bigscreenRTChart = echarts.init(bigscreenRTRef.value);
+      bigscreenRTChart.off().on("click",(params)=>{
+        rtShow.value = true
+        if (params.dataIndex!= powerIndex || params.name != powerArea || powetDayType != powerByAreaTotalStaticData.value.dayType){
+          powerIndex = params.dataIndex;
+          powerArea = params.name;
+          powetDayType = powerByAreaTotalStaticData.value.dayType;
+          alarmEventsList({
+            pageNum: 1,
+            pageSize: 1000,
+            area: params.name,
+            beginTime: powetDayType == "week"? dayjs().startOf("week").format("YYYY-MM-DD"):dayjs().startOf("year").format("YYYY-MM-DD"),
+            endTime: powetDayType == "week"? dayjs().endOf("week").format("YYYY-MM-DD"):dayjs().endOf("year").format("YYYY-MM-DD"),
+          }).then(res=>{
+            powerInfoList.value = res.data.data.rows;
+            console.log("powerInfoList",powerInfoList.value)
+          })
+        }
+        
+      })
+    }
+    powerInit = true;
     bigscreenRTChart.setOption(bigscreenRToption);
   }
 };
+const closeRtShow = () => {
+  rtShow.value = false;
+}
 const powerTimer = useIntervalFn(() => {
   powerTimer.pause();
   powerByAreaTotalStaticFun().finally(() => {
@@ -604,6 +749,17 @@ $design-height: 1080;
   @return #{$px / $design-width * 100}vw;
 }
 
+.rt_table{
+  width: adaptiveWidth(500);
+  height: adaptiveHeight(400);
+  position: absolute;
+  top: adaptiveHeight(150);
+  right: adaptiveWidth(470);
+  z-index: 999;
+  background-color: red;
+  
+}
+
 .lb_table {
   width: adaptiveWidth(500);
   height: adaptiveHeight(400);
@@ -613,6 +769,104 @@ $design-height: 1080;
   z-index: 999;
   background-color: red;
 }
+
+.myInput {
+  width: adaptiveWidth(200);
+  position: relative;
+  right: adaptiveWidth(70);
+  display: flex;
+}
+
+.downloadMy {
+  font-size: adaptiveWidth(20);
+}
+
+.ltTrendDialog {
+  width: adaptiveWidth(500);
+  height: adaptiveHeight(400);
+  left: adaptiveWidth(470);
+  top: adaptiveHeight(600);
+  background: url("/public/img/弹窗背景.png") no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
+  z-index: 10;
+  position: fixed;
+
+  .ltTrendDialog_top {
+    width: 100%;
+    height: adaptiveHeight(45);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    span {
+      font-size: adaptiveFontSize(20);
+      color: #ffffff;
+      padding-left: adaptiveWidth(15);
+      font-family: youshe;
+    }
+
+    img {
+      width: adaptiveWidth(8);
+      height: adaptiveHeight(8);
+      padding-right: adaptiveWidth(10);
+      padding-top: adaptiveHeight(20);
+      cursor: pointer;
+    }
+  }
+  .ltTrendDialog_bottom {
+    width: adaptiveWidth(450);
+    height: calc(90% - adaptiveHeight(60));
+    margin-left: adaptiveWidth(25);
+    margin-top: adaptiveHeight(35);
+  }
+  
+}
+
+
+.rtTrendDialog {
+  width: adaptiveWidth(500);
+  height: adaptiveHeight(400);
+  // left: adaptiveWidth(470);
+  // top: adaptiveHeight(600);
+  background: url("/public/img/弹窗背景.png") no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
+  z-index: 10;
+  position: fixed;
+
+  .ltTrendDialog_top {
+    width: 100%;
+    height: adaptiveHeight(45);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    span {
+      font-size: adaptiveFontSize(20);
+      color: #ffffff;
+      padding-left: adaptiveWidth(15);
+      font-family: youshe;
+    }
+
+    img {
+      width: adaptiveWidth(8);
+      height: adaptiveHeight(8);
+      padding-right: adaptiveWidth(10);
+      padding-top: adaptiveHeight(20);
+      cursor: pointer;
+    }
+  }
+  .ltTrendDialog_bottom {
+    width: adaptiveWidth(450);
+    height: calc(90% - adaptiveHeight(60));
+    margin-left: adaptiveWidth(25);
+    margin-top: adaptiveHeight(35);
+  }
+  
+}
+
+
 
 .text-urgent {
   color: #f53f3f !important;
@@ -640,6 +894,7 @@ $design-height: 1080;
 .bigscreen_rb {
   width: adaptiveWidth(443);
   height: adaptiveHeight(445);
+  position: relative;;
 }
 
 .bigscreen_lt {

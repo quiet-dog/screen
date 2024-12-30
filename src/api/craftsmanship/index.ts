@@ -18,6 +18,7 @@ export interface nodeListRes {
   pageSize: number;
   orderColumn: string;
   orderDirection: string;
+  craftArchiveId: number
 }
 export function nodeList(params: nodeListRes) {
   return http.get("/manage/craft-node", { params });

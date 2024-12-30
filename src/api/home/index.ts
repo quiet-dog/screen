@@ -12,3 +12,8 @@ export function getStaticEventHistory(params: { dayType: string }) {
 export function geteventTotal() {
   return http.get("/manage/event/eventTotal");
 }
+
+export function getEventAtatistics(params: { type: string }) {
+  return http.get("/manage/emergencyEvent/getStock", { params });
+}
+

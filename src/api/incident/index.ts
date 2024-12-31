@@ -38,6 +38,11 @@ export function alarmEventsList(params: alarmEventsListRes) {
   return http.get("/manage/event", { params });
 }
 
+export function alarmMateEventsList(params: alarmEventsListRes) {
+  return http.get("/manage/alarm", { params });
+}
+
+
 //获取报警信息列表
 export interface alarmInformationListRes {
   pageNum: number;

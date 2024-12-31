@@ -197,7 +197,7 @@ import {
   materialFilesInfo,
   allByReceiveExplain,
 } from "../../api/materials/index";
-import { alarmEventsList } from "../../api/incident/index";
+import { alarmEventsList, alarmMateEventsList } from "../../api/incident/index";
 import dayjs from "dayjs";
 import center from "../../components/center.vue";
 import img9 from "../../../public/img/叉号.png";
@@ -208,13 +208,13 @@ import { useIntervalFn } from "@vueuse/core";
 const alarmInformationData = ref({
   type: "物料报警",
   pageNum: 1,
-  pageSize: 3,
+  pageSize: 10,
   orderColumn: "createTime",
   orderDirection: "descending",
 });
 const alarmInformationlist = ref<any[]>([]);
 const alarmInformationlistFun = async () => {
-  const { data } = await alarmEventsList(alarmInformationData.value);
+  const { data } = await alarmMateEventsList(alarmInformationData.value);
   let list = data.data.rows;
   let imgList = [
     {
@@ -238,6 +238,23 @@ const alarmInformationlistFun = async () => {
       img: "/img/yiji_icon.png",
     },
   ];
+  list.forEach((item) => {
+    let level = "未知";
+    item.materials?.values?.forEach(v =>{
+      const isExit =  (v.scondition === "小于等于" && item.stock <= v.value) ||
+      (v.scondition === "大于等于" && item.stock >= v.value) ||
+      (v.scondition === "大于等于" && item.stock >= v.value) ||
+      (v.scondition === "小于" && item.stock < v.value) ||
+      (v.scondition === "大于" && item.stock > v.value);
+      if (isExit) {
+        level = v.level;
+        item.level = level;
+      }
+    })
+    if (level === "未知") {
+      item.level = "轻微";
+    }
+  });
   alarmInformationlist.value = list.map((item) => {
     const matchedLevel = imgList.find((v) => v.level === item.level);
     return {
@@ -253,7 +270,7 @@ const alarmInfomationTimer = useIntervalFn(() => {
   alarmInformationlistFun().finally(() => {
     alarmInfomationTimer.resume();
   })
-}, 10000)
+}, 100000)
 
 //领用记录
 const receiveFormData = ref({

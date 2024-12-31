@@ -503,7 +503,7 @@ const alarmEventslistFun = async () => {
 const alarmInformationFormData = ref({
   eventName: "",
   pageNum: 1,
-  pageSize: 10,
+  pageSize: 1000,
   orderColumn: "createTime",
   orderDirection: "descending",
   type: "政策法规类"

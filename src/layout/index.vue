@@ -1,11 +1,12 @@
 <template>
   <div class="bigscreen">
     <div class="bigscreen_header">
-      <img
+      <!-- <img
         class="bigscreen_header_l"
         src="/public/img/高生物安全动态监管平台.png"
         alt=""
-      />
+      /> -->
+      <div class="text-my">高风险安全风险车间智能化风险管理和实时动态监管平台</div>
       <div class="bigscreen_header_r">
         <span>{{ time }}</span>
         <span>{{ dayOfWeek }}</span>
@@ -166,6 +167,18 @@ $design-height: 1080;
 
 @function adaptiveFontSize($px) {
   @return #{$px / $design-width * 100}vw;
+}
+
+.text-my{
+  font-size: adaptiveFontSize(30);
+  color: white;
+  // 水平居中
+  text-align: center;
+  width: adaptiveWidth(560);
+  position: absolute;
+  transform: translateX(-50%);
+  left: 50%;
+  font-family: "youshe";
 }
 
 .bigscreen {

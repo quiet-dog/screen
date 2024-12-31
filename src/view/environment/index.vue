@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="bigscreen_lt_bottom">
-      <div class="bigscreen_lt_bottom_nei">
+      <!-- <div class="bigscreen_lt_bottom_nei">
         <div class="bigscreen_lt_bottom_nei_t">
           <span>描述</span>
           <span>位号</span>
@@ -21,6 +21,32 @@
           <span>{{ `${item.description}-${item.unitName}` }}</span>
           <span>{{ item.tag }}</span>
           <span>{{ item.esignal }}</span>
+        </div>
+      </div> -->
+      <div class="lt_container" >
+        <div :style="{
+          backgroundImage: `url(${BeiJing})`,
+        }" @click="ltClick2(item)" v-for="(item,index) in envList" :key="index">
+          <div>
+            <img v-if="item.environment?.unitName === '温度'" :src="WenDu" alt="">
+            <img v-if="item.environment?.unitName === '湿度'" :src="ShiDu" alt="">
+            <img v-if="item.environment?.unitName === '压差'" :src="YaCha" alt="">
+          </div>
+          <div>{{ 
+          item.environment?.unitName  }}
+          <br/>  
+          <span :class="getValueColorClass(item)">
+            {{ item.value }}
+          </span>
+          <br/>
+          {{ item.environment?.unitName =="温度" ? '℃' : item.environment?.unitName == "湿度" ? '%' : item.environment?.unitName == "压差" ? "Pa": ""}}
+        </div>
+          <div class="lt_b">
+             <div>
+              {{ item.environment?.tag }}
+             </div>
+            <img :src="DiZuo" alt="" srcset="">
+          </div>
         </div>
       </div>
     </div>
@@ -115,14 +141,50 @@ import {
   powerStatic,
   powerByTypeStatistics,
   powerByAreaTotalStatic,
+  environmentalDetectionList,
 } from "../../api/environment";
 import center from "../../components/center.vue";
 import img9 from "../../../public/img/叉号.png";
+import DiZuo from "../../assets/env/底座.png";
+import WenDu from "../../assets/env/温度.png";
+import ShiDu from "../../assets/env/湿度.png";
+import YaCha from "../../assets/env/压差.png";
+import BeiJing from "../../assets/env/背景.jpg";
 import { useIntervalFn } from "@vueuse/core";
 
 const zsRadio = ref("week");
 const zsRadioChange = async () => {
   zsEchartData();
+};
+
+const getValueColorClass = row => {
+  const value = row.value;
+  const alarmLevels = row.environment?.alarmlevels || [];
+
+  for (const level of alarmLevels) {
+    if (value >= level.min && value <= level.max) {
+      switch (level.level) {
+        case "一级":
+        case "紧急":
+          return "text-urgent";
+        case "二级":
+        case "重要":
+          return "text-important";
+        case "三级":
+        case "中度":
+          return "text-warning";
+        case "四级":
+        case "一般":
+          return "text-info";
+        case "五级":
+        case "轻微":
+          return "text-success";
+        default:
+          return "";
+      }
+    }
+  }
+  return "text-info"; // 默认颜色
 };
 const options2 = ref([
   {
@@ -237,6 +299,19 @@ const environmentFileFun = async () => {
     };
   });
 };
+const envList = ref([]);
+const getEnvList = ()=>{
+  environmentalDetectionList({
+    pageNum:1,
+    pageSize:4,
+    orderColumn: "createTime",
+    orderDirection: "descending",
+  }).then(res=>{
+    envList.value = res.data.data.rows;
+  }).catch(err=>{
+
+  })
+}
 const environmentFileTimer = useIntervalFn(() => {
   environmentFileTimer.pause();
   environmentFileFun().finally(() => {
@@ -397,11 +472,11 @@ const historyStatisticsFun = async () => {
   ltDialogoption.xAxis.data = data.time;
   ltDialogoption.series[0].data = data.data;
 };
-const ltClick2 = async (item: any, index: number) => {
-  environmentFileList.value.forEach(
-    (v) => (v.status = v.environmentId === item.environmentId)
-  );
-  if (!item.status) return;
+const ltClick2 = async (item: any) => {
+  // environmentFileList.value.forEach(
+  //   (v) => (v.status = v.environmentId === item.environmentId)
+  // );
+  // if (!item.status) return;
   historyStatisticsFormData.value.environmentId = item.environmentId;
   await historyStatisticsFun();
   environmentFileDialog.value = true;
@@ -703,6 +778,7 @@ onMounted(() => {
   powerStaticFun();
   powerByTypeStatisticsFun();
   powerByAreaTotalStaticFun();
+  getEnvList()
 });
 </script>
 
@@ -722,12 +798,53 @@ $design-height: 1080;
   @return #{$px / $design-width * 100}vw;
 }
 
+.lt_container{
+  width: calc(100% - adaptiveWidth(20));
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  word-break: break-word;
+  color: white;
+  font-size: adaptiveFontSize(16);
+  gap: adaptiveWidth(10);
+  padding: 0 adaptiveWidth(10);
+  // margin: 0 adaptiveWidth(10);
+
+  >div{
+    width: adaptiveWidth(90);
+    height: adaptiveHeight(350);
+    border-radius: adaptiveWidth(10);
+    // background-color: gray;
+    display: grid;
+    grid-template-rows: 1fr 2fr 1fr;
+  }
+}
+
 .bigscreen_lt,
 .bigscreen_lb,
 .bigscreen_rt,
 .bigscreen_rb {
   width: adaptiveWidth(443);
   height: adaptiveHeight(445);
+}
+
+.lt_b{
+  position: relative;
+  div {
+    position: relative;
+    z-index: 1;
+    font-size: adaptiveFontSize(12);
+  }
+  img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+  }
 }
 
 .bigscreen_lt {
@@ -1133,5 +1250,21 @@ $design-height: 1080;
   border-color: rgba(255, 255, 255, 0);
   font-size: adaptiveFontSize(12);
   border-radius: 2px;
+}
+
+.text-urgent {
+  color: #f53f3f;
+}
+.text-important {
+  color: #ff7d00;
+}
+.text-warning {
+  color: #fadc19;
+}
+.text-info {
+  color: #168cff;
+}
+.text-success {
+  color: #00b42a;
 }
 </style>

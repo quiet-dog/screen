@@ -105,3 +105,12 @@ export const getStreamUrlApi = (channelid: string) => {
         }
     })
 }
+
+export const getPersonnelListApi = () => {
+    return http.get("/manage/personnel", {
+        params: {
+            pageSize: 1,
+            pageNum: 1
+        }
+    });
+}

@@ -3,6 +3,9 @@ import { ref, watch } from "vue";
 import BgTwo from "../../assets/screen/2_108.png";
 import { useDeviceStore } from "../device";
 import { useTwoDeviceHook } from ".";
+import Per from "../../assets/per/per.jpg";
+import { getPersonnelListApi } from "../../api/video";
+import { healthyList } from "../../api/personnel";
 
 /** 组件name最好和菜单表中的router_name一致 */
 defineOptions({
@@ -10,6 +13,25 @@ defineOptions({
 });
 const { list, tuRef, xAspectRatio,yAspectRatio, urlInfo, deviceStyles } = useTwoDeviceHook();
 const deviceStore = useDeviceStore();
+const personnelInfo = ref<any>(null);
+const personelShow =ref(false)
+onMounted(()=>{
+  // getPersonnelListApi().then(res=>{
+  //   if(res.data?.data?.rows.length > 0){
+  //     personnelInfo.value = res.data.data.rows[0]
+  //     console.log("personnelInfo.value",personnelInfo.value)
+  //   }
+  // })
+  healthyList({
+    pageSize:1,
+    pageNum:1,
+  }).then(res=>{
+    if(res.data?.data?.rows.length > 0){
+      personnelInfo.value = res.data.data.rows[0]
+      console.log("personnelInfo.value",personnelInfo.value)
+    }
+  })
+})
 // watch(() => deviceStore.currentData, (newVal) => {
 //   deviceStore.tuTwo.forEach(item => {
 //     if (newVal.content.deviceType === item.type) {
@@ -34,6 +56,20 @@ const deviceStore = useDeviceStore();
 <template>
   <div class="main">
     <div class="my-container">
+
+      <ElPopover  v-model:visible="personelShow" >
+        <template #reference>
+      <img class="myPer" :src="Per" alt="" srcset="">
+        </template>
+        <span>姓名:{{ personnelInfo?.personnel?.name }}</span>
+        <br/>
+        <span>体温:{{  personnelInfo?.temperature}}</span>
+        <br/>
+
+        <span>收缩压:{{  personnelInfo?.lowBloodPressure }}</span>
+        <br/>
+        <span>舒张压:{{  personnelInfo?.highBloodPressure }}</span>
+      </ElPopover>
       <img class="my-img" style="max-width: 100%;" ref="tuRef" @load="urlInfo" :src="BgTwo" alt="" srcset="">
       <template v-for="(item, index) in deviceStore.tuFour">
         <ElPopover  v-model:visible="item.showPopover" :width="500">
@@ -91,5 +127,13 @@ const deviceStore = useDeviceStore();
 .my-img{
   // 旋转-90度
   transform: rotate(-90deg);
+}
+
+.myPer{
+  position: absolute;
+  width: 50px;
+  left: 150px;
+  top: 150px;
+  z-index: 2;
 }
 </style>

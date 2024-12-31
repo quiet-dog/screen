@@ -3,6 +3,9 @@ import { ref, watch } from "vue";
 import BgThree from "../../assets/screen/3_108.png";
 import { useDeviceStore } from "../device";
 import { useThreeDeviceHook } from ".";
+import Per from "../../assets/per/per.jpg";
+import { getPersonnelListApi } from "../../api/video";
+import { healthyList } from "../../api/personnel";
 
 /** 组件name最好和菜单表中的router_name一致 */
 defineOptions({
@@ -28,12 +31,44 @@ const deviceStore = useDeviceStore();
 
 //   })
 // }, { deep: true });
+const personnelInfo = ref<any>(null);
+const personelShow =ref(false)
+onMounted(()=>{
+  // getPersonnelListApi().then(res=>{
+  //   if(res.data?.data?.rows.length > 0){
+  //     personnelInfo.value = res.data.data.rows[0]
+  //   }
+  // })
+  healthyList({
+    pageSize:1,
+    pageNum:1,
+  }).then(res=>{
+    if(res.data?.data?.rows.length > 0){
+      personnelInfo.value = res.data.data.rows[0]
+      console.log("personnelInfo.value",personnelInfo.value)
+    }
+  })
+})
 
 </script>
 
 <template>
   <div class="main">
     <div class="my-container">
+
+      <ElPopover  v-model:visible="personelShow" >
+        <template #reference>
+      <img class="myPer" :src="Per" alt="" srcset="">
+        </template>
+        <span>姓名:{{ personnelInfo?.personnel?.name }}</span>
+        <br/>
+        <span>体温:{{  personnelInfo?.temperature}}</span>
+        <br/>
+
+        <span>收缩压:{{  personnelInfo?.lowBloodPressure }}</span>
+        <br/>
+        <span>舒张压:{{  personnelInfo?.highBloodPressure }}</span>
+      </ElPopover>
       <img ref="tuRef" style="max-width: 100%;" @load="urlInfo" :src="BgThree" alt="" srcset="">
       <template v-for="(item, index) in deviceStore.tuThree">
         <ElPopover  v-model:visible="item.showPopover" :width="500">
@@ -86,5 +121,15 @@ const deviceStore = useDeviceStore();
   // top: 370px;
   // left: 540px;
   cursor: pointer;
+}
+
+.myPer{
+  position: absolute;
+  width: 100px;
+  left: 150px;
+  top: 150px;
+  z-index: 2;
+  width: 50px;
+
 }
 </style>

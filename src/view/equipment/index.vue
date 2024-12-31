@@ -22,9 +22,10 @@
               }">
                 {{ item?.equipment?.equipmentName }}
               </span>
-              <span style="color: white;">
+              <span :style="{
+                color: getEquipmentDataColor(item)
+              }">
                 {{ item.equipmentData + "" + item?.threshold?.unit }}
-                <!-- {{ item?.threshold?.unitName }} -->
               </span>
             </div>
           </div>
@@ -351,11 +352,58 @@ const rtcanleClick = () => {
 const ltequipmentFormData = ref({
   equipmentName: "",
   pageNum: 1,
-  pageSize: 20,
+  pageSize: 1000,
   orderColumn: "createTime",
   orderDirection: "descending",
 });
 const ltequipmentlist = ref<any[]>([]);
+// 修改获取设备数据颜色的方法
+const getEquipmentDataColor = row => {
+  if (!row.threshold?.values?.length) return "inherit";
+
+  const value = Number(row.equipmentData);
+  const thresholds = row.threshold.values;
+
+  // 按照level等级排序
+  const sortedThresholds = [...thresholds].sort((a, b) => {
+    const levelA = Number(a.level.replace(/[^0-9]/g, ""));
+    const levelB = Number(b.level.replace(/[^0-9]/g, ""));
+    return levelB - levelA;
+  });
+
+  for (const threshold of sortedThresholds) {
+    if (value >= threshold.min && value <= threshold.max) {
+      // 根据不同等级返回不同颜色
+      switch (threshold.level) {
+        case "一级":
+          return "#F53F3F"; // 紧急 - 红色
+        case "紧急":
+          return "#F53F3F"; // 紧急 - 红色
+        case "二级":
+          return "#FF7D00"; // 重要 - 橙色
+        case "重要":
+          return "#FF7D00"; // 重要 - 橙色
+        case "三级":
+          return "#FADC19"; // 一般 - 黄色
+        case "中度":
+          return "#FADC19"; // 一般 - 黄色
+        case "四级":
+          return "#168CFF"; // 一般 - 蓝色
+        case "一般":
+          return "#168CFF"; // 一般 - 绿色
+        case "五级":
+          return "#00B42A"; // 一般 - 绿色
+        case "轻微":
+          return "#00B42A"; // 一般 - 绿色
+
+        default:
+          return "#168CFF";
+      }
+    }
+  }
+
+  return "inherit";
+};
 const ltequipmentListFun = async () => {
   // const { data } = await equipmentList(ltequipmentFormData.value);
   // let list = data.data.rows;
@@ -410,7 +458,7 @@ const ltequipmentlistTimer = useIntervalFn(() => {
   ltequipmentListFun().finally(() => {
     ltequipmentlistTimer.resume();
   })
-}, 10000)
+}, 100000)
 
 //设备台账
 const equipmentFormData = ref({

@@ -685,14 +685,14 @@ const lbcanleClick = (item: any) => {
 const alarmEventsFormData = ref({
   type: "工艺节点报警",
   pageNum: 1,
-  pageSize: 20,
+  pageSize: 1000,
   orderColumn: "createTime",
   orderDirection: "descending",
 });
 const alarmEventslist = ref<any[]>([]);
 const alarmEventsListFun = async () => {
   const { data } = await alarmEventsList(alarmEventsFormData.value);
-  let list = data.data.rows.slice(0, 4);
+  // let list = data.data.rows.slice(0, 4);
   let imgList = [
     {
       level: "轻微",
@@ -715,7 +715,7 @@ const alarmEventsListFun = async () => {
       img: "/img/yiji_icon.png",
     },
   ];
-  alarmEventslist.value = list.map((item, index) => {
+  alarmEventslist.value = data.data.rows.map((item, index) => {
     const matchedLevel = imgList.find((v) => v.level === item.level);
     return {
       ...item,
@@ -730,7 +730,7 @@ const alarmEventsTimer = useIntervalFn(() => {
   alarmEventsListFun().finally(() => {
     alarmEventsTimer.resume();
   })
-}, 5000)
+}, 100000)
 
 //工艺流程图
 const processFormData = ref({

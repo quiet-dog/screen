@@ -10,11 +10,11 @@
       <div class="bigscreen_lt_bottom_l">
         <img src="/public/img/报警信息图标.png" alt="" />
         <div class="bigscreen_lt_bottom_lt">
-          <div style="text-align: center">
+          <!-- <div style="text-align: center">
             <span>98</span>
             <span>%</span>
-          </div>
-          <div>当前数据</div>
+          </div> -->
+          <div>政策法规类</div>
         </div>
       </div>
       <div class="bigscreen_lt_bottom_r">
@@ -25,10 +25,10 @@
               {{ item?.eventName }}
             </div>
             <!-- <div>{{ dayjs(item?.createTime).format("YYYY-MM-DD") }}</div> -->
-             <div>
+            <div>
               {{ getHandlePerson(item) }}
-             </div>
-            
+            </div>
+
           </div>
         </Vue3SeamlessScroll>
 
@@ -92,13 +92,14 @@
           <Vue3SeamlessScroll :list="alarmEventslist" :class-option="{
             step: 5,
           }" hover class="scrool">
-            <div @click="openEventInfoShow(item)" v-for="(item, index) in alarmEventslist" :key="index" class="bigscreen_rt_bottom_rnei">
+            <div @click="openEventInfoShow(item)" v-for="(item, index) in alarmEventslist" :key="index"
+              class="bigscreen_rt_bottom_rnei">
               <span>{{ item.eventName }}</span>
               <div :style="{
                 background: ` url(${getBg(item)}) no-repeat`,
                 'background-size': '100% 100%',
               }">
-                <span >{{ item.type }}</span>
+                <span>{{ item.type }}</span>
               </div>
             </div>
           </Vue3SeamlessScroll>
@@ -111,36 +112,36 @@
         <img @click="closeEventInfoShow" :src="img9" alt="" srcset="" />
       </div>
       <div class="bigscreen_rc_info_bottom">
-       <div class="formMy">
-        <el-scrollbar height="100%">
-          <el-form id="formStyle" :model="eventInfoDetail" >
-          <el-form-item  label="事件编号">
-           <span> {{ eventInfoDetail.emergencyEventId }}</span>
-          </el-form-item>
-          <el-form-item label="事件名称">
-            {{ eventInfoDetail.eventName }}
-          </el-form-item>
-          <el-form-item label="处理人员">
-            <span>{{ handlePerson }}</span>
-          </el-form-item>
-          <el-form-item label="处理内容">
-            {{ eventInfoDetail.content }}
-          </el-form-item>
-          <el-form-item label="处理流程">
-            {{ eventInfoDetail.processingFlow }}
-          </el-form-item>
-          <!-- <el-form-item label="报警信息">
+        <div class="formMy">
+          <el-scrollbar height="100%">
+            <el-form id="formStyle" :model="eventInfoDetail">
+              <el-form-item label="事件编号">
+                <span> {{ eventInfoDetail.emergencyEventId }}</span>
+              </el-form-item>
+              <el-form-item label="事件名称">
+                {{ eventInfoDetail.eventName }}
+              </el-form-item>
+              <el-form-item label="处理人员">
+                <span>{{ handlePerson }}</span>
+              </el-form-item>
+              <el-form-item label="处理内容">
+                {{ eventInfoDetail.content }}
+              </el-form-item>
+              <el-form-item label="处理流程">
+                {{ eventInfoDetail.processingFlow }}
+              </el-form-item>
+              <!-- <el-form-item label="报警信息">
             <el-input v-model="eventInfoDetail.processingFlow" readonly />
           </el-form-item> -->
-          <el-form-item label="应对措施">
-            <el-tag @click="downloadFile(item.path)" v-for="item in files">
-              {{ item.fileName }}
-            </el-tag>
-          </el-form-item>
-        </el-form>
-        </el-scrollbar>
-     
-       </div>
+              <el-form-item label="应对措施">
+                <el-tag @click="downloadFile(item.path)" v-for="item in files">
+                  {{ item.fileName }}
+                </el-tag>
+              </el-form-item>
+            </el-form>
+          </el-scrollbar>
+
+        </div>
       </div>
     </div>
   </div>
@@ -164,18 +165,18 @@
         <div class="sop_con" style="overflow-y: hidden;">
           <Vue3SeamlessScroll :list="soplist" :class-option="{
             step: 5,
-          }" hover  class="scrool">
-           <div class="bigscreen_rc_bottom_nei_b" v-for="(item, index) in soplist" @click="rcClcik(item)">
-          <span>
-            {{ item.sopId }}
-          </span>
-          <span>{{ item.name }}</span>
-          <span>{{ item.scope }}</span>
-        </div>
+          }" hover class="scrool">
+            <div class="bigscreen_rc_bottom_nei_b" v-for="(item, index) in soplist" @click="rcClcik(item)">
+              <span>
+                {{ item.sopId }}
+              </span>
+              <span>{{ item.name }}</span>
+              <span>{{ item.scope }}</span>
+            </div>
           </Vue3SeamlessScroll>
         </div>
-  
-       
+
+
       </div>
     </div>
 
@@ -272,9 +273,9 @@ import { download } from "../../api/login";
 
 const getHandlePerson = (item) => {
   // console.log("item",item)
-  if(item.handlers && item.handlers.length > 0){
+  if (item.handlers && item.handlers.length > 0) {
     let handlePerson = ""
-    item.handlers.forEach((v)=>{
+    item.handlers.forEach((v) => {
       handlePerson += v.name + " "
     })
     return handlePerson
@@ -444,7 +445,7 @@ const previewcanleClick = (item: any) => {
   item.status = false;
 };
 
-const downloadFile= (item)=>{
+const downloadFile = (item) => {
   download(item)
 }
 
@@ -457,7 +458,7 @@ const alarmEventsFormData = ref({
   orderDirection: "descending",
 });
 const alarmEventslist = ref<any[]>([]);
-const getBg = (item)=>{
+const getBg = (item) => {
   let imgList = [
     {
       level: "轻微",
@@ -480,10 +481,10 @@ const getBg = (item)=>{
       img: "/img/yiji_back.png",
     },
   ];
-  let bg =""
-  if(item.emergencyAlarmDTOs && item.emergencyAlarmDTOs.length > 0){
-    imgList.forEach(result=>{
-      if(result.level == item.emergencyAlarmDTOs[0].level){
+  let bg = ""
+  if (item.emergencyAlarmDTOs && item.emergencyAlarmDTOs.length > 0) {
+    imgList.forEach(result => {
+      if (result.level == item.emergencyAlarmDTOs[0].level) {
         bg = result.img
       }
     })
@@ -583,35 +584,35 @@ const eventInfoDetail = ref({});
 const handlePerson = ref("");
 const files = ref([]);
 const eventInfoDetailShow = ref(false)
-const openEventInfoShow=(item)=>{
+const openEventInfoShow = (item) => {
   eventInfoDetailShow.value = true;
   handlePerson.value = "";
   eventInfoDetail.value = item;
   handlePerson.value = "";
-  files.value =[]
-  item.handlers.forEach((v)=>{
+  files.value = []
+  item.handlers.forEach((v) => {
     handlePerson.value += v.name + " ";
   })
-  item.emergencyAlarmDTOs.forEach((v)=>{
-    v.paths.forEach((path)=>{
-    
-    let fileName = ""
-    let sub =""
-    const r =  path.split("_")
-    if (r.length > 0){
-      const s = r[r.length-1].split(".")
-      sub = "." + s[s.length-1]
-    }
-    for (let i = 1; i < r.length-1; i++) {
-      fileName += r[i]
-    }
-    let result = {
-      emergencyAlarmId: v.emergencyAlarmId,
-      level: v.level,
-      path:path,
-      fileName:fileName+sub,
-    };
-    files.value.push(result);
+  item.emergencyAlarmDTOs.forEach((v) => {
+    v.paths.forEach((path) => {
+
+      let fileName = ""
+      let sub = ""
+      const r = path.split("_")
+      if (r.length > 0) {
+        const s = r[r.length - 1].split(".")
+        sub = "." + s[s.length - 1]
+      }
+      for (let i = 1; i < r.length - 1; i++) {
+        fileName += r[i]
+      }
+      let result = {
+        emergencyAlarmId: v.emergencyAlarmId,
+        level: v.level,
+        path: path,
+        fileName: fileName + sub,
+      };
+      files.value.push(result);
     })
   })
 }
@@ -664,11 +665,12 @@ $design-height: 1080;
   height: adaptiveHeight(292);
 }
 
-#formStyle{
-  :deep(.el-form-item__label){
+#formStyle {
+  :deep(.el-form-item__label) {
     color: #ffffff;
   }
-  :deep(.el-form-item__content){
+
+  :deep(.el-form-item__content) {
     color: #ffffff;
   }
 }
@@ -710,15 +712,16 @@ $design-height: 1080;
     width: 100%;
     height: adaptiveHeight(280);
     background-size: 100% 100%;
-  
+
   }
-  
+
 
 }
-.formMy{
-    width: calc(100% - daptiveHeight(20));
-    height: 100%;
-    padding: 0 adaptiveHeight(20);
+
+.formMy {
+  width: calc(100% - daptiveHeight(20));
+  height: 100%;
+  padding: 0 adaptiveHeight(20);
 }
 
 .scroolMy {
@@ -797,6 +800,8 @@ $design-height: 1080;
         margin-bottom: adaptiveHeight(20);
 
         div {
+          font-size: adaptiveFontSize(16);
+
           &:nth-child(1) {
             span {
               &:nth-child(1) {
@@ -1099,7 +1104,7 @@ $design-height: 1080;
   }
 }
 
-.sop_con{
+.sop_con {
   height: adaptiveHeight(191);
   overflow: hidden;
 }

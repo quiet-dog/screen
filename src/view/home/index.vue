@@ -310,7 +310,9 @@ const rtClick = (item: { channelid: string }) => {
     nextTick(() => {
       getStreamUrlApi(item.channelid).then((res) => {
         console.log("res.data.data.wsflv", res.data.data.wsflv);
-        videoRef.value.play(res.data.data.wsflv);
+        const url = new URL(res.data.data.wsflv);
+        url.host = location.host;
+        videoRef.value.play(url.toString());
         videoRef.value.setChannelId(res.data.data.channelId);
       });
     });
@@ -324,7 +326,7 @@ const rtcanleClick = () => {
 const policiesFormData = ref({
   policiesName: "",
   pageNum: 1,
-  pageSize: 20,
+  pageSize: 100,
   orderColumn: "createTime",
   orderDirection: "descending",
 });
@@ -818,7 +820,7 @@ const geteventTotalFun = async () => {
           hisDayType.value = lbRadio.value;
           if (lbRadio.value === "week") {
             // 将年份换成今年的年份
-            cuData = dayjs(params.name).startOf("day").format("YYYY-MM-DD").replace("2001", dayjs().format("YYYY"));
+            cuData = dayjs().subtract(6-hisIndex,"day").startOf("day").format("YYYY-MM-DD");
             enData = dayjs(cuData).endOf("day").format("YYYY-MM-DD")
           } else {
             cuData = dayjs(params.name).startOf("month").format("YYYY-MM-DD")
@@ -831,7 +833,7 @@ const geteventTotalFun = async () => {
             beginTime: cuData,
             endTime: enData,
             pageNum: 1,
-            pageSize: 1000
+            pageSize: 100
           }).then((res) => {
             hisList.value = res.data.data.rows;
           })

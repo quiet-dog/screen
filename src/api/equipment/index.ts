@@ -24,6 +24,26 @@ export function dailyInspectionList(params: dailyInspectionRes) {
   });
 }
 
+export function getThresholdInfo(id) {
+  return http.get("/manage/threshold/"+id );
+}
+
+export function submitThresholdInfo(data) {
+  for(let i = 0; i < data.values.length; i++){
+    if(data.values[i].min != null ){
+      data.values[i].min = Number(data.values[i].min)
+    }
+    if(data.values[i].max != null ){
+      data.values[i].max = Number(data.values[i].max)
+    }
+  }
+  return http.put("/manage/threshold/"+data.thresholdId,{
+    ...data,
+    emergencyIds:data.emergencys,
+    sopIds:data.sops
+  } );
+}
+
 //获取设备档案列表
 export interface equipmentListRes {
   equipmentName: string;

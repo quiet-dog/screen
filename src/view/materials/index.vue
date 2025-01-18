@@ -276,7 +276,7 @@ const alarmInfomationTimer = useIntervalFn(() => {
 const receiveFormData = ref({
   materialName: "",
   pageNum: 1,
-  pageSize: 20,
+  pageSize: 100,
   orderColumn: "createTime",
   orderDirection: "descending",
 });
@@ -298,7 +298,7 @@ const rbcanleClick = () => {
 const receiveFormData2 = ref({
   materialName: "",
   pageNum: 1,
-  pageSize: 20,
+  pageSize: 100,
   orderColumn: "createTime",
   orderDirection: "descending",
 });
@@ -378,7 +378,7 @@ const materiaStatus = ref("week");
 const materialsId = ref<number | null>(null);
 const materialFiles = ref({
   pageNum: 1,
-  pageSize: 20,
+  pageSize: 100,
   orderColumn: "createTime",
   orderDirection: "descending",
 });
@@ -699,31 +699,25 @@ const receivestatisticsFun = async () => {
   console.log("====================asd")
 };
 const timeLeftClick = () => {
-  const currentStart = dayjs(
-    receivestatisticsData.value.startTime,
-    "YYYY-MM-DD HH:mm:ss"
-  );
-  receivestatisticsData.value.startTime = currentStart
-    .subtract(6, "day")
+ 
+  receivestatisticsData.value.startTime = dayjs(receivestatisticsData.value.startTime)
+    .subtract(7, "day")
     .startOf("day")
     .format("YYYY-MM-DD HH:mm:ss");
-  receivestatisticsData.value.endTime = currentStart
-    // .subtract(7, "day")
+  receivestatisticsData.value.endTime = dayjs(receivestatisticsData.value.endTime)
+    .subtract(7, "day")
     .endOf("day")
     .format("YYYY-MM-DD HH:mm:ss");
   receivestatisticsFun(); // 更新数据
 };
 const timeRightClick = () => {
-  const currentStart = dayjs(
-    receivestatisticsData.value.startTime,
-    "YYYY-MM-DD HH:mm:ss"
-  );
-  receivestatisticsData.value.startTime = currentStart
-    .add(6, "day")
+
+  receivestatisticsData.value.startTime = dayjs(receivestatisticsData.value.startTime )
+    .add(7, "day")
     .startOf("day")
     .format("YYYY-MM-DD HH:mm:ss");
-  receivestatisticsData.value.endTime = currentStart
-    .add(12, "day")
+  receivestatisticsData.value.endTime = dayjs(receivestatisticsData.value.endTime )
+    .add(7, "day")
     .endOf("day")
     .format("YYYY-MM-DD HH:mm:ss");
   receivestatisticsFun(); // 更新数据

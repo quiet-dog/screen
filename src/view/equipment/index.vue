@@ -333,7 +333,9 @@ const rtClick = (item) => {
   rtStatus.value = !rtStatus.value;
   getStreamUrlApi(item.channelid).then((res) => {
     console.log("res.data.data.wsflv", res.data.data.wsflv);
-    videoRef.value.play(res.data.data.wsflv);
+    const url = new URL(res.data.data.wsflv);
+    url.host = location.host;
+    videoRef.value.play(url.toString());
     videoRef.value.setChannelId(res.data.data.channelId);
   });
   // nextTick(() => {
@@ -352,7 +354,7 @@ const rtcanleClick = () => {
 const ltequipmentFormData = ref({
   equipmentName: "",
   pageNum: 1,
-  pageSize: 1000,
+  pageSize: 100,
   orderColumn: "createTime",
   orderDirection: "descending",
 });
@@ -464,7 +466,7 @@ const ltequipmentlistTimer = useIntervalFn(() => {
 const equipmentFormData = ref({
   equipmentName: "",
   pageNum: 1,
-  pageSize: 20,
+  pageSize: 100,
   orderColumn: "createTime",
   orderDirection: "descending",
 });
@@ -482,6 +484,7 @@ const equipmentListFun = async () => {
         ...v,
         id: v.thresholdId,
         name: v.sensorName,
+        label: v.sensorName,
       };
     });
     return {
@@ -606,7 +609,7 @@ const cascaderChange = (val) => {
 const repairformData = ref<equipmentRepairListRes>({
   equipmentCode: "",
   pageNum: 1,
-  pageSize: 20,
+  pageSize: 100,
   orderColumn: "createTime",
   orderDirection: "descending",
 });
@@ -719,7 +722,7 @@ const rctcanleClick = () => {
 //巡检记录
 const inspectionformData = ref<dailyInspectionRes>({
   pageNum: 1,
-  pageSize: 20,
+  pageSize: 100,
   orderColumn: "createTime",
   orderDirection: "descending",
 });

@@ -575,7 +575,7 @@ function createAreaStyle(startColor: string, endColor: string) {
 //工艺档案
 const archiveFormData = ref({
   pageNum: 1,
-  pageSize: 20,
+  pageSize: 100,
   orderColumn: "createTime",
   orderDirection: "descending",
 });
@@ -644,7 +644,7 @@ const processSelstClick = async (item, v, i) => {
 const nodeFormData = ref({
   nodeName: "",
   pageNum: 1,
-  pageSize: 6,
+  pageSize: 100,
   orderColumn: "createTime",
   orderDirection: "descending",
 });
@@ -685,7 +685,7 @@ const lbcanleClick = (item: any) => {
 const alarmEventsFormData = ref({
   type: "工艺节点报警",
   pageNum: 1,
-  pageSize: 1000,
+  pageSize: 100,
   orderColumn: "createTime",
   orderDirection: "descending",
 });
@@ -736,7 +736,7 @@ const alarmEventsTimer = useIntervalFn(() => {
 const processFormData = ref({
   craftArchiveId: null,
   pageNum: 1,
-  pageSize: 20,
+  pageSize: 100,
   orderColumn: "createTime",
   orderDirection: "descending",
 });

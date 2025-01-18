@@ -118,9 +118,9 @@
         <img src="/public/img/光标.png" alt="" />
         <span>区域报警统计</span>
       </div>
-      <el-radio-group v-model="powerByAreaTotalStaticData.dayType" @change="powerByAreaTotalStaticFun" class="group">
+     <el-radio-group v-model="powerByAreaTotalStaticData.dayType" @change="powerByAreaTotalStaticFun" class="group">
         <el-radio-button label="周" value="week" />
-        <el-radio-button label="年" value="year" />
+       <el-radio-button label="年" value="year" />
       </el-radio-group>
     </div>
     <div class="bigscreen_rt_bottom">
@@ -176,7 +176,7 @@
           <Vue3SeamlessScroll :list="equipmentlist" :class-option="{
             step: 5,
           }" hover class="scrool">
-            <div class="bigscreen_rb_bottom_nei_b" v-for="item in equipmentlist">
+            <div @click="clickFormItem(item.thresholdId)" class="bigscreen_rb_bottom_nei_b" v-for="item in equipmentlist">
               <span>
                 {{ item.thresholdId }}
               </span>
@@ -189,6 +189,71 @@
       </div>
     </div>
   </div>
+  <el-dialog title="阈值设置"
+    width="900"
+    align-center v-model="centerDialogVisible">
+    <el-form :model="formData" label-width="120px" :rules="rules" ref="formRef">
+      <el-form-item label="级别层级：">
+        <el-input-number
+          v-model="num"
+          :min="1"
+          :max="5"
+          @change="handleChange"
+        />
+      </el-form-item>
+      <el-row v-for="(item, index) in formData.values" :key="index">
+        <el-col :span="12">
+          <el-form-item label="报警级别：">
+            <el-select
+              v-model="item.level"
+              placeholder="请选择报警级别"
+              style="width: 300px"
+            >
+              <el-option
+                v-for="option in alarmLevelOptions"
+                :key="option.value"
+                :label="option.label"
+                :value="option.value"
+              />
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="指标区间：">
+            <div
+              style="
+                width: 300px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              "
+            >
+              <el-input
+                v-model="item.min"
+                placeholder="开始区间"
+                autocomplete="off"
+                style="width: 130px"
+              />
+              <span>至</span>
+              <el-input
+                v-model="item.max"
+                placeholder="结束区间"
+                autocomplete="off"
+                style="width: 130px"
+              />
+            </div>
+          </el-form-item>
+        </el-col>
+      </el-row>
+    </el-form>
+    <template #footer>
+      <div class="dialog-footer">
+        <el-button type="primary" @click="submitFormThreshold">
+          提交
+        </el-button>
+      </div>
+    </template>
+  </el-dialog>
 </template>
 
 <script lang="ts" setup>
@@ -209,6 +274,9 @@ import dayjs from "dayjs";
 import { useIntervalFn } from '@vueuse/core'
 import img9 from "../../../public/img/叉号.png";
 import { type } from '../../../auto-imports';
+import { useEditThHook } from "./editTh.tsx";
+
+const {formData,centerDialogVisible,clickFormItem,alarmLevelOptions,num,handleChange,submitFormThreshold} = useEditThHook()
 const getValue = (item) => {
   if (item.type == "设备报警") {
     let unit = "";
@@ -483,7 +551,7 @@ const changeHisList = () => {
     beginTime: hisStart,
     endTime: hisEnd,
     pageNum: 1,
-    pageSize: 1000,
+    pageSize: 100,
     type: "设备报警",
     deviceName: hisDeviceName.value
   }).then((res) => {
@@ -525,7 +593,7 @@ const historyStatistics = async () => {
           hisDayType.value = historyStatisticsData.value.dayType;
           if (historyStatisticsData.value.dayType === "week") {
             // 将年份换成今年的年份
-            cuData = dayjs(params.name).startOf("day").format("YYYY-MM-DD").replace("2001", dayjs().format("YYYY"));
+            cuData =dayjs().subtract(6-hisIndex,"day").startOf("day").format("YYYY-MM-DD");
             enData = dayjs(cuData).endOf("day").format("YYYY-MM-DD")
           } else {
             cuData = dayjs(params.name).startOf("month").format("YYYY-MM-DD")
@@ -538,7 +606,7 @@ const historyStatistics = async () => {
             beginTime: cuData,
             endTime: enData,
             pageNum: 1,
-            pageSize: 1000,
+            pageSize: 100,
             type: "设备报警",
             deviceName: hisDeviceName.value
           }).then((res) => {
@@ -556,7 +624,7 @@ const historyStatistics = async () => {
 const downloadFile = () => {
   exportAlarmEvents({
     pageNum: 1,
-    pageSize: 1000,
+    pageSize: 100,
     beginTime: hisStart,
     endTime: hisEnd,
     type: "设备报警",
@@ -589,7 +657,7 @@ const historyStatisticsTimer = useIntervalFn(() => {
 //设备数据
 const equipmentFormData = ref({
   pageNum: 1,
-  pageSize: 20,
+  pageSize: 100,
   orderColumn: "createTime",
   orderDirection: "descending",
 });
@@ -687,7 +755,7 @@ const powerByAreaTotalStaticFun = async () => {
           powetDayType = powerByAreaTotalStaticData.value.dayType;
           alarmEventsList({
             pageNum: 1,
-            pageSize: 1000,
+            pageSize: 100,
             area: params.name,
             beginTime: powetDayType == "week"? dayjs().startOf("week").format("YYYY-MM-DD"):dayjs().startOf("year").format("YYYY-MM-DD"),
             endTime: powetDayType == "week"? dayjs().endOf("week").format("YYYY-MM-DD"):dayjs().endOf("year").format("YYYY-MM-DD"),

@@ -454,7 +454,7 @@ const accesscontrolData = ref<accesscontrolRes>({
   doorPlace: "",
   name: "",
   pageNum: 1,
-  pageSize: 20,
+  pageSize: 100,
   orderColumn: "createTime",
   orderDirection: "descending",
 });
@@ -627,8 +627,9 @@ const getVideoList = () => {
 
       videoInfo.value = res.data.data.List[0];
       getStreamUrlApi(videoInfo.value.channelid).then((ress) => {
-        console.log("res.data.data.wsflv", ress.data.data.wsflv);
-        videoRef.value.play(ress.data.data.wsflv);
+        const url = new URL(ress.data.data.wsflv);
+        url.host = location.host;
+        videoRef.value.play(url.toString());
         videoRef.value.setChannelId(ress.data.data.channelId);
         channelQuery.value.pageNum += 1;
         if (channelQuery.value.pageNum > ress.data.data.Total) {
